@@ -3,11 +3,11 @@
 % k: coefficient for the method (small number > 1)
 % dbg: 1 for debug figures, 0 for no debug
 function [length] = length_estimator (f, angle, meth, k, dbg)
-if nargin < 4
+if nargin < 5
     dbg = 0;
-    if nargin < 3
+    if nargin < 4
         k = 2;
-        if nargin < 2
+        if nargin < 3
             meth = 2; % I works a lot better
         end
     end
@@ -27,7 +27,7 @@ end
 c = log(fftshift(fft2(abs(log(abs(fftshift(fft2(f))))))));
 %plot(linspace(0,1,numel(c)), c);
 
-imrotate(c, -angle);
+c = imrotate(c, -angle);
 
 [cx cy] = max_coord_mat(c);
 
@@ -47,6 +47,8 @@ if dbg
     
     figure
     surf(N, M, real(c));
+    figure
+    contourf(N, M, real(c));
 end
 
 end
@@ -65,7 +67,7 @@ end
 
 % Here smaller k works but not good for length < 2*k still
 function [peek] = peek_finder_2(array, center, k)
-end_of_center = peek_finder_1(array, center, k, 0)
+end_of_center = peek_finder_1(array, center, k, 0);
 [m peek] = max(array(end_of_center:end));
 peek = peek + end_of_center - 1;
 end

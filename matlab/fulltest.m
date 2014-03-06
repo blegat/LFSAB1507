@@ -1,4 +1,5 @@
-f = im2double(imread('cameraman.tif'));
-blur(f, 30, 30);
-F = deblur(f);
-imshow(F);
+f = double(imread('cameraman.tif'));
+fh = blur(f, 30, 30);
+save_image(fh, 'blur', 2);
+fhat = deblur(fh);
+save_image(fhat, 'deblur', 2);
