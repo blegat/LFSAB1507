@@ -1,7 +1,7 @@
 function [F] = deblur (f, algo)
 %[len angle] = angle_estimatorS(f)
 angle  = angle_estimator(f,0)
-len = length_estimator(f, angle, 2, 7, 0)
+len = length_estimator(f, angle, 2, 3, 1)
 psf = fspecial('motion', len, angle);
 nsr = 0.0001;% nsrEstimation(f);
 
