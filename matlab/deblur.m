@@ -1,14 +1,15 @@
 function [F] = deblur (f, algo)
 %[len angle] = angle_estimatorS(f)
-angle  = angle_estimator(f,0)
-len = length_estimator(f, angle, 2, 3, 1)
+angle  = angle_estimator(f,1)
+len = length_estimator(f, angle, 2, 5, 0)
 psf = fspecial('motion', len, angle);
-nsr = 0.0001;% nsrEstimation(f);
+save_image(f, 'Blur',2);
+nsr = nsrEstimation(f);
 
 val = zeros(2);
 %Lucy Richardson
 if algo == 1
- f = edgetaper(f,psf);
+% f = edgetaper(f,psf);
 %  len =2;
 % for i = 1:100
 %     len = len+1;
@@ -27,11 +28,12 @@ end
 if algo == 2
     f = edgetaper(f,psf);
     F = deconvwnr(f,psf,nsr);
-    F = medfilt2(F);
+   % F = medfilt2(F);
 end
 if algo == 3
    % f = edgetaper(f,psf);
     [F arg] = deconvreg(f,psf, nsr);
+   % F = medfilt2(F);
 end
 
 if algo == 4

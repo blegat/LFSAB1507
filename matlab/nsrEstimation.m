@@ -6,7 +6,7 @@ BW = roipoly(f);
 dbw = double(BW);
 noise = var(dbw(:))
 signal = var(f(:))
-nsr = sqrt(noise)/signal
+nsr = noise/signal
 
 end
 

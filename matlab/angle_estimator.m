@@ -5,7 +5,7 @@ fs = squareborder(f, 0); % squared
 mean(mean(fs));
 sum(sum(fs)) / (size(fs, 1) * size(fs, 2));
 fc = fs - mean(mean(fs)); % centered
-mean(mean(fc))
+mean(mean(fc));
 
 G = fft2(fc);
 G = fftshift(G);
@@ -37,8 +37,8 @@ for i = 1:size(R,1)
 end
 % R = RDiv
 
-size(R)
-size(f)
+% size(R)
+% size(f)
 mid_elemt=round(size(R,1)/2);
 mid_size=floor(min(size(f))/4*sqrt(2))-1;
 R=R(mid_elemt-mid_size:mid_elemt+mid_size,:);
