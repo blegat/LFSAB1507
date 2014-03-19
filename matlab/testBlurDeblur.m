@@ -15,7 +15,8 @@ close all;
 % Computer, the professional prog has difficult so ...
 %I = double(imread('computerGray.jpg'));
 
-I = double(imread('AaronGray.png'));
+%I = double(imread('AaronGray.png'));
+I = double(imread('bordGray.jpg'));
 %I = double(imread('SeaGray.png'));
 %To be blurred
 %cameraman
@@ -33,8 +34,9 @@ I = double(imread('AaronGray.png'));
 
 save_image(I, 'Blurred',2);
 deblurred = deblur(I,algo);
-Sharpness = bordSobel(deblurred)
 save_image(deblurred, 'Deblurred',2);
+%Sharpness = bordSobel(deblurred)
+
 
 end
 
