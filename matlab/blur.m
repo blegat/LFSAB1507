@@ -6,5 +6,5 @@ if meth == 1
     f = conv2c(I, motion(len, angle));
 else
     h = fspecial('motion', len, angle);
-    f = imfilter(I,h,'replicate');
+    f = imfilter(I,h,'circular');
 end

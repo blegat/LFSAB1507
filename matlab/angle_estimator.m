@@ -10,16 +10,18 @@ mean(mean(fc))
 G = fft2(fc);
 G = fftshift(G);
 rInter = log(abs(G));
-plothot(rInter)
+%plothot(rInter, 1:size(rInter,1), 1:size(rInter, 2), 'cameramanBFhot')
+plothot(rInter, 1:size(rInter,1), 1:size(rInter, 2))
 
-angle = find_angle(fs, rInter, thetas);
+angle = find_angle(fc, rInter, thetas);
 end
 
 function [t] = find_angle(f, rInter, thetas)
 [R, xp] = radon(rInter,thetas);
+%plothot(R, thetas, xp, 'cameramanBFhotradon');
 plothot(R, thetas, xp);
 IdRad = radon(ones(size(rInter)), thetas);
-plothot(IdRad)
+plothot(IdRad, thetas, xp)
 RDiv = zeros(size(R));
 for i = 1:size(R,1)
     for j = 1:size(R,2)
@@ -28,13 +30,13 @@ for i = 1:size(R,1)
         end
     end
 end
-% R = RDiv
+R = RDiv;
+plothot(R, thetas, xp);
 
-size(R)
-size(f)
 mid_elemt=round(size(R,1)/2);
 mid_size=floor(min(size(f))/4*sqrt(2))-1;
 R=R(mid_elemt-mid_size:mid_elemt+mid_size,:);
+plothot(R, thetas, xp(mid_elemt-mid_size:mid_elemt+mid_size));
 
 figure
 plot(thetas,var(R));
