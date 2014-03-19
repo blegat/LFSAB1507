@@ -16,6 +16,7 @@ close all;
 %I = double(imread('computerGray.jpg'));
 
 %I = double(imread('AaronGray.png'));
+I= double(imread('bordGray.jpg'));
 %I = double(imread('SeaGray.png'));
 %To be blurred
 %cameraman
@@ -33,7 +34,8 @@ I = blur(I,50,20,1);
 
 save_image(I, 'Blurred',2);
 deblurred = deblur(I,algo);
-Sharpness = bordSobel(deblurred)
 save_image(deblurred, 'Deblurred',2);
+%Sharpness = bordSobel(deblurred)
+
 
 end
