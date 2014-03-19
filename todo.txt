@@ -1,0 +1,32 @@
+S'attribuer ce qu'il y a dans le To Do et le mettre dans le In progress puis au plus dans le Done :)
+
+To Do 
+=====
+Traitement du bruit (NSR) => potentiellement Arnaud qui s'en occupe
+
+
+
+
+
+In progress
+===========
+Benoit 
+	Finir le calcul d'angle	
+
+Arnaud
+	Algorithme de défloutage 
+
+Jonathan
+	Inteface graphique 
+
+Geoffroy
+	Détection du foreground - background
+
+
+Done
+==== 
+
+Critère de défloutage
+Lien angle longueur
+Calcul longeur
+
