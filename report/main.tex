@@ -50,6 +50,57 @@ Mettez ici ce que vous trouvez intéressant
    \item  Rotational Motion Deblurring of a Rigid Object from a Single Image : pour la détection du foreground pour la caméra 
 \end{itemize}
 
+fft1
+rotate in time
+black around circle
+polar coordinate -> fft2 ou fft1
+radon en temporel
+
+\section{Détermination de la PSF}
+On fait une convolution en temporelle avec une marche, ce qui fait une multiplication par $\frac{\sin(x)}{x}$ en fréquentiel.
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{../matlab/onesFhot.png}
+    \caption{Transformée de fourier d'une image unitaire}
+    \label{fig:onesFhot}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{../matlab/cameramanFhot.png}
+    \caption{Transformée de fourier du caméraman flouté}
+    \label{fig:cameramanFhot}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{../matlab/cameramanFhotradon.png}
+    \caption{Transformée de radon de la transformée de fourier du caméraman flouté}
+    \label{fig:cameramanFhotradon}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{../matlab/cameramanvar.png}
+    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
+    \label{fig:cameramanvar}
+  \end{subfigure}
+  \caption{Tranformées de fourier}
+  \label{fig:fourier}
+  \begin{subfigure}[b]{0.35\textwidth}
+    \includegraphics[width=\textwidth]{../matlab/cameramanBFhot.png}
+    \caption{Transformée de fourier du caméraman flouté}
+    \label{fig:cameramanBFhot}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{../matlab/cameramanBFhotradon.png}
+    \caption{Transformée de radon de la transformée de fourier du caméraman flouté}
+    \label{fig:cameramanBFhotradon}
+  \end{subfigure}%
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=\textwidth]{../matlab/cameramanBvar.png}
+    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
+    \label{fig:cameramanBvar}
+  \end{subfigure}
+  \caption{Tranformées de fourier}
+  \label{fig:fourier}
+\end{figure}
+
 \section{Quelques résolution avec PSF connue}
 
 \begin{figure}[!ht]

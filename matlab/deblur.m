@@ -23,10 +23,10 @@ if algo == 1
 % end
 % val
    % psf = fspecial('motion', psf, angle);
-    F = deconvlucy(f, psf, 18);
+    F = lucy(f, psf, 18);
 end
 if algo == 2
-    f = edgetaper(f,psf);
+ %   f = edgetaper(f,psf);
     F = deconvwnr(f,psf,nsr);
   % F = medfilt2(F);
 end

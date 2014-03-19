@@ -12,6 +12,6 @@ save_image(direct(fmat, mat), sprintf('direct-%s', name), graph);
 
 fpsf = noise(conv2(realf, psf, 'same'));
 save_image(fpsf, sprintf('psfb-%s', name), graph);
-save_image(lucy(fpsf, psf, 10), sprintf('lucy-%s', name), graph);
+save_image(lucy(fpsf, psf, 20), sprintf('lucy-%s', name), graph);
 
 end

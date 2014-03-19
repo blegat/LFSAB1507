@@ -1,10 +1,10 @@
-function [ a ] = testBlurDeblur(algo)
-%UNTITLED2 Summary of this function goes here
-%   Detailed explanation goes here
-
+function [] = testBlurDeblur(algo)
+%petite fille
+%I = load('fille.mat');
+%I = I.I;
+%save_image(deblur(blur(I,55,60,2)), 'testBlurDeblur',2);
 
 close all;
-
 %Already blurred
 %The day we read clearly 485 - PCK please call e immediatly
 %I = double(imread('BlurredImageUsedGray.jpg'));
@@ -39,4 +39,3 @@ save_image(deblurred, 'Deblurred',2);
 
 
 end
-
