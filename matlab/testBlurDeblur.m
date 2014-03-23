@@ -15,15 +15,11 @@ I = double(imread('BlurredImageUsed.jpg'));
 % Computer, the professional prog has difficult so ...
 %I = double(imread('computerGray.jpg'));
 
-<<<<<<< HEAD
 %I = double(imread('Aaron.png'));
 %I = double(imread('IMG_3923.JPG'));
 
 %I = double(imread('bordGray.jpg'));
-=======
-%I = double(imread('AaronGray.png'));
-I= double(imread('bordGray.jpg'));
->>>>>>> ab952d7e3013c30672678795daa5a7b8ce83b15f
+
 %I = double(imread('SeaGray.png'));
 %To be blurred
 %cameraman
@@ -37,15 +33,6 @@ I= double(imread('bordGray.jpg'));
 %petite fille
 %I = rgb2gray((imread('filleL50A20.jpg')));
 %load fille.mat;
-
-<<<<<<< HEAD
-=======
-I = blur(I,50,20,1);
-%deblurred = zeros(size(I,1),size(I,2),size(I,3));
-%  for i = 1:3
-%  deblurred(:,:,i) = deblur(I(:,:,i),algo);
-%  end
->>>>>>> ab952d7e3013c30672678795daa5a7b8ce83b15f
 
 
 %I = blur(I,20,20,2);
