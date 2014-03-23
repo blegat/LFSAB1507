@@ -9,7 +9,7 @@ if graph == 1 || graph == 2
     end
     colormap(gray);
     title(name);
-    imagesc(L, [0 255]);
+    imshow(L/255);
     axis off;
     if graph == 1
         saveas(gcf, name, 'png');

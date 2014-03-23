@@ -1,7 +1,6 @@
 function [angle] = angle_estimator (f, debug)
 thetas = 0:180;
-
-fs = squareborder(f, 0); % squared
+fs = squareborder(f(:,:,1), 0); % squared
 mean(mean(fs));
 sum(sum(fs)) / (size(fs, 1) * size(fs, 2));
 fc = fs - mean(mean(fs)); % centered
@@ -37,13 +36,15 @@ for i = 1:size(R,1)
     end
 end
 R = RDiv;
-plothot(R, thetas, xp);
-
+if debug == 1
+    plothot(R, thetas, xp);
+end
 mid_elemt=round(size(R,1)/2);
-mid_size=floor(min(size(f))/4*sqrt(2))-1;
+mid_size=floor(min(size(f(:,:,1)))/4*sqrt(2))-1;
 R=R(mid_elemt-mid_size:mid_elemt+mid_size,:);
-plothot(R, thetas, xp(mid_elemt-mid_size:mid_elemt+mid_size));
-
+if debug == 1
+    plothot(R, thetas, xp(mid_elemt-mid_size:mid_elemt+mid_size));
+end
 if debug ==1
     figure
     plot(thetas,var(R));

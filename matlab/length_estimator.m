@@ -24,7 +24,7 @@ if dbg
 end
 %c = fftshift(ifft(ifftshift(log(abs(fftshift(fft(h)))))));
 %c = fftshift(ifft2(ifftshift(log(abs(fftshift(fft2(f)))))));
-c = log(fftshift(fft2(abs(log(abs(fftshift(fft2(f))))))));
+c = log(fftshift(fft2(abs(log(abs(fftshift(fft2(f(:,:,1)))))))));
 %plot(linspace(0,1,numel(c)), c);
 
 c = imrotate(c, -angle);
