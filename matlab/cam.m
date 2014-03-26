@@ -5,15 +5,71 @@ I = double(rgb2gray(imread('stv_blur1.jpg')));
 save_image(I, 'blu', 2);
 save_image(abs(I - bg), 'dif', 2);
 
-var = 2;
-
 dif = abs(I - bg);
-%dif(dif > var) = 255;
-%save_image(dif, 'dif', 2);
-[n m] = size(I);
 
-dif = filter_block(dif, 10, 100);
+var = 8
+%var = graythresh(dif)
+%dif = im2bw(dif, var) * 255;
+dif(dif < var) = 0;
+dif(dif > var) = 255;
+save_image(dif, 'dif', 2);
 
+var = 128;
+n = 8;
+while var > 4
+    dif = shapeit(dif, var, n);
+    save_image(dif, 'dif', 2);
+    var = var / 2;
+end
+
+[orig, big] = biggest_square(dif);
+orig
+
+B = I(orig(1):orig(1)+big-1,orig(2):orig(2)+big-1);
+save_image(B, 'blurred', 2);
+
+end
+
+
+function [D] = shapeit(dif, var, n)
+h = fspecial('gaussian', [n n], 2);
+%h = fspecial('average', n);
+dif = imfilter(dif,h,'circular');
+dif(dif < var) = 0;
+dif(dif > var) = 255;
+D = dif;
+end
+
+function [orig, big] = biggest_square (A)
+dp = zeros(size(A));
+[n, m] = size(A);
+if A(1, 1) >= 254
+    dp(1,1) = 1;
+end
+for i = 1:n
+    if A(i, 1) >= 254
+        dp(i, 1) = 1;
+    end
+end
+for j = 2:m
+    if A(1, j) >= 254
+        dp(1, j) = 1;
+    end
+end
+for i = 2:n
+    for j = 2:m
+        if A(i, j) >= 254
+            dp(i, j) = 1 + min(dp(i-1,j-1), min(dp(i-1,j),dp(i, j-1)));
+        end
+    end
+end
+
+save_image(dp*255, 'dp', 2)
+
+[origx origy] = max_coord_mat(dp);
+orig = [origx, origy]
+big = dp(origx, origy)
+orig = orig - big + 1 % Move orig from bot/right to top/left
 end
 
 function [B] = filter_block(A, decal, threshold)
