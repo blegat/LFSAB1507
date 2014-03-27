@@ -1,19 +1,47 @@
-function [] = cam()
+function [] = cam(algo)
 
 bg = double(rgb2gray(imread('stv_bg.jpg')));
 I = double(rgb2gray(imread('stv_blur1.jpg')));
 save_image(I, 'blu', 2);
-save_image(abs(I - bg), 'dif', 2);
-
-var = 2;
+%save_image(abs(I - bg), 'dif', 2);
 
 dif = abs(I - bg);
-%dif(dif > var) = 255;
+
+var = 8
+%var = graythresh(dif)
+%dif = im2bw(dif, var) * 255;
+dif(dif < var) = 0;
+dif(dif > var) = 255;
 %save_image(dif, 'dif', 2);
-[n m] = size(I);
 
-dif = filter_block(dif, 10, 100);
+var = 128;
+n = 8;
+while var > 4
+    dif = shapeit(dif, var, n);
+    %save_image(dif, 'dif', 2);
+    var = var / 2;
+end
 
+B = biggest_square(I, dif);
+save_image(B, 'blurred', 2);
+
+% angle  = robust_angle_estimator(I, 0, dif)
+% len = length_estimator(B, angle, 2, 5, 0)
+% psf = fspecial('motion', len, angle);
+% F = lucy(B, psf, 18);
+F = deblur(I, algo, dif);
+save_image(F, 'deblurred', 2);
+
+end
+
+
+function [D] = shapeit(dif, var, n)
+h = fspecial('gaussian', [n n], 2);
+%h = fspecial('average', n);
+dif = imfilter(dif,h,'circular');
+dif(dif < var) = 0;
+dif(dif > var) = 255;
+D = dif;
 end
 
 function [B] = filter_block(A, decal, threshold)

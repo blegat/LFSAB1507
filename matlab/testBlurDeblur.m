@@ -23,7 +23,7 @@ close all;
 %I = double(imread('Sea.png'));
 %To be blurred
 %cameraman
-%I = double(imread('cameraman.tif'));
+I = double(imread('cameraman.tif'));
 
 %Office 
 I = double(imread('OfficeGray2HDCrop.jpg'));
@@ -35,8 +35,10 @@ I = double(imread('OfficeGray2HDCrop.jpg'));
 %load fille.mat;
 
 
-%I = blur(I,20,20,2);
-%I = compression(I);
+
+I = blur(I,40,0,2);
+save_image(I, 'test', 2);
+I = compression(I);
 save_image(I, 'Blurred',2);
 deblurred = deblur(I,algo);
 save_image(deblurred, 'Deblurred',2);
