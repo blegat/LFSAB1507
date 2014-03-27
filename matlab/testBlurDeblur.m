@@ -7,7 +7,7 @@ I = I.I;
 close all;
 %Already blurred
 %The day we read clearly 485 - PCK please call e immediatly
-I = double(imread('BlurredImageUsed.jpg'));
+%I = double(imread('BlurredImageUsed.jpg'));
 
 %Sagar
 %I = double(imread('SagarL25A10.jpg'));
@@ -23,7 +23,7 @@ I = double(imread('BlurredImageUsed.jpg'));
 %I = double(imread('SeaGray.png'));
 %To be blurred
 %cameraman
-%I = double(imread('cameraman.tif'));
+I = double(imread('cameraman.tif'));
 
 %Office 
 %I = double(imread('OfficeGray2HDCrop.jpg'));
@@ -35,7 +35,8 @@ I = double(imread('BlurredImageUsed.jpg'));
 %load fille.mat;
 
 
-%I = blur(I,20,20,2);
+I = blur(I,40,0,2);
+save_image(I, 'test', 2);
 I = compression(I);
 save_image(I, 'Blurred',2);
 deblurred = deblur(I,algo);

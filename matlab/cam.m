@@ -1,9 +1,9 @@
-function [] = cam()
+function [] = cam(algo)
 
 bg = double(rgb2gray(imread('stv_bg.jpg')));
 I = double(rgb2gray(imread('stv_blur1.jpg')));
 save_image(I, 'blu', 2);
-save_image(abs(I - bg), 'dif', 2);
+%save_image(abs(I - bg), 'dif', 2);
 
 dif = abs(I - bg);
 
@@ -12,21 +12,25 @@ var = 8
 %dif = im2bw(dif, var) * 255;
 dif(dif < var) = 0;
 dif(dif > var) = 255;
-save_image(dif, 'dif', 2);
+%save_image(dif, 'dif', 2);
 
 var = 128;
 n = 8;
 while var > 4
     dif = shapeit(dif, var, n);
-    save_image(dif, 'dif', 2);
+    %save_image(dif, 'dif', 2);
     var = var / 2;
 end
 
-[orig, big] = biggest_square(dif);
-orig
-
-B = I(orig(1):orig(1)+big-1,orig(2):orig(2)+big-1);
+B = biggest_square(I, dif);
 save_image(B, 'blurred', 2);
+
+% angle  = robust_angle_estimator(I, 0, dif)
+% len = length_estimator(B, angle, 2, 5, 0)
+% psf = fspecial('motion', len, angle);
+% F = lucy(B, psf, 18);
+F = deblur(I, algo, dif);
+save_image(F, 'deblurred', 2);
 
 end
 
@@ -38,38 +42,6 @@ dif = imfilter(dif,h,'circular');
 dif(dif < var) = 0;
 dif(dif > var) = 255;
 D = dif;
-end
-
-function [orig, big] = biggest_square (A)
-dp = zeros(size(A));
-[n, m] = size(A);
-if A(1, 1) >= 254
-    dp(1,1) = 1;
-end
-for i = 1:n
-    if A(i, 1) >= 254
-        dp(i, 1) = 1;
-    end
-end
-for j = 2:m
-    if A(1, j) >= 254
-        dp(1, j) = 1;
-    end
-end
-for i = 2:n
-    for j = 2:m
-        if A(i, j) >= 254
-            dp(i, j) = 1 + min(dp(i-1,j-1), min(dp(i-1,j),dp(i, j-1)));
-        end
-    end
-end
-
-save_image(dp*255, 'dp', 2)
-
-[origx origy] = max_coord_mat(dp);
-orig = [origx, origy]
-big = dp(origx, origy)
-orig = orig - big + 1 % Move orig from bot/right to top/left
 end
 
 function [B] = filter_block(A, decal, threshold)

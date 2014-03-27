@@ -1,9 +1,9 @@
-function [angle] = angle_estimator (f, debug)
-thetas = 0:180;
-fs = squareborder(f(:,:,1), 0); % squared
-mean(mean(fs));
-sum(sum(fs)) / (size(fs, 1) * size(fs, 2));
-fc = fs - mean(mean(fs)); % centered
+function [vars] = angle_estimator (f, debug, thetas)
+if nargin < 3
+    thetas = 0:180;
+end
+
+fc = f - mean(mean(f)); % centered
 
 G = fft2(fc);
 G = fftshift(G);
@@ -14,10 +14,10 @@ if debug ==1
     plothot(rInter)
 end
 
-angle = find_angle(fc, rInter, thetas, debug);
+vars = find_angle(fc, rInter, thetas, debug);
 end
 
-function [t] = find_angle(f, rInter, thetas, debug)
+function [vars] = find_angle(f, rInter, thetas, debug)
 [R, xp] = radon(rInter,thetas);
 if debug ==1
     plothot(R, thetas, xp);
@@ -51,12 +51,11 @@ if debug ==1
     plot(thetas,var(R));
     title('Var de la transfo de Radon');
     figure
-    plot(thetas,var(R));
+    plot(thetas,var(RDiv));
     title('Var de la transfo de Radon normalisée');
     %[size1, size2]  = size(R(5:100, 5:175))
 end
-[m i] = max(var(RDiv));
+vars = var(RDiv);
 
-t = thetas(i);
 end
 
