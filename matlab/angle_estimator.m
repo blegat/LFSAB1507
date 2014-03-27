@@ -35,8 +35,9 @@ for i = 1:size(R,1)
     end
 end
 
+if debug ==1
 plothot(RDiv, thetas, xp);
-
+end
 mid_elemt=round(size(R,1)/2);
 mid_size=floor(min(size(f))/4*sqrt(2))-1;
 RDiv=RDiv(mid_elemt-mid_size:mid_elemt+mid_size,:);

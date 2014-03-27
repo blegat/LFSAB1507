@@ -1,10 +1,10 @@
 function [F] = deblur (f, algo)
 %[len angle] = angle_estimatorS(f)
 angle  = angle_estimator(f,0)
-len = length_estimator(f, angle, 2, 5, 0)
+len = length_estimator(f, angle, 2, 8, 0)
 psf = fspecial('motion', len, angle);
 %save_image(f, 'Blur',2);
-nsr = 0.01;%nsrEstimation(f);
+nsr = 0.001%nsrEstimation(f);
 fsize = size(f)
 if length(fsize) == 2
     iterColorOrGray = 1;
@@ -31,11 +31,13 @@ if algo == 1
    % psf = fspecial('motion', psf, angle);
    for i=1:iterColorOrGray
     F(:,:,i) = lucy(f(:,:,i), psf, 18);
-    F(:,:,i) = wiener2(F(:,:,i), [5 5]);
+   F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    %imshow(F/255);
     save_image(F,'deb',2);
-    ;    
+%  F = medfilt2(F);
+    
+       
 end
 if algo == 2
    f = edgetaper(f,psf);
