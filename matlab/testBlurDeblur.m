@@ -26,7 +26,7 @@ close all;
 I = double(imread('cameraman.tif'));
 
 %Office 
-I = double(imread('OfficeGray2HDCrop.jpg'));
+%I = double(imread('OfficeGray2HDCrop.jpg'));
 
 %Car 
 %I = double(imread('CarGray2HDCrop.png'));
@@ -36,7 +36,7 @@ I = double(imread('OfficeGray2HDCrop.jpg'));
 
 
 
-I = blur(I,40,0,2);
+I = blur(I,40,30,2);
 save_image(I, 'test', 2);
 I = compression(I);
 save_image(I, 'Blurred',2);
