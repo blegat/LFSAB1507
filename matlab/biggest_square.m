@@ -1,4 +1,4 @@
-function [F] = biggest_square(f, B)
+function [F] = biggest_square(f, B, debug)
 dp = zeros(size(B));
 [n, m] = size(B);
 if B(1, 1) >= 254
@@ -21,8 +21,9 @@ for i = 2:n
         end
     end
 end
-
+if debug ==1
 save_image(dp*255, 'dp', 2)
+end
 
 [origx origy] = max_coord_mat(dp);
 orig = [origx, origy];

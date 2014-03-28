@@ -15,11 +15,11 @@ Br = imrotate(B, 45);
 if all_blurred
     fs = squareborder(f(:,:,1), 0);
 else
-    fs = biggest_square(f(:,:,1), B);
+    fs = biggest_square(f(:,:,1), B, debug);
     %fs = squared_border(f, 0);
 end
 
-frs = biggest_square(fr, Br);
+frs = biggest_square(fr, Br, debug);
 
 thetas = [20:70, 110:160];
 
