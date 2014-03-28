@@ -36,7 +36,7 @@ I = double(imread('cameraman.tif'));
 
 
 
-I = blur(I,40,30,2);
+I = blur(I,40,10,2);
 save_image(I, 'test', 2);
 I = compression(I);
 save_image(I, 'Blurred',2);

@@ -1,13 +1,15 @@
-function [] = cam(algo)
-
-bg = double(rgb2gray(imread('stv_bg.jpg')));
-I = double(rgb2gray(imread('stv_blur1.jpg')));
+function [] = cam(algo, debug)
+close all;
+%bg = double(rgb2gray(imread('stv_bg.jpg')));
+%I = double(rgb2gray(imread('stv_blur1.jpg')));
+bg = double(imread('stv_bg.jpg'));
+I = double(imread('stv_blur1.jpg'));
 save_image(I, 'blu', 2);
 %save_image(abs(I - bg), 'dif', 2);
 
-dif = abs(I - bg);
+dif = abs(I(:,:,1) - bg(:,:,1));
 
-var = 8
+var = 8;
 %var = graythresh(dif)
 %dif = im2bw(dif, var) * 255;
 dif(dif < var) = 0;
@@ -15,14 +17,14 @@ dif(dif > var) = 255;
 %save_image(dif, 'dif', 2);
 
 var = 128;
-n = 8;
+n = 5;
 while var > 4
     dif = shapeit(dif, var, n);
     %save_image(dif, 'dif', 2);
     var = var / 2;
 end
 
-B = biggest_square(I, dif);
+B = biggest_square(I(:,:,1), dif, debug);
 save_image(B, 'blurred', 2);
 
 % angle  = robust_angle_estimator(I, 0, dif)

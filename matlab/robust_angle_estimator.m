@@ -20,20 +20,20 @@ else
 end
 
 frs = biggest_square(fr, Br, debug);
-
+%save_image(frs,'frs',2);
 thetas = [20:70, 110:160];
-
+% [len wid] = size(frs);
+% vars = angle_estimator(fs([1:len],[1:wid]), debug, thetas);
 vars = angle_estimator(fs, debug, thetas);
 varsr = angle_estimator(frs, debug, thetas);
 
 thetass = [thetas, (thetas - 45)];
 varss = [vars varsr];
-
 [osef id] = max(varss);
 if true
     figure
     plot([thetas thetas+(thetas(end)-thetas(1)+1)], varss);
-    title('Toutes lse vars');
+    title('Toutes les vars');
 end
 
 angle = thetass(id);
