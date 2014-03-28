@@ -30,8 +30,8 @@ if algo == 1
 % val
    % psf = fspecial('motion', psf, angle);
    for i=1:iterColorOrGray
-    F(:,:,i) = lucy(f(:,:,i), psf, 18);
-   F(:,:,i) = wiener2(F(:,:,i), [5 5]);
+    F(:,:,i) = lucy(f(:,:,i), psf, 18, find(B == 255));
+   %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    %imshow(F/255);
     save_image(F,'deb',2);
