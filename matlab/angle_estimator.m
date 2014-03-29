@@ -11,7 +11,7 @@ G = fftshift(G);
 rInter = log(1+abs(G));
 
 if debug ==1
-    plothot(rInter)
+    plothot(rInter);
 end
 
 vars = find_angle(fc, rInter, thetas, debug);
@@ -36,7 +36,7 @@ for i = 1:size(R,1)
 end
 
 if debug ==1
-plothot(RDiv, thetas, xp);
+    plothot(RDiv, thetas, xp);
 end
 mid_elemt=round(size(R,1)/2);
 mid_size=floor(min(size(f))/4*sqrt(2))-1;
@@ -49,10 +49,10 @@ end
 
 if debug ==1
     figure
-    plot(thetas,var(R));
+    plot(thetas,var(R), thetas, max(R));
     title('Var de la transfo de Radon');
     figure
-    plot(thetas,var(RDiv));
+    plot(thetas,var(RDiv), thetas, max(RDiv));
     title('Var de la transfo de Radon normalisée');
     %[size1, size2]  = size(R(5:100, 5:175))
 end

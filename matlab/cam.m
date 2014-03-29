@@ -4,7 +4,7 @@ close all;
 %I = double(rgb2gray(imread('stv_blur1.jpg')));
 bg = double(imread('stv_bg.jpg'));
 I = double(imread('stv_blur1.jpg'));
-save_image(I, 'blu', 2);
+%save_image(I, 'blu', 2);
 %save_image(abs(I - bg), 'dif', 2);
 
 dif = abs(I(:,:,1) - bg(:,:,1));
