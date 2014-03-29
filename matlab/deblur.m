@@ -2,6 +2,7 @@ function [F] = deblur (f, algo, B)
 %[len angle] = angle_estimatorS(f);
 B = 255*ones(size(f(:,:,1)));
 angle  = robust_angle_estimator(f, 0, B)
+%angle  = angle_estimator(f, 0)
 %f = compression(f);
 len = length_estimator(f, angle, 2, 3, 0)
 psf = fspecial('motion', len, angle);
@@ -33,8 +34,8 @@ if algo == 1
    % psf = fspecial('motion', psf, angle);
    for i=1:iterColorOrGray
        f(:,:,i) = edgetaper(f(:,:,i),psf);
-       F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
-    %F(:,:,i) = lucy(f(:,:,i), psf, 18, find(B == 255));
+       %F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
+    F(:,:,i) = lucy(f(:,:,i), psf, 25, find(B == 255));
    %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    %imshow(F/255);

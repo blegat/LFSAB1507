@@ -2,8 +2,14 @@ function [] = cam(algo, debug)
 close all;
 %bg = double(rgb2gray(imread('stv_bg.jpg')));
 %I = double(rgb2gray(imread('stv_blur1.jpg')));
+
+%Stivy
 bg = double(imread('stv_bg.jpg'));
 I = double(imread('stv_blur1.jpg'));
+
+%Arnaud Up
+%bg = double(rgb2gray(imread('bgArUp.JPG')));
+%I = double(rgb2gray(imread('ArUp.JPG')));
 save_image(I, 'blu', 2);
 %save_image(abs(I - bg), 'dif', 2);
 
