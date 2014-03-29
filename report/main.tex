@@ -47,12 +47,6 @@ Mettez ici ce que vous trouvez intéressant
    \item  Single Image Motion Deblurring Using Transparency: pour la détection du foreground pour la caméra
 \end{itemize}
 
-fft1
-rotate in time
-black around circle
-polar coordinate -> fft2 ou fft1
-radon en temporel
-
 \section{Détermination de la PSF}
 \begin{figure}[!ht]
   \centering
@@ -98,6 +92,16 @@ radon en temporel
 \end{figure}
 
 \subsection{Angle estimation}
+
+\paragraph{Divers idées}
+\begin{itemize}
+  \item fft1
+  \item rotate in time
+  \item black around circle
+  \item polar coordinate -> fft2 ou fft1
+  \item radon en temporel
+\end{itemize}
+
 % TODO, refaire les images en floutant avec circular et en se souvenant de la longueur du flou...
 Flouter, c'est faire une convolution en temporelle avec une marche,
 ce qui fait une multiplication par $\frac{\sin(x)}{x}$ en fréquentiel.
