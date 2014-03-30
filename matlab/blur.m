@@ -7,6 +7,6 @@ if meth == 1
    % save_image(f,'blurred',2);
 else
     h = fspecial('motion', len, angle);
-    f = imfilter(I,h,'circular');
+    f = imfilter(I,h,'replicate');
     
 end

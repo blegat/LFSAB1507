@@ -56,7 +56,7 @@ if debug ==1
     title('Var de la transfo de Radon normalisée');
     %[size1, size2]  = size(R(5:100, 5:175))
 end
-vars = var(RDiv);
+vars = max(RDiv);
 
 end
 
