@@ -32,8 +32,9 @@ varss = [vars varsr];
 [osef id] = max(varss);
 if true
     figure
-    plot([thetas thetas+(thetas(end)-thetas(1)+1)], varss);
+    plot(thetas, vars, '+', thetas-45, varsr, '+');
     title('Toutes les vars');
+    legend('unchanged', 'rotated by 45°');
 end
 
 angle = thetass(id);

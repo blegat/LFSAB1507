@@ -47,12 +47,6 @@ Mettez ici ce que vous trouvez intéressant
    \item  Single Image Motion Deblurring Using Transparency: pour la détection du foreground pour la caméra
 \end{itemize}
 
-fft1
-rotate in time
-black around circle
-polar coordinate -> fft2 ou fft1
-radon en temporel
-
 \section{Détermination de la PSF}
 \begin{figure}[!ht]
   \centering
@@ -98,6 +92,16 @@ radon en temporel
 \end{figure}
 
 \subsection{Angle estimation}
+
+\paragraph{Divers idées}
+\begin{itemize}
+  \item fft1
+  \item rotate in time
+  \item black around circle
+  \item polar coordinate -> fft2 ou fft1
+  \item radon en temporel
+\end{itemize}
+
 % TODO, refaire les images en floutant avec circular et en se souvenant de la longueur du flou...
 Flouter, c'est faire une convolution en temporelle avec une marche,
 ce qui fait une multiplication par $\frac{\sin(x)}{x}$ en fréquentiel.
@@ -138,6 +142,7 @@ Il ne faudrait pas se comparer les var ou max de l'original avec celle tournée 
 Il faudrait prendre le maximum de chaque image indépendemment et puis comparer.
 Enfin, pour l'instant ça reste pareil mais si on fait le maximum pour les images séparément, on peut s'assurer qu'on est un pic et pas l'influence d'un pic.
 
+\paragraph{Deuxième idée}
 La méthode est la suivante.
 \begin{itemize}
   \item Choisir le max de \ang{0} à \ang{179} qu'on nomme $a$.
