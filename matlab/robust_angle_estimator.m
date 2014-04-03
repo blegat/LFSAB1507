@@ -56,6 +56,7 @@ for i = 1:numel(turns)
         end
         [best(i, 1) max_index] = max(maxs(:, 1));
         best(i, 2) = maxs(max_index, 2)
+
         if min(min(abs(thetas(intervals) - best(i,2)))) < epsilon
             % On doit rogner
             index_in_thetas = find(thetas == best(i,2), 1);
@@ -64,7 +65,7 @@ for i = 1:numel(turns)
                     if abs(thetas(intervals(j,1)) - best(i,2)) < epsilon
                         intervals(j,1) = index_in_thetas+1;
                     end
-                    if abs(intervals(j,2) - best(i,2)) < epsilon
+                    if abs(thetas(intervals(j,2)) - best(i,2)) < epsilon
                         intervals(j,2) = index_in_thetas-1;
                     end
                 end
