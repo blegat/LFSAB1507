@@ -31,10 +31,13 @@ c = imrotate(c, -angle);
 
 [cx cy] = max_coord_mat(c);
 
+%line=mean(c([cx-1 cx cx+1],:));
+line=c(cx,:);
+
 if meth == 1
-    length = peek_finder_1(real(c(cx,:)), cy, k, k) - cy;
+    length = peek_finder_1(real(line), cy, k, k) - cy;
 else
-    length = peek_finder_2(real(c(cx,:)), cy, k) - cy;
+    length = peek_finder_2(real(line), cy, k) - cy;
 end
 
 if dbg
@@ -47,8 +50,8 @@ if dbg
     
     figure
     surf(N, M, real(c));
-    figure
-    contourf(N, M, real(c));
+    %figure % Too slooow
+    %contourf(N, M, real(c));
 end
 
 end

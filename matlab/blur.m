@@ -8,5 +8,4 @@ if meth == 1
 else
     h = fspecial('motion', len, angle);
     f = imfilter(I,h,'replicate');
-    
 end
