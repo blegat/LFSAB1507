@@ -1,24 +1,19 @@
 function interface2
-global fig1 
+global Button2 Button3 
 
 fig1 = figure('color',[0 1 0]); %vert
 set(fig1, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
 movegui(fig1,'center')
 
 %% menu 
-set(fig1,'MenuBar','none');
+%set(fig1,'MenuBar','none');
 menu1 = uimenu(fig1, 'label', 'Case');
-smenu1 = uimenu(menu1,'label', 'Train', 'callback', @methode_normale);
-smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', @methode_cameravideo);
-
-
-
-% CAS DU TRAIN
+smenu1 = uimenu(menu1,'label', 'Train', 'callback', 'methode_normale');
+smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', 'methode_cameravideo');
 
 
 %% Création des boutons
-function methode_normale(hObject, eventdata, handles)  
-global fig1 Button2 Button3
+
 Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
 set(Button1,'Callback',@B1);
 
@@ -198,30 +193,11 @@ axis off;
 
 
 
-% CAS DE LA CAMERA
 
 
 
-function methode_cameravideo(hObject, eventdata, handles)  
-
-global fig1 
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
-set(Button1,'Callback',@B1);
-
-Button2 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Flouter artificiellement' , 'fontsize' , 15, 'position', [120,100,200,30] );
-set(Button2,'Enable','off')
-set(Button2,'Callback',@B2);
-
-Button3 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Déflouter' , 'fontsize' , 15, 'position', [400,100,150,30] );
-set(Button3,'Enable','off')
-set(Button3,'Callback',@B31);
 
 
-%%
 
-%axe1 = axes('units', 'pixels', 'position', [190,200, 300, 225], 'tag','axes1');
 
-% Stockage des identifiants utiles
-handles = guihandles(fig1);
-guidata(fig1,handles)
 

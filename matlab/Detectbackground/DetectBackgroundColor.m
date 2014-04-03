@@ -3,7 +3,10 @@ function Out = DetectBackgroundColor(Serie)%, InitialBackground)
 % la caméra de cette série. Serie est une "matrice" à 3 dimensions
 
 Dim = size(Serie{1});
-Moy = zeros(Dim(1),Dim(2),3);
+VariablesStat = cell(1,3);
+VariablesStat{1} = zeros(Dim(1),Dim(2),3);
+VariablesStat{2} = zeros(Dim(1),Dim(2),3);
+VariablesStat{3} = zeros(Dim(1),Dim(2),3);
 Med = zeros(Dim(1),Dim(2),3);
 Quartinf = zeros(Dim(1),Dim(2),3);
 Quartsup = zeros(Dim(1),Dim(2),3);
@@ -16,13 +19,16 @@ for i = 1:Dim(1)
         Quartinf(i,j,k) = Tmp(1);
         Med(i,j,k) = Tmp(2);
         Quartsup(i,j,k) = Tmp(3);
-        Interquart(i,j,k) = Quartsup(i,j) - Quartinf(i,j);
-        Moy(i,j,k) = F1(Tmp2, Interquart(i,j,k), Med(i,j,k));
+        Interquart(i,j,k) = Quartsup(i,j,k) - Quartinf(i,j,k);
+        Tmp2 = F1(Tmp2, Interquart(i,j,k), Med(i,j,k));
+        VariablesStat{1}(i,j,k) = Tmp2(1);
+        VariablesStat{2}(i,j,k) = Tmp2(2);
+        VariablesStat{3}(i,j,k) = Tmp2(3);
         end
     end
 end
 
-Out = Moy;
+Out = VariablesStat;
 
 end
 
@@ -38,7 +44,10 @@ for i = 1:length(vec)
         Tmp = Tmp - 1;
     end
 end
-A = sum(vec)/Tmp;
+Moy = sum(vec)/Tmp;
+Moment2 = sum(vec.^2)/Tmp;
+Variance = Moment2 - Moy^2;
+A = [Moy Moment2 Variance] ;
 end
 
 function Vec = VecSerie(Serie, i, j, k)
