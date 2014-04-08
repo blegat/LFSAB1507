@@ -1,13 +1,13 @@
 function interface2
-global fig1 
+global MainWindow 
 
-fig1 = figure('color',[0 1 0]); %vert
-set(fig1, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
-movegui(fig1,'center')
+MainWindow = figure('color',[0 1 0]); %vert
+set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
+movegui(MainWindow,'center')
 
 %% menu 
-set(fig1,'MenuBar','none');
-menu1 = uimenu(fig1, 'label', 'Case');
+set(MainWindow,'MenuBar','none');
+menu1 = uimenu(MainWindow, 'label', 'Case');
 smenu1 = uimenu(menu1,'label', 'Train', 'callback', @methode_normale);
 smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', @methode_cameravideo);
 
@@ -18,33 +18,34 @@ smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', @methode_cameravideo
 
 %% Création des boutons
 function methode_normale(hObject, eventdata, handles)  
-global fig1 Button2 Button3
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
-set(Button1,'Callback',@B1);
 
-Button2 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Flouter artificiellement' , 'fontsize' , 15, 'position', [120,100,200,30] );
-set(Button2,'Enable','off')
-set(Button2,'Callback',@B2);
+global MainWindow ArtificialBlurButton DeblurButton1
+UploadButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
+set(UploadButton,'Callback',@LoadFunction);
 
-Button3 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Déflouter' , 'fontsize' , 15, 'position', [400,100,150,30] );
-set(Button3,'Enable','off')
-set(Button3,'Callback',@B31);
+ArtificialBlurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Flouter artificiellement' , 'fontsize' , 15, 'position', [120,100,200,30] );
+set(ArtificialBlurButton,'Enable','off')
+set(ArtificialBlurButton,'Callback',@ArtificialBlurFunction);
+
+DeblurButton1 = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Déflouter' , 'fontsize' , 15, 'position', [400,100,150,30] );
+set(DeblurButton1,'Enable','off')
+set(DeblurButton1,'Callback',@DeblurFunction1);
 
 
 %%
 
 axe1 = axes('units', 'pixels', 'position', [190,200, 300, 225], 'tag','axes1');
-
+axis off; 
 % Stockage des identifiants utiles
-handles = guihandles(fig1);
-guidata(fig1,handles)
+handles = guihandles(MainWindow);
+guidata(MainWindow,handles)
 
-function B1(hObject, eventdata, handles)  
+function LoadFunction(hObject, eventdata, handles)  
 %% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
-global Button2 Button3 a
+global ArtificialBlurButton DeblurButton1 a
 a = 0;
 nomfichier=[]; 
-[filename,pathname] = uigetfile({'*.jpg';'*.tiff';'*.bmp';'*.png'},'File Selector');% recupere le 
+[filename,pathname] = uigetfile({'*.png';'*.jpg';'*.tiff';'*.bmp'},'File Selector');% recupere le 
 %chemin du rï¿½pertoire et le nom du fichier 
 chemin=[pathname filename]; 
 % chemin absolu donnant nombre_images'image a utiliser pour la mosaique 
@@ -66,15 +67,15 @@ else
     axis off;
     handles.ImgPret=I;
 end
-set(Button2,'Enable','on');
-set(Button3,'Enable','on');
+set(ArtificialBlurButton,'Enable','on');
+set(DeblurButton1,'Enable','on');
 guidata(hObject,handles) 
 
-function B2(hObject, eventdata, handles)  
-global Saisie1 Saisie2 Button23 Button22 
+function ArtificialBlurFunction(hObject, eventdata, handles)  
+global Saisie1 Saisie2 DeblurButton2 Button22 
 
-fig1 = figure('color',[1 1 0]); 
-set(fig1, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
+ArtificialBlur = figure('color',[1 1 0]); 
+set(ArtificialBlur, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
 axe1 = axes('units', 'Normalized', 'position', [0.09,0.61, 0.3, 0.3], 'tag','axes1');
 
 load LALA;
@@ -83,63 +84,62 @@ title('Image originelle');
 axis off; 
 handles.ImgPret=I; 
 
-Saisie1 = uicontrol( fig1 , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.8,0.2,0.05], 'Max' , 1 , 'string' , '0' );
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Angle de floutage');
+Saisie1 = uicontrol( ArtificialBlur , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.8,0.2,0.05], 'Max' , 1 , 'string' , '0' );
+uicontrol(ArtificialBlur,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Angle de floutage');
 
-Saisie2 = uicontrol( fig1 , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0');
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Longueur de floutage');
+Saisie2 = uicontrol( ArtificialBlur, 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0');
+uicontrol(ArtificialBlur,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Longueur de floutage');
 
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
-set(Button1,'Callback',@B21);
+GoBlurButton = uicontrol( ArtificialBlur , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
+set(GoBlurButton,'Callback',@GoBlurFunction);
 
-Button22 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [100,40,200,30] );
-set(Button22,'Enable','off')
-set(Button22,'Callback',@B2);
+Button22 = uicontrol( ArtificialBlur , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [100,40,200,30] );
+set(Button22,'Enable','on')
+set(Button22,'Callback',@Enregistrer1);
 
-Button23 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Déflouter image obtenue' , 'fontsize' , 15, 'position', [380,40,280,30] );
-set(Button23,'Enable','off')
-set(Button23,'Callback',@B32);
+DeblurButton2 = uicontrol( ArtificialBlur , 'style' , 'pushbutton' ,'string' , 'Déflouter image obtenue' , 'fontsize' , 15, 'position', [380,40,280,30] );
+set(DeblurButton2,'Enable','off')
+set(DeblurButton2,'Callback',@DeblurFunction2);
 
-handles = guihandles(fig1);
+handles = guihandles(ArtificialBlur);
 guidata(hObject,handles) 
 
-function B31(hObject, eventdata, handles)  
+function DeblurFunction1(hObject, eventdata, handles)  
 % modifier pour a
 global choix1 SaisieVitesse 
-fig1 = figure('color',[1 0 0]); 
-set(fig1, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
+MainWindow = figure('color',[1 0 0]); 
+set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
 axe1 = axes('units', 'Normalized', 'position', [0.09,0.61, 0.3, 0.3], 'tag','axes1');
-
 load LALA
 imshow(I);% Afficher l'image 
 title('Image de départ du défloutage'); 
 axis off; 
 handles.ImgPret=I; 
 
-choix1 = uicontrol ( fig1 , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.605,0.8,0.2,0.05], 'Callback',@CBchoix1);
+choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.605,0.8,0.2,0.05], 'Callback',@CBchoix1);
 get(choix1)
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Vitesse du train connue ?');
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Vitesse du train connue ?');
 
-SaisieVitesse = uicontrol( fig1 , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Si oui, vitesse:');
+SaisieVitesse = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Si oui, vitesse:');
 
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
-set(Button1,'Callback',@B21);
+GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
+set(GoDeblurButton,'Callback',@Defloute1);
 
-Button32 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [240,40,200,30] );
-set(Button32,'Enable','off')
-%set(Button32,'Callback',@B3);
+Button32 = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [240,40,200,30] );
+set(Button32,'Enable','on')
+set(Button32,'Callback',@Enregistrer2);
 
-handles = guihandles(fig1);
+handles = guihandles(MainWindow);
 guidata(hObject,handles)
 
 
 
-function B32(hObject, eventdata, handles)  
+function DeblurFunction2(hObject, eventdata, handles)  
 % modifier pour a
 global choix1 SaisieVitesse 
-fig1 = figure('color',[1 0 0]); 
-set(fig1, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
+MainWindow = figure('color',[1 0 0]); 
+set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off' );
 axe1 = axes('units', 'Normalized', 'position', [0.09,0.61, 0.3, 0.3], 'tag','axes1');
 
 load BlurredImage
@@ -150,25 +150,25 @@ handles.ImgPret=L;
 
 
 
-choix1 = uicontrol ( fig1 , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.605,0.8,0.2,0.05], 'Callback',@CBchoix1);
+choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.605,0.8,0.2,0.05], 'Callback',@CBchoix1);
 get(choix1)
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Vitesse du train connue ?');
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Vitesse du train connue ?');
 
-SaisieVitesse = uicontrol( fig1 , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
-uicontrol(fig1,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Si oui, vitesse:');
+SaisieVitesse = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Si oui, vitesse:');
 
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
-set(Button1,'Callback',@Defloute1);
+GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
+set(GoDeblurButton,'Callback',@Defloute2);
 
-Button32 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [240,40,200,30] );
-set(Button32,'Enable','off')
-%set(Button32,'Callback',@B3);
+Button32 = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Enregistrer image' , 'fontsize' , 15, 'position', [240,40,200,30] );
+set(Button32,'Enable','on')
+set(Button32,'Callback',@Enregistrer2);
 
-handles = guihandles(fig1);
+handles = guihandles(MainWindow);
 guidata(hObject,handles) 
 
-function B21(hObject, eventdata, handles)  
-global Saisie1 Saisie2 Button23 Button22 
+function GoBlurFunction(hObject, eventdata, handles)  
+global Saisie1 Saisie2 DeblurButton2 Button22 
 angle = str2double(get(Saisie1,'String'));
 length = str2double(get(Saisie2,'String'));
 load LALA;
@@ -178,7 +178,7 @@ axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 imshow(L)
 title('Image floutée artificiellement');
 %set(Button22,'Enable','on');
-set(Button23,'Enable','on');
+set(DeblurButton2,'Enable','on');
 
 
 function CBchoix1(hObject, eventdata, handles)  
@@ -189,12 +189,42 @@ end
 
 function Defloute1(hObject, eventdata, handles)  
 
-load BlurredImage;
-L = deblur(L);
+load Lala;
+I = compression(I);
+Final = deblur(I,1);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
-imshow(L);
+imshow(I,'parent',axe1);
 title('Image défloutée'); 
-axis off; 
+save('DeblurImage','Final')
+%axis off; 
+%guidata(hObject,handles) 
+
+function Defloute2(hObject, eventdata, handles)  
+
+load BlurredImage ;
+L = compression(L);
+Final = deblur(L,1);
+axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
+Imshow(L, 'parent', axe1);
+title('Image défloutée'); 
+save('DeblurImage','Final')
+%axis off; 
+%guidata(hObject,handles) 
+
+function Enregistrer1(hObject, eventdata, handles)  
+%% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
+load BlurredImage;
+[filename,pathname] = uiputfile('*.png','Save Workspace as'); %Dans quel format le mettre ? 
+chemin=[pathname filename]; 
+imwrite(L, chemin); 
+
+function Enregistrer2(hObject, eventdata, handles)  
+%% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
+load DeblurImage;
+[filename,pathname] = uiputfile('*.png','Save Workspace as'); %Dans quel format le mettre ? 
+chemin=[pathname filename]; 
+imwrite(Final, chemin); 
+
 
 
 
@@ -204,24 +234,24 @@ axis off;
 
 function methode_cameravideo(hObject, eventdata, handles)  
 
-global fig1 
-Button1 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
-set(Button1,'Callback',@B1);
+global MainWindow 
+UploadButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Charger' , 'fontsize' , 15, 'position', [250,500,150,30] );
+set(UploadButton,'Callback',@LoadFunction);
 
-Button2 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Flouter artificiellement' , 'fontsize' , 15, 'position', [120,100,200,30] );
-set(Button2,'Enable','off')
-set(Button2,'Callback',@B2);
+ArtificialBlurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Flouter artificiellement' , 'fontsize' , 15, 'position', [120,100,200,30] );
+set(ArtificialBlurButton,'Enable','off')
+set(ArtificialBlurButton,'Callback',@ArtificialBlurFunction);
 
-Button3 = uicontrol( fig1 , 'style' , 'pushbutton' ,'string' , 'Déflouter' , 'fontsize' , 15, 'position', [400,100,150,30] );
-set(Button3,'Enable','off')
-set(Button3,'Callback',@B31);
+DeblurButton1 = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Déflouter' , 'fontsize' , 15, 'position', [400,100,150,30] );
+set(DeblurButton1,'Enable','off')
+set(DeblurButton1,'Callback',@DeblurFunction1);
 
 
 %%
 
-%axe1 = axes('units', 'pixels', 'position', [190,200, 300, 225], 'tag','axes1');
+axe1 = axes('units', 'pixels', 'position', [190,200, 300, 225], 'tag','axes1');
 
 % Stockage des identifiants utiles
-handles = guihandles(fig1);
-guidata(fig1,handles)
+handles = guihandles(MainWindow);
+guidata(MainWindow,handles)
 

@@ -1,9 +1,9 @@
 function [F] = deblur (f, algo, B)
 %[len angle] = angle_estimatorS(f);
 B = 255*ones(size(f(:,:,1)));
-angle  = robust_angle_estimator(f, 0, B)
+angle  = robust_angle_estimator(f, 0, B);
 %f = compression(f);
-len = length_estimator(f, angle, 2, 3, 0)
+len = length_estimator(f, angle, 2, 3, 0);
 psf = fspecial('motion', len, angle);
 %save_image(f, 'Blur',2);
 nsr = 0.001;%nsrEstimation(f);
