@@ -13,7 +13,7 @@ close all;
 %I = double(imread('SagarL25A10.jpg'));
 
 % Computer, the professional prog has difficult so ...
-%I = double(imread('computerGray.jpg'));
+I = double(imread('computerGray.jpg'));
 
 %I = double(imread('Aaron.png'));
 %I = double(imread('IMG_3993.JPG'));
@@ -23,7 +23,7 @@ close all;
 %I = double(imread('Sea.png'));
 %To be blurred
 %cameraman
-I = double(imread('cameraman.tif'));
+%I = double(imread('cameraman.tif'));
 
 %Office 
 %I = double(imread('OfficeGray1HD.jpg'));
@@ -37,7 +37,7 @@ I = double(imread('cameraman.tif'));
 
 
 
-I = blur(I,40,34,2);
+%I = blur(I,40,34,2);
 save_image(I, 'test', 2);
 %I = compression(I);
 %save_image(I, 'Blurred',2);

@@ -11,7 +11,7 @@ angle  = robust_angle_estimator(fResized, 0)
 len = length_estimator(fResized, angle, 2, 5, 0)
 
 % if compression(...,2), reduce the number of pixels to a standard size
-%[ratio f] = compression(f,2);
+[ratio f] = compression(f,2);
 lenCompressed = ratio*len
 psf = fspecial('motion', lenCompressed, angle);
 %save_image(f, 'Blur',2);
