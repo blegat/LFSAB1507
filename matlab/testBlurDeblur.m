@@ -26,7 +26,7 @@ close all;
 I = double(imread('cameraman.tif'));
 
 %Office 
-%I = double(imread('OfficeGray2HDCrop.jpg'));
+%I = double(imread('OfficeGray1HD.jpg'));
 
 %Car 
 %I = double(imread('CarGray2HDCrop.png'));
@@ -41,7 +41,9 @@ I = blur(I,40,34,2);
 save_image(I, 'test', 2);
 %I = compression(I);
 %save_image(I, 'Blurred',2);
+tic
 deblurred = deblur(I,algo);
+toc
 save_image(deblurred, 'Deblurred',2);
 %Sharpness = bordSobel(deblurred)
 
