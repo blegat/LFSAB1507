@@ -1,13 +1,15 @@
 % B(i,j) = 0 si le pixel est net et 255 s'il est flou
 function [angle] = robust_angle_estimator(f, debug, B)
 all_blurred = false;
-if nargin < 2
-    debug = 0;
-    if nargin < 3
-        B = 255 * ones(size(f(:,:,1)));
-        all_blurred = true;
+
+if nargin < 3
+    B = 255 * ones(size(f(:,:,1)));
+    all_blurred = true;
+    if nargin < 2
+        debug = 0;
     end
 end
+
 
 %save_image(frs,'frs',2);
 thetas = 0:180;
@@ -20,10 +22,10 @@ n_hann = 1;
 epsilon = 1;
 best = zeros(numel(turns), numel(turns));
 for i = 1:numel(turns)
-% [len wid] = size(frs);
-% vars = angle_estimator(fs([1:len],[1:wid]), debug, thetas);
+    % [len wid] = size(frs);
+    % vars = angle_estimator(fs([1:len],[1:wid]), debug, thetas);
     turn = turns(i);
-
+    
     if turn == 0
         if all_blurred
             fs = squareborder(f(:,:,1), 0);
@@ -35,7 +37,7 @@ for i = 1:numel(turns)
         Br = imrotate(B, turn);
         fs = biggest_square(fr, Br, debug);
     end
-
+    
     if n_hann > 0
         w_hann1 = hann(size(fs,1));
         w_hann2 = w_hann1(:)*w_hann1(:).';
@@ -43,12 +45,14 @@ for i = 1:numel(turns)
     for i_hann = 1:n_hann
         fs = w_hann2 .* fs;
     end
-
+    
     save_image(fs, 'hann', 2);
-
+    
     vars(i,:) = angle_estimator(fs, debug, thetas);
 
-    plot(thetas, vars(i,:)); hold on
+    if debug
+        plot(thetas, vars(i,:)); hold on
+    end
 
     if false
         % indexes starts at 0 so angles are shifted by 1
@@ -70,7 +74,7 @@ for i = 1:numel(turns)
             end
             [best(i, 1) max_index] = max(maxs(:, 1));
             best(i, 2) = maxs(max_index, 2)
-
+            
             if min(min(abs(thetas(intervals) - best(i,2)))) < epsilon
                 % On doit rogner
                 index_in_thetas = find(thetas == best(i,2), 1);

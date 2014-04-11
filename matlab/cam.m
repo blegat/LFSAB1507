@@ -15,30 +15,34 @@ save_image(I, 'blu', 2);
 %save_image(abs(I - bg), 'dif', 2);
 
 dif = abs(I(:,:,1) - bg(:,:,1));
+B = dif;
 
 var = 8;
 %var = graythresh(dif)
 %dif = im2bw(dif, var) * 255;
-dif(dif < var) = 0;
-dif(dif > var) = 255;
+B(B < var) = 0;
+B(B > var) = 255;
 %save_image(dif, 'dif', 2);
 
 var = 128;
 n = 5;
 while var > 4
-    dif = shapeit(dif, var, n);
+    B = shapeit(B, var, n);
     %save_image(dif, 'dif', 2);
     var = var / 2;
 end
 
-B = biggest_square(I(:,:,1), dif, debug);
-save_image(B, 'blurred', 2);
+%B = biggest_square(I(:,:,1), dif, debug);
+%save_image(B, 'blurred', 2);
 
 % angle  = robust_angle_estimator(I, 0, dif)
 % len = length_estimator(B, angle, 2, 5, 0)
 % psf = fspecial('motion', len, angle);
 % F = lucy(B, psf, 18);
-F = deblur(I, algo, dif);
+save_image(dif*10,'test', 2);
+save_image(B,'test', 2);
+save_image(B.*dif,'test', 2)
+F = deblur_cam(I, algo, B, dif);
 save_image(F, 'deblurred', 2);
 
 end
