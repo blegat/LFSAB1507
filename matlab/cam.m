@@ -39,7 +39,10 @@ end
 % len = length_estimator(B, angle, 2, 5, 0)
 % psf = fspecial('motion', len, angle);
 % F = lucy(B, psf, 18);
-F = deblur(I, algo, B, dif);
+save_image(dif*10,'test', 2);
+save_image(B,'test', 2);
+save_image(B.*dif,'test', 2)
+F = deblur_cam(I, algo, B, dif);
 save_image(F, 'deblurred', 2);
 
 end

@@ -1,6 +1,8 @@
-function latent_est = lucy(observed, psf, len, angle, iterations, debug, mask)
+function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, mask)
     %if nargin < 4
-    meth = 3;
+    if nargin < 7
+        meth = 1;
+    end
     %end
     if meth == 1
         latent_est = deconvlucy(observed, psf, iterations);
