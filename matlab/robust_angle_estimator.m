@@ -48,7 +48,9 @@ for i = 1:numel(turns)
 
     vars(i,:) = angle_estimator(fs, debug, thetas);
 
-    plot(thetas, vars(i,:)); hold on
+    if debug
+        plot(thetas, vars(i,:)); hold on
+    end
 
     if false
         % indexes starts at 0 so angles are shifted by 1
