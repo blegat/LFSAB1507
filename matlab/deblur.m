@@ -1,12 +1,18 @@
 function [F] = deblur (f, algo, B)
 %[len angle] = angle_estimatorS(f);
 B = 255*ones(size(f(:,:,1)));
+%<<<<<<< HEAD
 angle  = robust_angle_estimator(f, 0, B);
+%=======
+%angle  = robust_angle_estimator(f, 0)
+%angle  = angle_estimator(f, 0)
+%angle = angle_estimator_Gabor(f)
+%>>>>>>> 36c841434a99d0a6a8770d29d1154a16bd9b1d3a
 %f = compression(f);
 len = length_estimator(f, angle, 2, 3, 0);
 psf = fspecial('motion', len, angle);
 %save_image(f, 'Blur',2);
-nsr = 0.001;%nsrEstimation(f);
+nsr =  nsrEstimation(f);
 fsize = size(f);
 if length(fsize) == 2
     iterColorOrGray = 1;
@@ -31,12 +37,14 @@ if algo == 1
 % end
 % val
    % psf = fspecial('motion', psf, angle);
+   tic
    for i=1:iterColorOrGray
-       f(:,:,i) = edgetaper(f(:,:,i),psf);
-       F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
-    %F(:,:,i) = lucy(f(:,:,i), psf, 18, find(B == 255));
+      f(:,:,i) = edgetaper(f(:,:,i),psf);
+   %    F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
+    F(:,:,i) = lucy(f(:,:,i), psf, 25, find(B == 255));
    %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
+   toc
    %imshow(F/255);
     save_image(F,'deb',2);
 %  F = medfilt2(F);

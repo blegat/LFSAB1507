@@ -16,7 +16,7 @@ close all;
 %I = double(imread('computerGray.jpg'));
 
 %I = double(imread('Aaron.png'));
-%I = double(imread('IMG_3912.JPG'));
+%I = double(imread('IMG_3993.JPG'));
 
 %I = double(imread('bordGray.jpg'));
 
@@ -30,16 +30,17 @@ I = double(imread('cameraman.tif'));
 
 %Car 
 %I = double(imread('CarGray2HDCrop.png'));
+
 %petite fille
 %I = rgb2gray((imread('filleL50A20.jpg')));
 %load fille.mat;
 
 
 
-I = blur(I,40,10,2);
+I = blur(I,40,34,2);
 save_image(I, 'test', 2);
-I = compression(I);
-save_image(I, 'Blurred',2);
+%I = compression(I);
+%save_image(I, 'Blurred',2);
 deblurred = deblur(I,algo);
 save_image(deblurred, 'Deblurred',2);
 %Sharpness = bordSobel(deblurred)

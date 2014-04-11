@@ -22,6 +22,7 @@ function [vars] = find_angle(f, rInter, thetas, debug)
 if debug ==1
     plothot(R, thetas, xp);
 end
+
 IdRad = radon(ones(size(rInter)), thetas);
 if debug ==2
     plothot(IdRad, thetas, xp)
