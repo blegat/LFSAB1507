@@ -1,20 +1,21 @@
-function [F] = deblur (f, algo, B, diff)
-%[len angle] = angle_estimatorS(f);
+function [F] = deblur (f, algo, B)
+
+
+% if compression(...,1), select part of the picture for psf estimation
+[ratio fResized] = compression(f,1);
+%fResized = f;
+B = 255*ones(size(fResized(:,:,1)));
+angle  = robust_angle_estimator(fResized, 0)
 %angle = angle_estimator_Gabor(f)
-if nargin < 3
-    B = 255*ones(size(f(:,:,1)));
-    diff = B;
-end
-angle  = robust_angle_estimator(f, 0, B)
-%f = compression(f);
-len = length_estimator(f, angle, 2, 5, 1)
 
-%bg = background_estimator(diff, len, angle);
-%save_image(bg, 'bg', 2);
+len = length_estimator(fResized, angle, 2, 5, 0)
 
-psf = fspecial('motion', len, angle);
+% if compression(...,2), reduce the number of pixels to a standard size
+[ratio f] = compression(f,2);
+lenCompressed = ratio*len
+psf = fspecial('motion', lenCompressed, angle);
 %save_image(f, 'Blur',2);
-%nsr =  nsrEstimation(f);
+nsr =  0.0001; %nsrEstimation(f);
 fsize = size(f);
 if length(fsize) == 2
     iterColorOrGray = 1;
@@ -41,9 +42,9 @@ if algo == 1
    % psf = fspecial('motion', psf, angle);
    tic
    for i=1:iterColorOrGray
-      %f(:,:,i) = edgetaper(f(:,:,i),psf);
+      f(:,:,i) = edgetaper(f(:,:,i),psf);
    %    F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
-   F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, find(B == 255));
+      F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, find(B == 255));
    %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    toc
@@ -63,11 +64,11 @@ if algo == 2
 end
 if algo == 3
    f = edgetaper(f,psf);
-    [F arg] = deconvreg(f,psf, nsr);
+    [F arg] = deconvreg(f,psf,nsr);
       save_image(F,'deb',2);
-    F = wiener2(F, [2 2]);
+   % F = wiener2(F, [2 2]);
     save_image(F,'wi',2);
-  F = medfilt2(F);
+ % F = medfilt2(F);
  
 end
 
