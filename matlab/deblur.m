@@ -4,7 +4,7 @@ function [F] = deblur (f, algo)
 % if compression(...,1), select part of the picture for psf estimation
 [ratio fResized] = compression(f,1);
 %fResized = f;
-B = 255*ones(size(fResized(:,:,1)));
+%B = 255*ones(size(fResized(:,:,1)));
 angle  = robust_angle_estimator(fResized, 0)
 %angle = angle_estimator_Gabor(f)
 
@@ -44,7 +44,7 @@ if algo == 1
    for i=1:iterColorOrGray
       f(:,:,i) = edgetaper(f(:,:,i),psf);
    %    F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
-      F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, find(B == 255));
+      F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    toc
