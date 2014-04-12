@@ -5,7 +5,7 @@ angle  = robust_angle_estimator(f, 0, B)
 % w_hann1 = hann(size(fs,1));
 % w_hann2 = w_hann1(:)*w_hann1(:).';
 % fs = w_hann2 .* fs;
-len = length_estimator(fs, angle, 2, 5, 0)
+len = 32%length_estimator(fs, angle, 2, 5, 0)
 
 [connected minx maxx miny maxy] = flood_fill(center, B);
 
@@ -35,7 +35,7 @@ index_fg = find(focus_connected==1);
 psf = oneway_psf(len, angle);
 tic
 for i=1:iterColorOrGray
-    F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 10, 0, 2, index_fg);
+    F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 40, 0, 2, index_fg);
 end
 toc
 save_image(F,'deb',2);
