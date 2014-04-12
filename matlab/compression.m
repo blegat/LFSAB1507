@@ -30,7 +30,7 @@ if type == 1
         
 else
     if max(d(1),d(2)) > 705
-        ratio = 2000/max(d(1),d(2)); % international norm TO BE CONFIRMED
+        ratio = 705/max(d(1),d(2)); % international norm TO BE CONFIRMED
     end
     Fchanged = imresize(I,ratio);
 end

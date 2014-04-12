@@ -1,4 +1,4 @@
-function [F] = deblur (f, algo, B)
+function [F] = deblur (f, algo)
 
 
 % if compression(...,1), select part of the picture for psf estimation
@@ -15,7 +15,7 @@ len = length_estimator(fResized, angle, 2, 5, 0)
 lenCompressed = ratio*len
 psf = fspecial('motion', lenCompressed, angle);
 %save_image(f, 'Blur',2);
-nsr =  0.0001; %nsrEstimation(f);
+nsr = nsrEstimation(f, psf);
 fsize = size(f);
 if length(fsize) == 2
     iterColorOrGray = 1;
