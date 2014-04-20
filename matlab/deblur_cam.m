@@ -5,7 +5,7 @@ angle  = robust_angle_estimator(f, 0, B)
 % w_hann1 = hann(size(fs,1));
 % w_hann2 = w_hann1(:)*w_hann1(:).';
 % fs = w_hann2 .* fs;
-len = length_estimator(fs, angle, 2, 5, 0)
+len = 32%length_estimator(fs, angle, 2, 5, 0)
 
 [connected minx maxx miny maxy] = flood_fill(center, B);
 
