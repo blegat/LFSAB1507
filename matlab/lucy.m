@@ -1,4 +1,4 @@
-function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, mask)
+function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, mask, bg)
     %if nargin < 4
     if nargin < 7
         meth = 1;
@@ -36,7 +36,7 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
             % N'updatons que le foreground par contre :D
             latent_est(mask) = latent_est(mask) .* error_est(mask);
         end
-    else
+    elseif meth == 3
         centered_psf = oneway_psf(len, angle);
         centered_psf_hat = centered_psf(end:-1:1,end:-1:1);
         if debug
@@ -117,6 +117,135 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         %latent_est(:,marginy) = observed(:,marginy+len/2);
         latent_est(marginx,:) = observed(marginx,:);
         latent_est(:,marginy) = observed(:,marginy);
+    else
+        observed = imrotate(observed, angle);
+        mask = imrotate(mask, angle);
+        bg = imrotate(bg, angle);
+        [n m] = size(observed);
+        slope = zeros(n, m-len);
+        K = len;
+        %mask(150,1:m) = 1:m;
+        for k = 1:n
+            % slope = SXY / SXX
+            % SXX = m_2x - m_1x**2
+            % SXY = m_2xy - m_1x * m_1y
+            x = 1:len;
+            y = mask(k,x);
+            s_1x = sum(x);
+            s_1y = sum(y);
+            s_2x = sum(x.*x);
+            s_2xy = sum(x.*y);
+            slope(k,1) = (s_2xy - len * s_1x * s_1y) / (s_2x - len*s_1x*s_1x);
+            for j = 2:size(slope,2);
+                prevx = j-1;
+                nextx = j+len-1;
+                prevy = mask(k,prevx);
+                nexty = mask(k,nextx);
+                s_1x = (s_1x - prevx + nextx);
+                s_1y = (s_1y - prevy + nexty);
+                s_2x = (s_2x - prevx*prevx + nextx*nextx);
+                s_2xy = (s_2xy - prevx*prevy + nextx*nexty);
+                slope(k,j) = (s_2xy - s_1x*s_1y/len) / (s_2x - s_1x*s_1x/len);
+            end
+        end
+        figure
+        imshow(slope/max(max(slope)));
+        start = m*ones(n,1);
+        endit = ones(n,1);
+        contour = zeros(n, m);
+        threshold = 0.15;
+        for k = 1:n
+            for j = K+1:size(slope,2)-K
+                if slope(k,j) > threshold && slope(k,j) == max(slope(k,j-K:j+K)) % j-K:j also makes sense
+                    start(k) = j;
+                    if k == 3
+                        k
+                        start(k)
+                    end
+                    break;
+                end
+            end
+        end
+        for k = 1:n
+            for j = size(slope,2)-K:-1:K+1
+                if slope(k,j) < -threshold && slope(k,j) == min(slope(k,j-K:j+K)) % j:j+K is also nice
+                    endit(k) = j;
+                    break;
+                end
+            end
+        end
+        for k = 1:n
+            if start(k) <= endit(k)
+                contour(k,start(k):endit(k)) = 1;
+            end
+        end
+        figure
+        subplot(2,2,1);
+        imshow(mask/255);
+        subplot(2,2,2);
+        imshow(contour)
+        subplot(2,2,3)
+        %imshow(abs(slope) / max(max(abs(slope))));
+        imshow(abs(slope));
+        %slope2(150,:)
+        %plot(1:m-len,slope1(150,:), 1:m-len,slope2(150,:), '+');
+        %legend('slope1', 'slope2');
+
+        centered_psf = oneway_psf(len, 0);
+        centered_psf_hat = centered_psf(end:-1:1,end:-1:1);
+        % blurred foreground
+        Bcontour = imfilter(contour, centered_psf);
+        subplot(2,2,4)
+        imshow(Bcontour);
+        fg = observed;
+        fg = fg - bg .* (1 - Bcontour);
+        fg(Bcontour == 0) = 0;
+        figure
+        imshow(fg/255);
+
+        latent_est = contour/2; % grey
+        for i = 1:iterations
+            if debug
+                figure
+                subplot(3,2,2);
+                imshow(latent_est/255);
+            end
+            %est_conv         = filter2(psf, latent_est, 'same');
+            est_conv = imfilter(latent_est, centered_psf);
+            if debug
+                subplot(3,2,3);
+                imshow(est_conv/255);
+            end
+            % We take the difference with one so that
+            % if a pixel influence in total, less than 1 pixel,
+            % it does not get dark
+            relative_blur    = fg ./ est_conv - 1;
+            relative_blur(est_conv == 0) = 0;
+            if debug
+                subplot(3,2,4);
+                imshow((relative_blur+0.5)/2.55);
+            end
+            %rev_relative_blur = relative_blur(end:-1:1,end:-1:1);
+            %error_est = filter2(psf, rev_relative_blur, 'same');
+            %error_est = imfilter(rev_relative_blur, centered_psf, 'replicate');
+            %error_est = error_est(end:-1:1,end:-1:1);
+            error_est = 1 + imfilter(relative_blur, centered_psf_hat);
+            if debug
+                subplot(3,2,5);
+                imshow((error_est-0.5)/2.55);
+            end
+            latent_est       = latent_est .* error_est;
+            if debug
+                subplot(3,2,6);
+                imshow(latent_est/255);
+            end
+            figure
+            imshow(latent_est/255)
+        end
+        latent_est = latent_est + bg .* (1 - contour);
+        figure
+        imshow(latent_est/255);
+        latent_est = imrotate(latent_est, -angle);
     end
 end
 

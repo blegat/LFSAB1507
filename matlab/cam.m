@@ -42,7 +42,7 @@ end
 save_image(dif*10,'test', 2);
 save_image(B,'test', 2);
 save_image(B.*dif,'test', 2)
-F = deblur_cam(I, algo, B, dif);
+F = deblur_cam(I, algo, B, dif, bg);
 save_image(F, 'deblurred', 2);
 
 end

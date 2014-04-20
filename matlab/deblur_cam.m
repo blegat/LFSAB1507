@@ -1,4 +1,4 @@
-function [F] = deblur_cam(f, debug, B, dif)
+function [F] = deblur_cam(f, debug, B, dif, bg)
 angle  = robust_angle_estimator(f, 0, B)
 
 [fs center] = biggest_square(f(:,:,1), B, debug);
@@ -35,7 +35,8 @@ index_fg = find(focus_connected==1);
 psf = oneway_psf(len, angle);
 tic
 for i=1:iterColorOrGray
-    F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 10, 0, 2, index_fg);
+    %F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 10, 0, 2, index_fg); % Method 2
+    F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 4, 0, 4, focus_dif, focus_bg(:,:,i)); % Method 4
 end
 toc
 save_image(F,'deb',2);
