@@ -148,8 +148,10 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
                 slope(k,j) = (s_2xy - s_1x*s_1y/len) / (s_2x - s_1x*s_1x/len);
             end
         end
-        figure
-        imshow(slope/max(max(slope)));
+        if debug
+            figure
+            imshow(slope/max(max(slope)));
+        end
         start = m*ones(n,1);
         endit = ones(n,1);
         contour = zeros(n, m);
@@ -179,29 +181,33 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
                 contour(k,start(k):endit(k)) = 1;
             end
         end
-        figure
-        subplot(2,2,1);
-        imshow(mask/255);
-        subplot(2,2,2);
-        imshow(contour)
-        subplot(2,2,3)
-        %imshow(abs(slope) / max(max(abs(slope))));
-        imshow(abs(slope));
-        %slope2(150,:)
-        %plot(1:m-len,slope1(150,:), 1:m-len,slope2(150,:), '+');
-        %legend('slope1', 'slope2');
 
         centered_psf = oneway_psf(len, 0);
         centered_psf_hat = centered_psf(end:-1:1,end:-1:1);
         % blurred foreground
         Bcontour = imfilter(contour, centered_psf);
-        subplot(2,2,4)
-        imshow(Bcontour);
+        if debug
+            figure
+            subplot(2,2,1);
+            imshow(mask/255);
+            subplot(2,2,2);
+            imshow(contour)
+            subplot(2,2,3)
+            %imshow(abs(slope) / max(max(abs(slope))));
+            imshow(abs(slope));
+            %slope2(150,:)
+            %plot(1:m-len,slope1(150,:), 1:m-len,slope2(150,:), '+');
+            %legend('slope1', 'slope2');
+            subplot(2,2,4)
+            imshow(Bcontour);
+        end
         fg = observed;
         fg = fg - bg .* (1 - Bcontour);
         fg(Bcontour == 0) = 0;
-        figure
-        imshow(fg/255);
+        if debug
+            figure
+            imshow(fg/255);
+        end
 
         latent_est = contour/2; % grey
         for i = 1:iterations
@@ -239,12 +245,14 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
                 subplot(3,2,6);
                 imshow(latent_est/255);
             end
-            figure
-            imshow(latent_est/255)
+            %figure
+            %imshow(latent_est/255)
         end
         latent_est = latent_est + bg .* (1 - contour);
-        figure
-        imshow(latent_est/255);
+        if debug
+            figure
+            imshow(latent_est/255);
+        end
         latent_est = imrotate(latent_est, -angle);
     end
 end
