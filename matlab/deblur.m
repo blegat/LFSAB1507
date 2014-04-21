@@ -10,7 +10,7 @@ angle  = robust_angle_estimator(fResized, 0)
 %angle = angle_estimator_Gabor(f)
 toc
 tic
-len = length_estimator(fResized, angle, 2, 5, 0)
+len = length_estimator(fResized, angle, 2, 3, 0)
 toc
 % if compression(...,2), reduce the number of pixels to a standard size
 [ratio f] = compression(f,2);

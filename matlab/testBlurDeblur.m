@@ -7,11 +7,14 @@ function [] = testBlurDeblur(algo)
 close all;
 %Already blurred
 %The day we read clearly 485 - PCK please call e immediatly
-%I = double(imread('BlurredImageUsed.jpg'));
+I = double(imread('BlurredImageUsed.jpg'));
 
 %Sagar
-I = double(imread('SagarL25A10.jpg'));
+%I = double(imread('SagarL25A10.jpg'));
 
+%I = double(imread('Car.jpg'));
+%I = double(imread('carRed.jpg'));
+%I = double(imread('ambulance.jpg'));
 % Computer, the professional prog has difficult so ...
 %I = double(imread('computerGray.jpg'));
 
