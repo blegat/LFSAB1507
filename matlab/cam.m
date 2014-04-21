@@ -1,20 +1,5 @@
-function [] = cam(algo, debug)
-close all;
-%bg = double(rgb2gray(imread('stv_bg.jpg')));
-%I = double(rgb2gray(imread('stv_blur1.jpg')));
-
-%Stivy
-bg = double(imread('stv_bg.jpg'));
-I = double(imread('stv_blur1.jpg'));
-
-%Arnaud Up
-%bg = double(imread('bgArUp.JPG'));
-%I = double(imread('ArUp.JPG'));
-save_image(I, 'blu', 2);
-
-%save_image(abs(I - bg), 'dif', 2);
-
-dif = abs(I(:,:,1) - bg(:,:,1));
+function [F] = cam(fg, bg, algo)
+dif = abs(fg(:,:,1) - bg(:,:,1));
 B = dif;
 
 var = 8;
@@ -39,11 +24,12 @@ end
 % len = length_estimator(B, angle, 2, 5, 0)
 % psf = fspecial('motion', len, angle);
 % F = lucy(B, psf, 18);
-save_image(dif*10,'test', 2);
-save_image(B,'test', 2);
-save_image(B.*dif,'test', 2)
-F = deblur_cam(I, algo, B, dif, bg);
-save_image(F, 'deblurred', 2);
+
+%save_image(dif*10,'test', 2);
+%save_image(B,'test', 2);
+%save_image(B.*dif,'test', 2)
+F = deblur_cam(fg, algo, B, dif, bg, 0);
+%save_image(F, 'deblurred', 2);
 
 end
 

@@ -62,9 +62,9 @@ if algo == 1
    tic
    for i=1:iterColorOrGray
       f(:,:,i) = edgetaper(f(:,:,i),psf);
-       F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
-   %   F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
-   %F(:,:,i) = wiener2(F(:,:,i), [5 5]);
+      F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
+   %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
+   %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
    toc
    %imshow(F/255);
@@ -83,11 +83,11 @@ if algo == 2
 end
 if algo == 3
    f = edgetaper(f,psf);
-    [F arg] = deconvreg(f,psf,nsr);
-      save_image(F,'deb',2);
-   % F = wiener2(F, [2 2]);
-   % save_image(F,'wi',2);
- % F = medfilt2(F);
+   [F arg] = deconvreg(f,psf,nsr);
+  %save_image(F,'deb',2);
+  %F = wiener2(F, [2 2]);
+  %save_image(F,'wi',2);
+  %F = medfilt2(F);
  
 end
 

@@ -46,7 +46,9 @@ for i = 1:numel(turns)
         fs = w_hann2 .* fs;
     end
     
-    save_image(fs, 'hann', 2);
+    if debug
+        save_image(fs, 'hann', 2);
+    end
     
     vars(i,:) = angle_estimator(fs, debug, thetas);
 
