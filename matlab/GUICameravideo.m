@@ -45,7 +45,7 @@ list = dir(chemin);
 n = numel(list);
 A = cell(1,n);
 for i = 1:n
-    A{i} = imread(fullfile(directoryname, list(i).name));
+    A{i} = rgb2gray(imread(fullfile(directoryname, list(i).name)));
 end
 Out = DetectBackground(A); % Que en noir et blanc 
 imshow(uint8(Out{1}),'parent',axe1)
@@ -57,9 +57,9 @@ ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
 list = dir(chemin);
 for n = 1:numel(list)
-     img = imread(fullfile(directoryname, list(n).name));
+     img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
      Out = UpdateBackground(Out, img);
-     imshow(rgb2gray(img),'parent',axe2);
+     imshow(img,'parent',axe2);
      imshow(uint8(Out{1}),'parent',axe1);
      pause(0.01)
 end

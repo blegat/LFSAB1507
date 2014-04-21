@@ -186,11 +186,11 @@ end
 function Defloute1(hObject, eventdata, handles)  
 global Enregistrer2Button
 load Lala;
-I = compression(I);
+%I = compression(I);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
-%I = deblur(I,1);
+I = deblur(I,1);
 imshow(I,'parent',axe1);
 Final = I;
 save('DeblurImage','Final')
@@ -200,11 +200,11 @@ set(Enregistrer2Button,'Enable','on');
 function Defloute2(hObject, eventdata, handles)  
 global Enregistrer2Button
 load BlurredImage ;
-L = compression(L);
+%L = compression(L);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
-%L = deblur(L,1);
+L = deblur(L,1);
 Imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')
