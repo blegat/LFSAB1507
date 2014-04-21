@@ -18,15 +18,15 @@ sigma_x=3;
 sigma_y=3;
 w=1.75;
 G=f;
-Rnorm=zeros(thetamax-thetamin+1);
+Rnorm=zeros(1,thetamax-thetamin+1);
 [m n]=size(f);
 for theta=thetamin:thetamax
    for k=1:m
     for l=1:n
-        G(k,l)=1/(2*pi*sigma_x*sigma_y)*exp(-(k^2/sigma_x^2+l^2/sigma_y^2)/2)*exp(-i*w*(k*cos(theta)+l*sin(theta)));
+        G(k,l)=1/(2*pi*sigma_x*sigma_y)*exp(-(k^2/sigma_x^2+l^2/sigma_y^2)/2)*exp(-1i*w*(k*cos(theta)+l*sin(theta)));
     end
    end
-   R=conv2(f,G);
+   R=conv2(I,G);
    Rnorm(theta-thetamin+1)=norm(R,2);
 end
 
