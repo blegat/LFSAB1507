@@ -1,0 +1,56 @@
+\begin{titlepage}
+\begin{center}
+\textsc{\Large Université Catholique de Louvain}\\[0.5cm]
+\HRule \\[0.2cm]
+{\Large \bfseries Projet d'optimisation}\\
+{\huge \bfseries Modélisation et optimisation du flux d’un barrage hydroélectrique
+}\\
+\HRule \\[0.2cm]
+\end{center}
+\vfill
+\begin{figure}[h!]
+\includegraphics[width=0.9\textwidth]{barrage.jpg}
+\centering
+\end{figure}
+\vfill
+\begin{minipage}{0.5\textwidth}
+\begin{flushleft} \large
+\emph{Groupe:} \\
+6\\
+~\\
+\emph{Auteurs:}\\
+Arnaud \textsc{Cerckel} (45871100)\\
+Philipp \textsc{Roechner} (04511200)\\
+Nicolas \textsc{Stevens} (39541100)
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+\begin{flushright} \large
+\emph{Cours:} \\
+LINMA 1702\\
+~\\
+\emph{Professeurs :} \\
+Vincent  \textsc{Blondel} \\
+François \textsc{Glineur} 
+\end{flushright}
+\end{minipage}
+\vfill
+\begin{center}
+\begin{minipage}{0.25\textwidth}
+\begin{flushleft}
+\includegraphics[scale=0.25]{Couverture/ucl-logo.jpg}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.48\textwidth}
+\begin{center}
+\Large{Année académique: 2012-2013}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.25\textwidth}
+\begin{flushright}
+\includegraphics[scale=0.5]{Couverture/epl-logo.jpg}
+\end{flushright}
+\end{minipage}
+\end{center}
+\end{titlepage}
+\newpage

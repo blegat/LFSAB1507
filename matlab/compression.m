@@ -6,7 +6,8 @@ function [ ratio Fchanged ] = compression( I, type )
 
 d = size(I);
 ratio = 1;
-
+FchangedCenter = I;
+FchangedCorner = I;
 if type ==1
     %256 is a standard size for picture and around 0.9 sec to compute
     %robust_angle_estimator
