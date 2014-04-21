@@ -10,10 +10,10 @@ close all;
 %I = double(imread('BlurredImageUsed.jpg'));
 
 %Sagar
-%I = double(imread('SagarL25A10.jpg'));
+I = double(imread('SagarL25A10.jpg'));
 
 % Computer, the professional prog has difficult so ...
-I = double(imread('computerGray.jpg'));
+%I = double(imread('computerGray.jpg'));
 
 %I = double(imread('Aaron.png'));
 %I = double(imread('IMG_3993.JPG'));
@@ -23,6 +23,7 @@ I = double(imread('computerGray.jpg'));
 %I = double(imread('Sea.png'));
 %To be blurred
 %cameraman
+%I = imread('cameraman.tif');
 %I = double(imread('cameraman.tif'));
 
 %Office 
