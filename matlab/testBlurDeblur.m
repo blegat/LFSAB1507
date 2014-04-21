@@ -1,55 +1,53 @@
 function [] = testBlurDeblur(algo)
-%petite fille
-%I = load('fille.mat');
-%I = I.I;
-%save_image(deblur(blur(I,55,60,2)), 'testBlurDeblur',2);
+%Test function, 
+% -choose a picture to deblur
+% -blur it artificially if  not already blurred
+% -deblur it 
+% -save or show it
+% 
+% IN : algo speficies the algorithm for deconvolution in the deblur function 
 
 close all;
-%Already blurred
-%The day we read clearly 485 - PCK please call e immediatly
-I = double(imread('BlurredImageUsed.jpg'));
 
-%Sagar
-%I = double(imread('SagarL25A10.jpg'));
+%%%%%%%%%%%%        Must be blurred         %%%%%%%%%%%%
+%cameraman
+%I = double(imread('cameraman.tif'));
 
+%little girl
+%load fille.mat;
+
+%%% Blur the picture
+%I = blur(I,40,34,2);
+
+%%%%%%%%%%%%        Already blurred         %%%%%%%%%%%%
+%Picture on icampus
+%I = double(imread('BlurredImageUsed.jpg'));
+
+%Blurred with Gimp function
+I = double(imread('SagarL25A10.jpg'));
+
+%Pictures on internet
 %I = double(imread('Car.jpg'));
 %I = double(imread('carRed.jpg'));
 %I = double(imread('ambulance.jpg'));
-% Computer, the professional prog has difficult so ...
-%I = double(imread('computerGray.jpg'));
-
 %I = double(imread('Aaron.png'));
-%I = double(imread('IMG_3993.JPG'));
-
-%I = double(imread('bordGray.jpg'));
-
 %I = double(imread('Sea.png'));
-%To be blurred
-%cameraman
-%I = imread('cameraman.tif');
-%I = double(imread('cameraman.tif'));
 
-%Office 
+% Taken by us
+%I = double(imread('IMG_3993.JPG'));
+%I = double(imread('computerGray.jpg'));
 %I = double(imread('OfficeGray1HD.jpg'));
-
-%Car 
 %I = double(imread('CarGray2HDCrop.png'));
 
-%petite fille
-%I = rgb2gray((imread('filleL50A20.jpg')));
-%load fille.mat;
 
-
-
-%I = blur(I,40,34,2);
+%%%Show the blurred image
 save_image(I, 'test', 2);
-%I = compression(I);
-%save_image(I, 'Blurred',2);
+
+%%% Deblur the image
 tic
 deblurred = deblur(I,algo);
 toc
+
+%%%Show the deblurred image
 save_image(deblurred, 'Deblurred',2);
-%Sharpness = bordSobel(deblurred)
-
-
 end

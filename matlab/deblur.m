@@ -1,31 +1,48 @@
 function [F] = deblur (f, algo)
+% Deblur the picture given in argument by evaluation of the psf and then 
+% deconvolution using lucy, wiener or regularisation
+%
+% IN :  -f the function which need to be deblurred
+%       -algo specifies the algorithm for deconvolution
+%           1: Lucy-Richardson
+%           2: Wiener
+%           3: Regularization
+% OUT:  -F the deblurred image
 
 
-% if compression(...,1), select part of the picture for psf estimation
-[ratio fResized] = compression(f,1);
-%fResized = f;
-%B = 255*ones(size(fResized(:,:,1)));
-tic
-angle  = robust_angle_estimator(fResized, 0)
+% select part of the picture for qucicker psf estimation
+[ratio partfForPSF] = compression(f,1);
+
+%compute the estimation of the angle of PSF
+angle  = robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
-toc
-tic
-len = length_estimator(fResized, angle, 2, 3, 0)
-toc
-% if compression(...,2), reduce the number of pixels to a standard size
+
+%compute the estimation of the length of PSF
+len = length_estimator(partfForPSF, angle, 2, 3, 0)
+
+% Reduce the number of pixels to a defined size if the picture 
+% is too big
 [ratio f] = compression(f,2);
+% Adapt the number of pixels invovled after compression
 lenCompressed = ratio*len
+
+%Create the psf with the arguments computed
 psf = fspecial('motion', lenCompressed, angle);
-%save_image(f, 'Blur',2);
+
+%Estimate the noise to signal ratio to have a better wiener or
+%regularization deconvolution
 nsr = nsrEstimation(f, psf);
+
 fsize = size(f);
 if length(fsize) == 2
     iterColorOrGray = 1;
 else
     iterColorOrGray = 3;
 end
+
 val = zeros(2);
 F = zeros(size(f));
+
 %Lucy Richardson
 if algo == 1
  %f = edgetaper(f,psf);
