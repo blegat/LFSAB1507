@@ -45,7 +45,19 @@ for i=1:iterColorOrGray
     if algo == 1
         F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 10, 0, 2, index_fg); % Method 2
     else
-        F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 4, 0, 4, focus_dif, focus_bg(:,:,i)); % Method 4
+        subfocus = lucy(focus_f(:,:,i), psf, len, angle, 4, 1, 4, focus_dif, focus_bg(:,:,i)); % Method 4
+        % subfocus can be smaller that F(focusx,focusy,i) because of the
+        % rotations
+        dx = numel(focusx) - size(subfocus,1);
+        dx2 = floor(dx/2);
+        subfocusx = focusx(1)+dx2:focusx(end)-dx+dx2;
+        dy = numel(focusy) - size(subfocus,2);
+        dy2 = floor(dy/2);
+        subfocusy = focusy(1)+dy2:focusy(end)-dy+dy2;
+        size(subfocus)
+        size(subfocusx)
+        size(subfocusy)
+        F(subfocusx,subfocusy,i) = subfocus;
     end
 end
 toc
