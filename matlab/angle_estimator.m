@@ -39,10 +39,10 @@ end
 if debug ==1
     plothot(RDiv, thetas, xp);
 end
-mid_elemt=round(size(R,1)/2);
-mid_size=floor(min(size(f))/4*sqrt(2))-1;
-RDiv=RDiv(mid_elemt-mid_size:mid_elemt+mid_size,:);
-R=R(mid_elemt-mid_size:mid_elemt+mid_size,:);
+% mid_elemt=round(size(R,1)/2);
+% mid_size=floor(min(size(f))/4*sqrt(2))-1;
+% RDiv=RDiv(mid_elemt-mid_size:mid_elemt+mid_size,:);
+% R=R(mid_elemt-mid_size:mid_elemt+mid_size,:);
 if debug ==1
     plothot(R, thetas, xp(mid_elemt-mid_size:mid_elemt+mid_size));
     plothot(RDiv, thetas, xp(mid_elemt-mid_size:mid_elemt+mid_size));

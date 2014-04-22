@@ -5,9 +5,9 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{fullpage}
-\usepackage{graphicx}
-\graphicspath{{../img/}}
+%\graphicspath{{../img/}}
 \usepackage{epstopdf}
+\usepackage{graphicx}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{multirow}
@@ -49,48 +49,48 @@ Mettez ici ce que vous trouvez intéressant
 \end{itemize}
 
 \section{Détermination de la PSF}
-\begin{figure}[!ht]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{onesFhot.png}
-    \caption{Transformée de fourier d'une image unitaire}
-    \label{fig:onesFhot}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.35\textwidth}
-    \includegraphics[width=\textwidth]{cameramanFhot.png}
-    \caption{Transformée de fourier du caméraman flouté}
-    \label{fig:cameramanFhot}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.2\textwidth}
-    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{cameramanFhotradon.png}
-    \caption{Transformée de radon de la transformée de fourier du caméraman non-flouté}
-    \label{fig:cameramanFhotradon}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{cameramanvar.png}
-    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
-    \label{fig:cameramanvar}
-  \end{subfigure}
-  \caption{Tranformées de fourier}
-  \label{fig:fourier}
-  \begin{subfigure}[b]{0.35\textwidth}
-    \includegraphics[width=\textwidth]{cameramanBFhot.png}
-    \caption{Transformée de fourier du caméraman flouté}
-    \label{fig:cameramanBFhot}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.2\textwidth}
-    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{cameramanBFhotradon.png}
-    \caption{Transformée de radon de la transformée de fourier du caméraman flouté}
-    \label{fig:cameramanBFhotradon}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.4\textwidth}
-    \includegraphics[width=\textwidth]{cameramanBvar.png}
-    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
-    \label{fig:cameramanBvar}
-  \end{subfigure}
-  \caption{Tranformées de fourier}
-  \label{fig:fourier}
-\end{figure}
+%\begin{figure}[!ht]
+%  \centering
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{onesFhot.png}
+%    \caption{Transformée de fourier d'une image unitaire}
+%    \label{fig:onesFhot}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.35\textwidth}
+%    \includegraphics[width=\textwidth]{cameramanFhot.png}
+%    \caption{Transformée de fourier du caméraman flouté}
+%    \label{fig:cameramanFhot}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.2\textwidth}
+%    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{cameramanFhotradon.png}
+%    \caption{Transformée de radon de la transformée de fourier du caméraman non-flouté}
+%    \label{fig:cameramanFhotradon}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.4\textwidth}
+%    \includegraphics[width=\textwidth]{cameramanvar.png}
+%    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
+%    \label{fig:cameramanvar}
+%  \end{subfigure}
+%  \caption{Tranformées de fourier}
+%  \label{fig:fourier}
+%  \begin{subfigure}[b]{0.35\textwidth}
+%    \includegraphics[width=\textwidth]{cameramanBFhot.png}
+%    \caption{Transformée de fourier du caméraman flouté}
+%    \label{fig:cameramanBFhot}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.2\textwidth}
+%    \includegraphics[trim=5cm 0cm 5cm 0cm, clip, width=\textwidth]{cameramanBFhotradon.png}
+%    \caption{Transformée de radon de la transformée de fourier du caméraman flouté}
+%    \label{fig:cameramanBFhotradon}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.4\textwidth}
+%    \includegraphics[width=\textwidth]{cameramanBvar.png}
+%    \caption{Variance de la transformée de radon de la transformée de fourier du caméraman flouté}
+%    \label{fig:cameramanBvar}
+%  \end{subfigure}
+%  \caption{Tranformées de fourier}
+%  \label{fig:fourier}
+%\end{figure}
 
 \subsection{Angle estimation}
 
@@ -122,12 +122,12 @@ qui est un produit en temporel par deux passe-bas à \ang{0} et \ang{90}
 (donc convolution par des $\sin(x)/x$ en fréquentiel ? Ici ça ressemble plus à un produit en fréquentiel...).
 Serait-ce une bonne idée de passer en coordonnées polaires avant fft2 et faire fft2 sur l'image en polaire ?
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=\textwidth]{car_cross.png}
-  \caption{Visible cross}
-  \label{fig:car_cross}
-\end{figure}
+%\begin{figure}[!ht]
+%  \centering
+%  \includegraphics[width=\textwidth]{car_cross.png}
+%  \caption{Visible cross}
+%  \label{fig:car_cross}
+%\end{figure}
 
 \subsubsection{Solutions}
 On va ignorer un interval autour \ang{0} et \ang{90} pour éviter de fausser le calcul.
@@ -169,98 +169,98 @@ On fait ça pour chaque orientation de l'image puis on compare la valeur pour le
 
 \section{Quelques résolution avec PSF connue}
 
-\begin{figure}[!ht]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/start-nonoise.png}
-    \caption{Image de départ}
-    \label{fig:start-nonoise}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/matb-nonoise.png}
-    \caption{Image flouté par matrice}
-    \label{fig:matb-nonoise}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/psfb-nonoise.png}
-    \caption{Image floutée par PSF}
-    \label{fig:psfb-nonoise_explicite_lambda}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/direct-nonoise.png}
-    \caption{Image déflouté par méthode directe}
-    \label{fig:direct-nonoise}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/lucy-nonoise.png}
-    \caption{Image défloutée par Lucy-Richardson}
-    \label{fig:lucy-nonoise}
-  \end{subfigure}
-  \caption{Résultats pour une image sans noise}
-  \label{fig:nonoise}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/start-noise-g10.png}
-    \caption{Image de départ}
-    \label{fig:start-noise-g10}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/matb-noise-g10.png}
-    \caption{Image flouté par matrice}
-    \label{fig:matb-noise-g10}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/psfb-noise-g10.png}
-    \caption{Image floutée par PSF}
-    \label{fig:psfb-noise-g10_explicite_lambda}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/direct-noise-g10.png}
-    \caption{Image déflouté par méthode directe}
-    \label{fig:direct-noise-g10}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/lucy-noise-g10.png}
-    \caption{Image défloutée par Lucy-Richardson}
-    \label{fig:lucy-noise-g10}
-  \end{subfigure}
-  \caption{Résultats pour une image avec noise gaussien}
-  \label{fig:noise-g10}
-\end{figure}
-
-\begin{figure}[!ht]
-  \centering
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/start-noise-poisson.png}
-    \caption{Image de départ}
-    \label{fig:start-noise-poisson}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/matb-noise-poisson.png}
-    \caption{Image flouté par matrice}
-    \label{fig:matb-noise-poisson}
-  \end{subfigure}%
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/psfb-noise-poisson.png}
-    \caption{Image floutée par PSF}
-    \label{fig:psfb-noise-poisson_explicite_lambda}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/direct-noise-poisson.png}
-    \caption{Image déflouté par méthode directe}
-    \label{fig:direct-noise-poisson}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.45\textwidth}
-    \includegraphics[width=\textwidth]{../matlab/lucy-noise-poisson.png}
-    \caption{Image défloutée par Lucy-Richardson}
-    \label{fig:lucy-noise-poisson}
-  \end{subfigure}
-  \caption{Résultats pour une image avec noise poisson}
-  \label{fig:noise-poisson}
-\end{figure}
+%\begin{figure}[!ht]
+%  \centering
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/start-nonoise.png}
+%    \caption{Image de départ}
+%    \label{fig:start-nonoise}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/matb-nonoise.png}
+%    \caption{Image flouté par matrice}
+%    \label{fig:matb-nonoise}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/psfb-nonoise.png}
+%    \caption{Image floutée par PSF}
+%    \label{fig:psfb-nonoise_explicite_lambda}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/direct-nonoise.png}
+%    \caption{Image déflouté par méthode directe}
+%    \label{fig:direct-nonoise}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/lucy-nonoise.png}
+%    \caption{Image défloutée par Lucy-Richardson}
+%    \label{fig:lucy-nonoise}
+%  \end{subfigure}
+%  \caption{Résultats pour une image sans noise}
+%  \label{fig:nonoise}
+%\end{figure}
+%
+%\begin{figure}[!ht]
+%  \centering
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/start-noise-g10.png}
+%    \caption{Image de départ}
+%    \label{fig:start-noise-g10}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/matb-noise-g10.png}
+%    \caption{Image flouté par matrice}
+%    \label{fig:matb-noise-g10}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/psfb-noise-g10.png}
+%    \caption{Image floutée par PSF}
+%    \label{fig:psfb-noise-g10_explicite_lambda}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/direct-noise-g10.png}
+%    \caption{Image déflouté par méthode directe}
+%    \label{fig:direct-noise-g10}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/lucy-noise-g10.png}
+%    \caption{Image défloutée par Lucy-Richardson}
+%    \label{fig:lucy-noise-g10}
+%  \end{subfigure}
+%  \caption{Résultats pour une image avec noise gaussien}
+%  \label{fig:noise-g10}
+%\end{figure}
+%
+%\begin{figure}[!ht]
+%  \centering
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/start-noise-poisson.png}
+%    \caption{Image de départ}
+%    \label{fig:start-noise-poisson}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/matb-noise-poisson.png}
+%    \caption{Image flouté par matrice}
+%    \label{fig:matb-noise-poisson}
+%  \end{subfigure}%
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/psfb-noise-poisson.png}
+%    \caption{Image floutée par PSF}
+%    \label{fig:psfb-noise-poisson_explicite_lambda}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/direct-noise-poisson.png}
+%    \caption{Image déflouté par méthode directe}
+%    \label{fig:direct-noise-poisson}
+%  \end{subfigure}
+%  \begin{subfigure}[b]{0.45\textwidth}
+%    \includegraphics[width=\textwidth]{../matlab/lucy-noise-poisson.png}
+%    \caption{Image défloutée par Lucy-Richardson}
+%    \label{fig:lucy-noise-poisson}
+%  \end{subfigure}
+%  \caption{Résultats pour une image avec noise poisson}
+%  \label{fig:noise-poisson}
+%\end{figure}
 
 \bibliographystyle{plain}
 \bibliography{biblio}

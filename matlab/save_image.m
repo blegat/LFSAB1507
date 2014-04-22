@@ -12,7 +12,8 @@ if graph == 1 || graph == 2
     imshow(double(L)/255);
     axis off;
     if graph == 1
-        saveas(gcf, name, 'png');
+        %saveas(gcf, name, 'png');
+        saveas(gcf, sprintf('../Images/%s',name), 'png');
     end
 end
 end

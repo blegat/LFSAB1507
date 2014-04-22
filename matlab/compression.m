@@ -7,7 +7,7 @@ function [ ratio Fchanged ] = compression( I, type )
 d = size(I);
 ratio = 1;
 FchangedCenter = I;
-FchangedCorner = I;
+FchangedCorner = I;    
 if type ==1
     %256 is a standard size for picture and around 0.9 sec to compute
     %robust_angle_estimator
@@ -36,12 +36,14 @@ if type ==1
     end
     
     
-else
-    sizeFormat = 500;
+elseif type ==2
+    sizeFormat = 250;
     if max(d(1),d(2)) > sizeFormat
         ratio = sizeFormat/max(d(1),d(2)); % international norm TO BE CONFIRMED
     end
-    Fchanged = imresize(I,ratio, 'lanczos2');
+    Fchanged = imresize(I,ratio, 'lanczos3');
+else    
+    Fchanged = I ;
 end
 
 end

@@ -14,12 +14,14 @@ function [F] = deblur (f, algo)
 [ratio partfForPSF] = compression(f,1);
 
 %compute the estimation of the angle of PSF
-angle  = robust_angle_estimator(partfForPSF, 0)
+tic
+angle  = 5%robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
-
+toc
+tic
 %compute the estimation of the length of PSF
-len = length_estimator(partfForPSF, angle, 2, 3, 0)
-
+len = 15%length_estimator(partfForPSF, angle, 2, 5, 0)
+toc
 % Reduce the number of pixels to a defined size if the picture 
 % is too big
 [ratio f] = compression(f,2);
@@ -62,7 +64,7 @@ if algo == 1
    tic
    for i=1:iterColorOrGray
       f(:,:,i) = edgetaper(f(:,:,i),psf);
-      F(:,:,i) = deconvlucy(f(:,:,i), psf, 25);
+      F(:,:,i) = deconvlucy(f(:,:,i), psf, 15);
    %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
@@ -74,16 +76,18 @@ if algo == 1
        
 end
 if algo == 2
-   f = edgetaper(f,psf);
-    F = deconvwnr(f,psf,nsr);
+  % f = edgetaper(f,psf);
+   F = deconvwnr(f,psf,nsr);
   % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);
+  % F = f;
   
 end
 if algo == 3
    f = edgetaper(f,psf);
    [F arg] = deconvreg(f,psf,nsr);
+   
   %save_image(F,'deb',2);
   %F = wiener2(F, [2 2]);
   %save_image(F,'wi',2);
