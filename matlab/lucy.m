@@ -160,10 +160,6 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
             for j = K+1:size(slope,2)-K
                 if slope(k,j) > threshold && slope(k,j) == max(slope(k,j-K:j+K)) % j-K:j also makes sense
                     start(k) = j;
-                    if k == 3
-                        k
-                        start(k)
-                    end
                     break;
                 end
             end
@@ -254,6 +250,12 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
             imshow(latent_est/255);
         end
         latent_est = imrotate(latent_est, -angle);
+        if debug
+            figure
+            imshow(latent_est/255);
+        end
+        size(latent_est)
+        size(observed)
     end
 end
 
