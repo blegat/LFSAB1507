@@ -19,6 +19,7 @@ angle  = robust_angle_estimator(partfForPSF, 0)
 
 %compute the estimation of the length of PSF
 len = length_estimator(partfForPSF, angle, 2, 5, 0)
+
 % Reduce the number of pixels to a defined size if the picture 
 % is too big
 tic
@@ -76,7 +77,7 @@ if algo == 1
 end
 if algo == 2
   % f = edgetaper(f,psf);
-   F = deconvwnr(f,psf,nsr);
+  F = deconvwnr(f,psf,nsr);
   % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);

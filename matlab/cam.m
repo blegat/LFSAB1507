@@ -4,6 +4,7 @@ if nargin < 4
 end
 
 dif = abs(fg(:,:,1) - bg(:,:,1)) ./ var;
+
 B = dif;
 
 %save_image(B, 'test', 2)
@@ -33,7 +34,7 @@ end
 %save_image(B,'test', 2);
 %save_image(B.*dif,'test', 2)
 F = deblur_cam(fg, algo, B, dif, bg, 0);
-%save_image(F, 'deblurred', 2);
+save_image(F, 'deblurred', 2);
 
 end
 

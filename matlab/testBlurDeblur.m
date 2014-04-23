@@ -11,7 +11,7 @@ close all;
 
 %%%%%%%%%%%%        Must be blurred         %%%%%%%%%%%%
 %cameraman
-%I = double(imread('cameraman.tif'));
+I = double(imread('cameraman.tif'));
 
 %little girl
 %load fille.mat;
@@ -24,7 +24,7 @@ close all;
 %I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture
-%I = blur(I,15,5,2);
+%I = blur(I,50,30,2);
 
 
 %%%%%%%%%%%%        Already blurred         %%%%%%%%%%%%
@@ -56,5 +56,5 @@ deblurred = deblur(I,algo);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'SagarBilinear',2);
+save_image(deblurred, 'bricksCompressed',2);
 end
