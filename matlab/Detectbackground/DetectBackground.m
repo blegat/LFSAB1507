@@ -27,7 +27,7 @@ for i = 1:Dim(1)
     end
 end
 
-Out = VariablesStat; 
+Out = VariablesStat;
 end
 
 function A = F1(vec, Interquart, Med)

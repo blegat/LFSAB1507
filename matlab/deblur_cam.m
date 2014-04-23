@@ -9,8 +9,8 @@ len = length_estimator(fs, angle, 2, 5, 0)
 
 [connected minx maxx miny maxy] = flood_fill(center, B);
 
-focusx = minx-len:maxx+len;
-focusy = miny-len:maxy+len;
+focusx = max(minx-len,1):min(maxx+len,size(connected,1));
+focusy = max(miny-len,1):min(maxy+len,size(connected,2));
 
 focus_connected = connected(focusx, focusy);
 focus_bg = bg(focusx, focusy, :);
@@ -38,13 +38,13 @@ end
 
 F = f;
 %Lucy Richardson
-index_fg = find(focus_connected==1);
 psf = oneway_psf(len, angle);
 tic
 for i=1:iterColorOrGray
     if algo == 1
+        index_fg = find(focus_connected==1);
         F(focusx,focusy,i) = lucy(focus_f(:,:,i), psf, len, angle, 10, 0, 2, index_fg); % Method 2
-    else
+    elseif algo == 2
         subfocus = lucy(focus_f(:,:,i), psf, len, angle, 4, 1, 4, focus_dif, focus_bg(:,:,i)); % Method 4
         % subfocus can be smaller that F(focusx,focusy,i) because of the
         % rotations
@@ -58,6 +58,12 @@ for i=1:iterColorOrGray
         size(subfocusx)
         size(subfocusy)
         F(subfocusx,subfocusy,i) = subfocus;
+    else
+        % Wiener
+        focus_f = edgetaper(focus_f,psf);
+        nsr = nsrEstimation(focus_f, psf);
+        focus_F = deconvwnr(focus_f,psf,nsr);
+        F(focusx,focusy,i) = focus_f(:,:,i) .* (1-focus_connected) + focus_F(:,:,i) .* focus_connected;
     end
 end
 toc
