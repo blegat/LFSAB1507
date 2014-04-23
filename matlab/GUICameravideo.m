@@ -1,5 +1,6 @@
+
 function GUICameravideo(hObject, eventdata, handles)  
-global MainWindow axe1 axe2 UploadCameraButton
+global MainWindow axe1 axe2 axe3 UploadCameraButton
 
 h=findall(gcf,'parent',gcf);
  for i = 1:length(h)
@@ -44,23 +45,33 @@ chemin = fullfile(directoryname,ext);
 list = dir(chemin);
 n = numel(list);
 A = cell(1,n);
+% for i = 1:n
+%     A{i} = rgb2gray(imread(fullfile(directoryname, list(i).name)));
+% end
+% Out = DetectBackground(A); % Que en noir et blanc 
 for i = 1:n
-    A{i} = rgb2gray(imread(fullfile(directoryname, list(i).name)));
+    A{i} = imread(fullfile(directoryname, list(i).name));
 end
-Out = DetectBackground(A); % Que en noir et blanc 
-imshow(uint8(Out{1}),'parent',axe1)
+%Out = cell(1,3);
+Out = DetectBackgroundColor(A); % Que en noir et blanc 
+imshow(Out{1}/255,'parent',axe1)
 
 function UploadCamera(hObject, eventdata, handles)  
-global axe1 axe2 Out
+global axe1 axe2 axe3 Out
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
 list = dir(chemin);
 for n = 1:numel(list)
-     img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
-     Out = UpdateBackground(Out, img);
+%      img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
+%      Out = UpdateBackground(Out, img);
+     img = imread(fullfile(directoryname, list(n).name));
+     Out = UpdateBackgroundColor(Out, img);
      imshow(img,'parent',axe2);
-     imshow(uint8(Out{1}),'parent',axe1);
+     imshow(Out{1}/255,'parent',axe1);
      pause(0.01)
+     %DeblurCam = cam(double(img), Out{1}, 2);
+     %imshow(DeblurCam/255,'parent',axe3);
 end
+
 

@@ -100,7 +100,7 @@ guidata(hObject,handles)
 
 function DeblurFunction1(hObject, eventdata, handles)  
 % modifier pour a
-global choix1 SaisieVitesse Enregistrer2Button 
+global choix1 SaisieVitesse Enregistrer2Button Method
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off','Name','Deblurring','NumberTitle','off');
@@ -111,12 +111,16 @@ title('Image before deblurring');
 axis off; 
 handles.ImgPret=I; 
 
-choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.605,0.8,0.2,0.05], 'Callback',@CBchoix1);
+choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'non|oui' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05], 'Callback',@CBchoix1);
 get(choix1)
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Vitesse du train connue ?');
 
-SaisieVitesse = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.7,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
-uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Si oui, vitesse:');
+SaisieVitesse = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.60,0.75,0.2,0.05], 'Max' , 1 , 'string' , '0', 'Enable','off' );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Si oui, vitesse:');
+
+Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position', [0.6,0.65,0.2,0.05] );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.65,0.2,0.05],'string','Method of deblurring');
+
 
 GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
 set(GoDeblurButton,'Callback',@Defloute1);
@@ -132,7 +136,7 @@ guidata(hObject,handles)
 
 function DeblurFunction2(hObject, eventdata, handles)  
 % modifier pour a
-global choix1 SaisieVitesse Enregistrer2Button
+global choix1 SaisieVitesse Enregistrer2Button Method
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off', 'Name','Deblurring','NumberTitle','off');
@@ -155,6 +159,9 @@ uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,
 
 GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
 set(GoDeblurButton,'Callback',@Defloute2);
+
+Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position', [0.6,0.65,0.2,0.05] );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.65,0.2,0.05],'string','Method of deblurring');
 
 Enregistrer2Button = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'save' , 'fontsize' , 15, 'position', [240,40,200,30] );
 set(Enregistrer2Button,'Enable','off')
@@ -184,13 +191,13 @@ if get(choix1,'Value') == [2]
 end
 
 function Defloute1(hObject, eventdata, handles)  
-global Enregistrer2Button
+global Enregistrer2Button Method
 load Lala;
 %I = compression(I);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
-I = deblur(I,1);
+I = deblur(I,get(Method,'Value'));
 imshow(I,'parent',axe1);
 Final = I;
 save('DeblurImage','Final')
@@ -198,13 +205,13 @@ set(Enregistrer2Button,'Enable','on');
 %guidata(hObject,handles) 
 
 function Defloute2(hObject, eventdata, handles)  
-global Enregistrer2Button
+global Enregistrer2Button Method
 load BlurredImage ;
 %L = compression(L);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
-L = deblur(L,1);
+L = deblur(L,get(Method,'Value'));
 Imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')
