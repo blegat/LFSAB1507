@@ -17,7 +17,9 @@ while stack_cur > 1
     cur = stack{stack_cur};
     for i = 1:size(deltas,1)
         next = cur + deltas(i,:);
-        if graph(next(1), next(2)) && ~connected(next(1), next(2))
+        if next(1) > 0 && next(1) <= size(graph, 1) && ...
+                next(2) > 0 && next(2) <= size(graph, 2) && ...
+                graph(next(1), next(2)) && ~connected(next(1), next(2))
             connected(next(1), next(2)) = 1;
             stack{stack_cur} = next;
             stack_cur = stack_cur + 1;
