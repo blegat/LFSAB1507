@@ -14,8 +14,8 @@ A = cell(1,n);
 for i = 1:n
     A{i} = imread(fullfile(directoryname, list(i).name));
 end
-A
-Out = DetectBackground(A) % Que en noir et blanc 
+A;
+Out = DetectBackgroundColor(A); % Que en noir et blanc 
 %imshow(uint8(Out{1}))
 
 %% Terrase

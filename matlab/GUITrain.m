@@ -197,7 +197,7 @@ load Lala;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
-I = deblur(I,get(Method,'Value'));
+I = deblur(I,get(Method,'Value'),0);
 imshow(I,'parent',axe1);
 Final = I;
 save('DeblurImage','Final')
@@ -211,7 +211,7 @@ load BlurredImage ;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
-L = deblur(L,get(Method,'Value'));
+L = deblur(L,get(Method,'Value'),0);
 Imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')

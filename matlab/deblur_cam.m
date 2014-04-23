@@ -1,5 +1,7 @@
 function [F] = deblur_cam(f, algo, B, dif, bg, debug)
-angle  = robust_angle_estimator(f, 0, B)
+[ratio partfForPSF] = compression(f,1);
+[ratio partBForPSF] = compression(B,1);
+angle  = robust_angle_estimator(partfForPSF, 0, partBForPSF)
 
 [fs center] = biggest_square(f(:,:,1), B, debug);
 % w_hann1 = hann(size(fs,1));
@@ -36,9 +38,11 @@ else
     focus_f = f(focusx, focusy, :);
 end
 
-F = f;
+%F = f;
+[ratio F] = compression(f,2);
 %Lucy Richardson
-psf = oneway_psf(len, angle);
+lenCompressed = ratio*len;
+psf = oneway_psf(lenCompressed, angle);
 tic
 for i=1:iterColorOrGray
     if algo == 1
