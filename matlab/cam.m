@@ -1,12 +1,16 @@
-function [F] = cam(fg, bg, algo)
-dif = abs(fg(:,:,1) - bg(:,:,1));
+function [F] = cam(fg, bg, algo, var)
+if nargin < 4
+    var = 5;
+end
+
+dif = abs(fg(:,:,1) - bg(:,:,1)) ./ var;
 B = dif;
 
-var = 8;
+%save_image(B, 'test', 2)
 %var = graythresh(dif)
 %dif = im2bw(dif, var) * 255;
-B(B < var) = 0;
-B(B > var) = 255;
+B(B < 1) = 0;
+B(B > 1) = 255;
 %save_image(dif, 'dif', 2);
 
 var = 128;
