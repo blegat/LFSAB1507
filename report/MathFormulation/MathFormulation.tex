@@ -1,0 +1,93 @@
+\chapter{Mathematical model}
+
+\section{What is an image?}
+
+An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is grey-scaled, the output is a scalar:
+\begin{eqnarray}
+f:\Omega \rightarrow \mathbb{R} \\
+(x,y) \mapsto f(x,y)
+\end{eqnarray},
+where $\Omega \rightarrow \mathbb{R}^2$. If we have a coloured image, we adopt a RGB (Red-Green-Blue) representation and the output will be 3-dimensional (one dimension per primitive colour):
+\begin{eqnarray}
+f:\Omega \rightarrow \mathbb{R}^3 \\
+(x,y) \mapsto f(x,y)
+\end{eqnarray}.
+Along this report, we will only consider grey-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bytes so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
+
+\section{What is blurring?}
+
+Blurring is the operation of mixing the spatial information of an image. In this section, we will try to give an accurate description of an continuous model and a discrete model of blurring.
+
+\subsection{Continuous model}
+
+Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation:
+\begin{equation}
+g(x,y) = \mathcal{H}\left\lbrace f(x,y) \right\lbrace.
+\end{equation}
+
+We suppose the blurring operator to be linear. This assumption will be verified in the specific situations we have chosen (train and camera). Mathematically, we write:
+\begin{equation}
+\mathcal{H}\left\lbrace \alpha f_1(x,y) + \beta f_2(x,y) \right\lbrace =  \alpha \mathcal{H}\left\lbrace f_1(x,y)\right\lbrace + \beta \mathcal{H}\left\lbrace f_2(x,y)\right\lbrace,
+\end{equation}
+for $\alpha, \beta \in \mathbb{R}$.
+Secondly, we may assume the operator is shift-invariant: when the input signal is shifted, the output signal is shifted by the same amount. This implies that the blurring system responds identically, no matter where on the plan the input is applied, which seems intuitively correct for images where all the objects of the scene are approximatively on the same vertical plane (this is an assumption we will make in the specific situations, cfr. infra). Mathematically:
+
+if $\mathcal{H}\left\lbrace f(x,y) \right\rbrace = g(x,y)$, then $\mathcal{H}\left\lbrace f(x-x_0,y-y_0) \right\rbrace = g(x-x_0,y-y_0)$.
+
+
+The input signal can be represented by a weighted superposition of shifted impulses ( cfr cours de signaux et systèmes ref??). Because of the linearity of the system, the output is a weighted superposition of the responses of the system to each shifted impulse. The system is also shift-invariant so the system's response to a shifted impulse is a shifted version of the system's response to an impulse. Hence, the output is given by a weighted superposition of shifted impulse responses. This weighted superposition is called $\emph{convolution}$. So, if $f(x,y)$ is the input, $h(x,y)=\mathcal{H}\left\lbrace \delta(x,y) \right\rbrace$ ($\delta(x,y)$ is an impulse) is the system's impulse response and $g(x,y)$ is the output, then we write:
+\begin{eqnarray}
+g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace \\
+g(x,y) &=& h(x,y) \ast f(x,y),
+\end{eqnarray}
+where $\ast$ is the convolution symbol. So blurring is spreading the value of a pixel by a certain way which is determined by $h$. That's why we call $h$ also the Point Spread Function (PSF).
+
+When we take a picture, the image that we get is usually affected by additive noise. Additive means that the noise does not depend on the input signal. If $e(x,y)$ denotes the additive noise, we can represent the system by the scheme  given in figure (??) or by the following equation:
+\begin{eqnarray}
+g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\lbrace + e(x,y) \\
+ &=& f(x,y) \ast h(x,y) + e(x,y).
+\label{generaleq}
+\end{eqnarray}
+This noise represents measurement and round-off errors and also errors due to the model we use to represent blurring. 
+
+
+\subsection{Discrete model}
+
+Like we said earlier, in the discrete model, the signals can be represented by matrices. The operation of $\mathcal{H}$ on $f$ can then be replaced by a matrix multiplication of $H \in \mathbb{R}^{m \times m}$ (the matrix associated with the operator $\mathcal{H}$) with $F \in \mathbb{N}^{m \times n}$ (the matrix associated with the input signal $f$). Equation $(\ref{generaleq})$ becomes:
+\begin{equation}
+G = HF + E,
+\label{eqmatrix}
+\end{equation}
+where $E \in \mathbb{R}^{m \times n}$ is the matrix associated with the additive noise $e$. To handle this problem more easily, we would like to solve a linear system. That's why we are going to make a vector of a matrix representing an image. So if $F \in \mathbb{N}^{m \times n}$ is a matrix representing an image, then the corresponding vector is $\emph{f} = vec(F) \in \mathbb{N}^{mn \times 1}$. Watch out for the notation used: $f$ is a continuous signal, $F$ is the matrix associated with this signal and $\emph{f}$  is the vector corresponding to this matrix. Equation $(\ref{eqmatrix})$ becomes:
+\begin{equation}
+\emph{g} = \tilde{H}\emph{f} + \emph{e},
+\label{eqvec}
+\end{equation}
+where $\tilde{H} \in \mathbb{R}^{mn \times mn}$ is the result of the following Kronecker product:
+\begin{equation}
+\tilde{H} = I_n \otimes H,
+\end{equation}
+with $I_n$ the identity matrix of dimension $n$. By equation $(\ref{eqvec})$, we clearly see that a pixel of the blurred image is a linear combination of pixels of the original image, plus some noise. In the following section, we will always consider the vector form equation $\ref{eqvec}$, so to simplify the notations, we won't overwrite the tilde on $H$ assuming that it is implicit that this is the $mn \times mn$ matrix and not the $m \times m$ matrix.
+
+%La dernière phrase est compréhensible? Sinon je la baque mais je trouve ça badant de reprendre à chaque fois le tilde sur le H
+
+\section{What is deblurring?} 
+
+Deblurring is the inverse operation of blurring. So it consists in getting the image $\emph{f}$ from the blurred image $\emph{g}$. If the blurring matrix $H$ is known and if it is invertible, deblurring becomes very easy and we get the exact solution by:
+\begin{equation}
+f=H^{-1}(g-e).
+\end{equation}
+But in a real situation, we only have the blurred image $\emph{g}$ and we don't know $H$. That's why we approximate $H$, knowing some information about how the image has been blurred. Finding this approximation is the subject of the following section. If $\hat{H}$ is the approximation of $H$ and if it is invertible, the approximative result $\hat{\emph{f}}$ of deblurring is obtained by:
+\begin{equation}
+\hat{\emph{f}} = \hat{H}^{-1} \emph{g} = \hat{H}^{-1}H\emph{f} + \hat{H}^{-1}\emph{e} \approx \emph{f} + \hat{H}^{-1}\emph{e}.
+\end{equation}
+
+\section{Situations}
+
+Like we said in the previous section, to approximate the blurring operator, we need some information on the reason why the image image has been blurred. We have chosen two typical situations in which blur effect occur. The first one is a a picture that has been taken from a moving train wtih known or unknown speed. The second one is a picture depicted by a security camera. The goal is to deblur the part the image where a subject is moving. We also dispose of several statistical image without the subject.
+
+\subsection{Train}
+
+Firstly we need to make some assumptions about the circumstances to get an idea of what $H$ should look like.
+
+\subsection{Security camera}
