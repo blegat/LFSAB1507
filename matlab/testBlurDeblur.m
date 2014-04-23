@@ -21,7 +21,7 @@ close all;
 
 %Moiré pattern
 %I = double(imread('Moiré_Pattern.jpg'));
-I = double(imread('Moirebricks.jpg'));
+%I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture
 %I = blur(I,15,5,2);
@@ -32,7 +32,7 @@ I = double(imread('Moirebricks.jpg'));
 %I = double(imread('BlurredImageUsed.jpg'));
 
 %Blurred with Gimp function
-%I = double(imread('SagarL25A10.jpg'));
+I = double(imread('SagarL25A10.jpg'));
 
 %Pictures on internet
 %I = double(imread('Car.jpg'));

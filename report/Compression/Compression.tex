@@ -27,28 +27,50 @@ The second point is to crop the image when the whole one is unnecessary. Indeed,
 Another change is the image's resizing before the deconvolution. The goal is to reduce the number of pixels and so reduce the size of the matrix and the number of iterations needed in our loops.  However this resizing presents some challenges due to artifacts which can appear during the process. 
 
 The main artifacts which can occur depending on the algorithm are the moiré pattern and picture's softening.  
-The first one, the moiré pattern is 
+The first one, the moiré pattern is due to an insufficient number of pixels to replicate a specific pattern. However when a picture is blurred, as the pixels of the pattern are spread, these artifact is less problematic. The figure \ref{fig:bricksOriginal} is processed in two different ways. The first one is a resizing using the Nearest Neighbor algorithm, figure \ref{fig:bricksCompressed}, the second one is a artificial blur then a resizing and a deblur using the same resizing algorithm as before, figure \ref{fig:bricksDeblurred}. On the one hand, there is a strong moiré pattern on the figure \ref{fig:bricksCompressed}. On the other hand the deblurred picture \ref{fig:bricksDeblurred} has still a bit of Moiré, but the result is much better than the other picture. 
+The second artifact, the picture's softening, is due to image processing which try to reduce the moiré artifact. 
+
+So, as we have to deal with blurred image and want the sharpest result possible, we can reasonably use resizing algorithm which allow the best sharpness even if they produce Moiré pattern. 
+
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.4\textwidth} 
-\includegraphics[width= \textwidth]{../Images/SagarLanczos3.png}
+\begin{subfigure}{0.3\textwidth} 
+\includegraphics[width= \textwidth]{../Images/bricks.jpg}
 \vspace{-30pt}
-\caption{Picture resized using Lanczos3 algorithm. }
-\label{fig:SagarShort}
+\caption{Original picture.}
+\label{fig:bricksOriginal}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth} 
+\includegraphics[width= \textwidth]{../Images/bricksCompressed.png}
+\vspace{-30pt}
+\caption{Picture resized using Nearest-Neighbor algorithm and no blur. }
+\label{fig:bricksCompressed}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/SagarNearest.png}
+\includegraphics[{width= \textwidth}]{../Images/bricksDeblurred.png}
 \vspace{-30pt}
-\caption{Picture resized using Nearest Neighbor algorithm.}
-\label{fig:SagarLong}
+\caption{Picture resized and deblurred using Nearest-Neighbor algorithm and Lucy-Richardson deconvolution.}
+\label{fig:bricksDeblurred}
 \end{subfigure}
-\caption{Different algorithm to resize the picture.}
+\caption{Difference between resizing and resizing with blur.}
 \end{figure}
  
 
+There exist many different algorithms to resize pictures and some are better to preserve the sharpness. Among these, there is the Nearest-neighbor algorithm already used before. It operates in a easy way and is quick, around $0.002$ [s] to resize.  This algorithm selects points at constant distance depending on the resizing required and replaces all the other points by their nearest neighbor. %TODO source: wiki
+ However the results are far from perfect. 
 
-
+So we decide to use another algorithm. The algorithm which is known to present %TODO source??
+the sharpest result is lanczos. It is based on a sinc multiplied by a windowing function. For example the two-lobed Lanczos-windowed sinc function is defined as 
+\begin{equation*}
+Lanczos2(x) = 
+\left\{\begin{tabular}{cc}
+\frac{\sin(\pi x )}{\pi x} \frac{\sin (\pi \frac{x}{2}) }{\pi \frac{x}{2}}, & |x| < 2\\
+0, & |x| \geq 2
+\end{tabular} \right 
+\end{equation*}
+%TODO source : ResamplingFilters.pdf
 
 %Notre critère supplémentaire est une attention particulière au temps de calcul nécessaire pour le défloutage. 
 %Nous avons donc mis divers procédés en place pour réduire le temps de calcul 

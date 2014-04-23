@@ -41,7 +41,7 @@ elseif type ==2
     if max(d(1),d(2)) > sizeFormat
         ratio = sizeFormat/max(d(1),d(2)); % international norm TO BE CONFIRMED
     end
-    Fchanged = imresize(I,ratio, 'lanczos3');
+    Fchanged = imresize(I,ratio, 'bicubic');
 else    
     Fchanged = I ;
 end
