@@ -69,9 +69,9 @@ for n = 1:numel(list)
      Out = UpdateBackgroundColor(Out, img);
      imshow(img,'parent',axe2);
      imshow(Out{1}/255,'parent',axe1);
+     DeblurCam = cam(double(img), Out{1}, 1, Out{3});
+     imshow(DeblurCam/255,'parent',axe3);
      pause(0.01)
-     %DeblurCam = cam(double(img), Out{1}, 2);
-     %imshow(DeblurCam/255,'parent',axe3);
 end
 
 
