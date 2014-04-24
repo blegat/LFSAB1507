@@ -1,4 +1,4 @@
-function [F] = deblur (f, algo)
+function [F] = deblur (f, algo, comp)
 % Deblur the picture given in argument by evaluation of the psf and then 
 % deconvolution using lucy, wiener or regularisation
 %
@@ -11,7 +11,7 @@ function [F] = deblur (f, algo)
 
 
 % select part of the picture for qucicker psf estimation
-[ratio partfForPSF] = compression(f,1);
+[ratio partfForPSF] = compression(f,comp);
 
 %compute the estimation of the angle of PSF
 angle  = 5%robust_angle_estimator(partfForPSF, 0)
@@ -23,7 +23,7 @@ len = 20%length_estimator(partfForPSF, angle, 2, 5, 0)
 % Reduce the number of pixels to a defined size if the picture 
 % is too big
 tic
-[ratio f] = compression(f,2);
+[ratio f] = compression(f,2*comp);
 toc
 % Adapt the number of pixels invovled after compression
 lenCompressed = ratio*len
