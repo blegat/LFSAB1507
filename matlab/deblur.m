@@ -14,11 +14,11 @@ function [F] = deblur (f, algo)
 [ratio partfForPSF] = compression(f,1);
 
 %compute the estimation of the angle of PSF
-angle  = robust_angle_estimator(partfForPSF, 0)
+angle  = 5%robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
 
 %compute the estimation of the length of PSF
-len = length_estimator(partfForPSF, angle, 2, 5, 0)
+len = 20%length_estimator(partfForPSF, angle, 2, 5, 0)
 
 % Reduce the number of pixels to a defined size if the picture 
 % is too big

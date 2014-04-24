@@ -57,20 +57,28 @@ So, as we have to deal with blurred image and want the sharpest result possible,
 \caption{Difference between resizing and resizing with blur.}
 \end{figure}
  
+
 There exist many different algorithms to resize pictures and some are better to preserve the sharpness. Among these, there is the Nearest-neighbor algorithm already used before. It operates in a easy way and is quick, around $0.002$ [s] to resize.  This algorithm selects points at constant distance depending on the resizing required and replaces all the other points by their nearest neighbor. %TODO source: wiki
  However the results are far from perfect. 
 
 So we decide to use another algorithm. The algorithm which is known to present %TODO source??
 the sharpest result is lanczos. It is based on a sinc multiplied by a windowing function. For example the two-lobed Lanczos-windowed sinc function is defined as 
-\begin{equation*}
+\[
 Lanczos2(x) = 
-\left\{\begin{tabular}{cc}
+\left\{  \begin{array}{cc}
 \frac{\sin(\pi x )}{\pi x} \frac{\sin (\pi \frac{x}{2}) }{\pi \frac{x}{2}}, & |x| < 2\\
 0, & |x| \geq 2
-\end{tabular} \right 
-\end{equation*}
+\end{array} \right \]
 %TODO source : ResamplingFilters.pdf
 
+There is also three lobed Lanczos-windowed sinc function, four lobed etc. Because or goal is to have a fast algorithm, we prefer to keep $Lanczos2$ (average computation time :  0.012 [s]) instead of $Lanczos3$ (average computation time : 0.016 [s]).
+
+\begin{figure}
+\centering
+\includegraphics[scale=•]{../Images/bricksLanczos.png}
+\label{fig:bricksLanczos}
+\caption{Picture processed in the same way as \ref{fig:bricksDeblurred} }
+\end{figure}
 %Notre critère supplémentaire est une attention particulière au temps de calcul nécessaire pour le défloutage. 
 %Nous avons donc mis divers procédés en place pour réduire le temps de calcul 
 %

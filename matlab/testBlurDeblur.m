@@ -21,10 +21,10 @@ I = double(imread('cameraman.tif'));
 
 %Moiré pattern
 %I = double(imread('Moiré_Pattern.jpg'));
-%I = double(imread('Moirebricks.jpg'));
+I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture
-%I = blur(I,50,30,2);
+I = blur(I,20,5,2);
 
 
 %%%%%%%%%%%%        Already blurred         %%%%%%%%%%%%
@@ -32,7 +32,7 @@ I = double(imread('cameraman.tif'));
 %I = double(imread('BlurredImageUsed.jpg'));
 
 %Blurred with Gimp function
-I = double(imread('SagarL25A10.jpg'));
+%I = double(imread('SagarL25A10.jpg'));
 
 %Pictures on internet
 %I = double(imread('Car.jpg'));
@@ -56,5 +56,5 @@ deblurred = deblur(I,algo);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'bricksCompressed',2);
+save_image(deblurred, 'bricksLanczos',1);
 end
