@@ -1,0 +1,26 @@
+\section{Lucy Deconvolution}
+
+
+
+\section{Wiener Deconvolution}
+ Another deconvolution is the wiener one. 
+
+
+
+
+\section{Regularisation}
+%TODO
+The third deconvolution method is the deconvolution using regularized filter. 
+
+\begin{equation}
+\sum_{m,n} \{ [g(m,n) - h(m,n)*f(m,n)]^2 + \alpha [l(m,n)*f(m,n)]^2\}
+\end{equation}
+
+\begin{equation}
+\sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
+\end{equation}
+
+
+\begin{equation}
+\hat{X}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} Y(k,l)
+\end{equation}

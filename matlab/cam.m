@@ -1,5 +1,5 @@
-function [F] = cam(fg, bg, algo, var)
-if nargin < 4
+function [F] = cam(fg, bg, algo, comp, var)
+if nargin < 5
     var = 5;
 end
 
@@ -33,8 +33,8 @@ end
 %save_image(dif*10,'test', 2);
 %save_image(B,'test', 2);
 %save_image(B.*dif,'test', 2)
-F = deblur_cam(fg, algo, B, dif, bg, 0);
-save_image(F, 'deblurred', 2);
+F = deblur_cam(fg, algo, B, dif, bg, comp, 0);
+%save_image(F, 'deblurred', 2);
 
 end
 

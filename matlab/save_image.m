@@ -9,6 +9,7 @@ if graph == 1 || graph == 2
     end
     colormap(gray);
     title(name);
+    set(gcf,'name',name,'numbertitle','off');
     imshow(double(L)/255);
     axis off;
     if graph == 1

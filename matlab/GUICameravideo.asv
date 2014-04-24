@@ -1,6 +1,6 @@
 
 function GUICameravideo(hObject, eventdata, handles)  
-global MainWindow axe1 axe2 axe3 UploadCameraButton SaveButton
+global MainWindow axe1 axe2 axe3 UploadCameraButton
 
 h=findall(gcf,'parent',gcf);
  for i = 1:length(h)
@@ -43,7 +43,6 @@ guidata(MainWindow,handles)
 function UploadBackground(hObject, eventdata, handles)  
 global axe1 UploadCameraButton Out SaveButton
 set(UploadCameraButton,'Enable','on')
-set(SaveButton, 'Enable','on');
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
@@ -60,7 +59,7 @@ end
 Out = DetectBackgroundColor(A); % Que en noir et blanc 
 imshow(Out{1}/255,'parent',axe1)
 save('Bg','Out');
-
+set(SaveButton, 'Enable','on');
 
 function UploadCamera(hObject, eventdata, handles)  
 global axe1 axe2 axe3 Out
@@ -88,6 +87,6 @@ if isequal(filename,0)
     %annulation ou fermeture de la fenetre 'browser'
     disp('User selected Cancel')
 else
-  imwrite(Out{1}/255, chemin); 
+  imwrite(L, chemin); 
 end
 

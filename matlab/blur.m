@@ -1,4 +1,8 @@
 function [f] = blur(I, len, angle, meth)
+if len == 0 && angle == 0
+    f = I;
+    return
+end
 if nargin < 4
     meth = 3;
 end
