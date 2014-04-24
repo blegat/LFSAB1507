@@ -35,7 +35,8 @@ So, as we have to deal with blurred image and want the sharpest result possible,
 \begin{figure}[h]
 \centering
 \begin{subfigure}{0.3\textwidth} 
-\includegraphics[width= \textwidth]{../Images/bricks.jpg}
+% The image is missing
+%\includegraphics[width= \textwidth]{../Images/bricks.jpg}
 \vspace{-30pt}
 \caption{Original picture.}
 \label{fig:bricksOriginal}
@@ -64,10 +65,10 @@ So we decide to use another algorithm. The algorithm which is known to present %
 the sharpest result is lanczos. It is based on a sinc multiplied by a windowing function. For example the two-lobed Lanczos-windowed sinc function is defined as 
 \begin{equation*}
 Lanczos2(x) = 
-\left\{\begin{tabular}{cc}
+\begin{cases}
 \frac{\sin(\pi x )}{\pi x} \frac{\sin (\pi \frac{x}{2}) }{\pi \frac{x}{2}}, & |x| < 2\\
 0, & |x| \geq 2
-\end{tabular} \right 
+\end{cases}
 \end{equation*}
 %TODO source : ResamplingFilters.pdf
 
