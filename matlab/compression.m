@@ -42,7 +42,7 @@ elseif type ==2
         ratio = sizeFormat/max(d(1),d(2)); % international norm TO BE CONFIRMED
     end
     tic
-    Fchanged = imresize(I,ratio, 'nearest');
+    Fchanged = imresize(I,ratio, 'lanczos2');
     toc
 else    
     Fchanged = I ;

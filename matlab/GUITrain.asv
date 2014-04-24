@@ -103,8 +103,8 @@ handles = guihandles(ArtificialBlur);
 guidata(hObject,handles) 
 
 function DeblurFunction1(hObject, eventdata, handles)  
-
-global choix1 Enregistrer2Button Method
+% modifier pour a
+global choix1 SaisieVitesse Enregistrer2Button Method
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off','Name','Deblurring','NumberTitle','off');
@@ -161,7 +161,7 @@ Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reg
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Method of deblurring');
 
 GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
-set(GoDeblurButton,'Callback',@Defloute2);
+set(GoDeblurButton,'Callback',@Defloute1);
 
 Enregistrer2Button = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'save' , 'fontsize' , 15, 'position', [240,40,200,30] );
 set(Enregistrer2Button,'Enable','off')
@@ -184,17 +184,20 @@ set(Enregistrer1Button,'Enable','on');
 set(DeblurButton2,'Enable','on');
 
 
+function CBchoix1(hObject, eventdata, handles)  
+global choix1 SaisieVitesse
+if get(choix1,'Value') == [2]
+    set(SaisieVitesse,'Enable','on' );
+end
+
 function Defloute1(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1
+global Enregistrer2Button Method
 load Lala;
+%I = compression(I);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
-if get(choix1,'Value') == 1
-  I = deblur(I,get(Method,'Value'),1);
-elseif get(choix1,'Value') == 2
-  I = deblur(I,get(Method,'Value'),0);  
-end
+I = deblur(I,get(Method,'Value'),0);
 imshow(I,'parent',axe1);
 Final = I;
 save('DeblurImage','Final')
@@ -202,16 +205,13 @@ set(Enregistrer2Button,'Enable','on');
 %guidata(hObject,handles) 
 
 function Defloute2(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1
+global Enregistrer2Button Method
 load BlurredImage ;
+%L = compression(L);
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
-if get(choix1,'Value') == 1
-  L = deblur(L,get(Method,'Value'),1);
-elseif get(choix1,'Value') == 2
-  L = deblur(L,get(Method,'Value'),0);  
-end
+L = deblur(L,get(Method,'Value'),0);
 Imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')
