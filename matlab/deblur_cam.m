@@ -1,6 +1,6 @@
-function [F] = deblur_cam(f, algo, B, dif, bg, debug)
-[ratio partfForPSF] = compression(f,1);
-[ratio partBForPSF] = compression(B,1);
+function [F] = deblur_cam(f, algo, B, dif, bg, comp, debug)
+[ratio partfForPSF] = compression(f,comp);
+[ratio partBForPSF] = compression(B,comp);
 angle  = robust_angle_estimator(partfForPSF, 0, partBForPSF)
 
 [fs center] = biggest_square(f(:,:,1), B, debug);
@@ -23,10 +23,10 @@ var = 10;
 focus_Bdif(focus_Bdif < var) = 0;
 
 if debug
-    save_image(255*focus_connected, 'test', 2);
-    save_image(10*focus_dif, 'test', 2);
-    save_image(10*focus_dif.*focus_connected, 'test', 2);
-    save_image(10*focus_Bdif, 'test', 2);
+    save_image(255*focus_connected, 'focus_connected', 2);
+    save_image(10*focus_dif, 'focus_dif', 2);
+    save_image(10*focus_dif.*focus_connected, 'focus_dif.*focus_connected', 2);
+    save_image(10*focus_Bdif, 'focus_Bdif', 2);
 end
 
 fsize = size(f)
@@ -39,7 +39,7 @@ else
 end
 
 %F = f;
-[ratio F] = compression(f,2);
+[ratio F] = compression(f,2*comp);
 %Lucy Richardson
 lenCompressed = ratio*len;
 psf = oneway_psf(lenCompressed, angle);
