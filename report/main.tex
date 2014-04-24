@@ -20,6 +20,41 @@
 % Numbers and units
 \usepackage{siunitx}
 
+\usepackage[usenames,dvipsnames]{color}
+
+\usepackage{listings}
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{dkgreen}{rgb}{0.25,0.7,0.35}
+\definecolor{dkred}{rgb}{0.7,0,0} 
+\lstset{language=matlab,numbers=left,numberstyle=\tiny\color{gray},basicstyle=\rm\footnotesize,keywordstyle=\bfseries\color{dkred},frame=single,commentstyle=\color{gray}=small, stringstyle=\color{dkgreen}}
+% Matlab import
+\usepackage{xparse}% for using parameters at the end block
+\NewDocumentEnvironment{mylist}{m}{%
+  \begin{#1}%
+  % other code
+}{%
+  \end{#1}%
+}
+
+\NewDocumentEnvironment{mytable}{mm}
+{\begin{table}[!ht]\centering}
+{\caption{#2 Valeurs obtenues par le code du listing~\ref{lst:#1}.}\label{tab:#1}\end{table}}
+
+\newcommand{\matlabplot}[2]
+{\begin{figure}[!ht]\centering
+\includegraphics[width=\textwidth]{img/#1.png}
+\caption{#2 Graphique obtenu par le code du listing~\ref{lst:#1}.}\label{fig:#1}\end{figure}}
+
+
+\newcommand{\matlabcode}[2]
+{\lstinputlisting[caption={Contenu du fichier \lstinline{#1.m}
+  contenant l'implémentation de la fonction \lstinline{#1}.
+#2},label={lst:#1}]
+{../matlab/#1.m}
+}
+
+
+
 \DeclareMathOperator{\newdiff}{d} % use \dif instead
 \newcommand{\dif}{\newdiff\!}
 \newcommand{\fpart}[2]{\frac{\partial #1}{\partial #2}}
@@ -165,6 +200,7 @@ On fait ça pour chaque orientation de l'image puis on compare la valeur pour le
 \input{Compression/Compression}
 \input{ComparisonResults/ComparisonResults}
 \input{Conclusion/Conclusion}
+\input{Annexe/Annexe}
 
 
 \section{Quelques résolution avec PSF connue}
