@@ -19,8 +19,8 @@ I = double(imread('cameraman.tif'));
 %circle
 %I = double(imread('circle.png'));
 
-%Moiré pattern
-%I = double(imread('Moiré_Pattern.jpg'));
+%Moire pattern
+%I = double(imread('Moire_Pattern.jpg'));
 %I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture

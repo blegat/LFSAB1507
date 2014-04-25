@@ -1,6 +1,6 @@
 function Out = UpdateBackgroundColor(Initial, New)
 %initial est la cellule contenant moyenne, moment2 et variance (donc chaque
-%éléments de la cellule est une matrice), new est une matrice (image)
+%elements de la cellule est une matrice), new est une matrice (image)
 
 Dim = size(Initial{1});
 VariablesStat = cell(1,3);

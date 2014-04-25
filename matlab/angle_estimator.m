@@ -54,7 +54,7 @@ if debug ==1
     title('Var de la transfo de Radon');
     figure
     plot(thetas,var(RDiv), thetas, max(RDiv));
-    title('Var de la transfo de Radon normalisée');
+    title('Var of the normalized Radon transform la transform');
     %[size1, size2]  = size(R(5:100, 5:175))
 end
 vars = max(RDiv);

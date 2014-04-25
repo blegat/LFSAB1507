@@ -25,7 +25,7 @@ for i = 1:numel(turns)
     % [len wid] = size(frs);
     % vars = angle_estimator(fs([1:len],[1:wid]), debug, thetas);
     turn = turns(i);
-    
+
     if turn == 0
         if all_blurred
             fs = squareborder(f(:,:,1), 0);
@@ -61,7 +61,8 @@ for i = 1:numel(turns)
         intervals = [1 91; 91 181];
         nint = size(intervals, 1);
         found = false;
-        % Tant qu'on a pas trouvé et qu'il reste des intervaux non-vides
+        % As long as we've not found it and there is non-empty intervals
+        % left
         while max(abs(diff(intervals'))) > 0 && ~found
             maxs = zeros(1, nint);
             for j = 1:nint
@@ -94,8 +95,8 @@ for i = 1:numel(turns)
                 found = true;
             end
         end
-        if ~found % On a pas trouvé et les intervals sont vides
-            best(i, 2) = 45; % FIXME trouver un truc mieux à faire
+        if ~found % We've not found it and the intervals are non-empty
+            best(i, 2) = 45; % FIXME find something better to do
             best(i, 1) = -inf;
         end
     else

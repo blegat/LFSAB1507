@@ -14,5 +14,5 @@ elseif meth == 2
     f = imfilter(I,h,'replicate');
 else
     h = oneway_psf(len, angle);
-    f = imfilter(I, h, 'replicate');
+    f = imfilter(I, h);
 end

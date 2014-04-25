@@ -2,7 +2,7 @@
 
 
 
-%% Création des boutons
+%% Creation des boutons
 function GUITrain(hObject, eventdata, handles)  
 global MainWindow ArtificialBlurButton DeblurButton1
 
@@ -38,12 +38,12 @@ handles = guihandles(MainWindow);
 guidata(MainWindow,handles)
 
 function LoadFunction(hObject, eventdata, handles)  
-%% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
+%% attention code trouve sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
 global ArtificialBlurButton DeblurButton1 a
 a = 0;
 nomfichier=[]; 
 [filename,pathname] = uigetfile({'*.png';'*.jpg';'*.tiff';'*.bmp'},'File Selector');% recupere le 
-%chemin du rï¿½pertoire et le nom du fichier 
+%chemin du repertoire et le nom du fichier 
 chemin=[pathname filename]; 
 % chemin absolu donnant nombre_images'image a utiliser pour la mosaique 
 
@@ -219,7 +219,7 @@ set(Enregistrer2Button,'Enable','on');
 %guidata(hObject,handles) 
 
 function Enregistrer1(hObject, eventdata, handles)  
-%% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
+%% attention code trouve sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
 load BlurredImage;
 [filename,pathname] = uiputfile('*.png','Save Workspace as'); %Dans quel format le mettre ? 
 chemin=[pathname filename]; 
@@ -231,7 +231,7 @@ else
 end
 
 function Enregistrer2(hObject, eventdata, handles)  
-%% attention code trouvé sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
+%% attention code trouve sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
 load DeblurImage;
 [filename,pathname] = uiputfile('*.png','Save Workspace as'); %Dans quel format le mettre ? 
 chemin=[pathname filename]; 
