@@ -1,4 +1,3 @@
-\chapter{General strategy}
 \section{Train}
 Let's summarize the model.
 We know $g(x,y)$ and we know that there is a $h(x,y)$ such that
@@ -19,23 +18,3 @@ Once we have an estimate of $h(x,y)$, we then deconvolve
 $g(x,y)$ to get an estimate $\hat{f}(x,y)$.
 For some deconvolution method, we need an estimate of
 some properties of the noise which is done only using $g(x,y)$.
-
-\section{Camera}
-On the camera case, we have a serie of images.
-The images are obtained from a fixed camera capturing a fixed
-background with some objects appearing in some images.
-\begin{enumerate}
-  \item For the first images, we only estimate the background.
-    The background is obtained as the mean of the pixels,
-    we also calculate the variance.
-  \item For each following images, we use the background and the variance
-    to detect the foreground.
-    We take the ``biggest'' connected shape and then deblur it.
-    Once it is deblurred, we put it back on the background.
-  \item We can then update the background.
-    Indeed, if for example, a chair is added to the background
-    or the light is changing, we need the background to be updated.
-    The mean is then not exactly the mean nor the variance
-    since we wand new images to have more importance than previous
-    images.
-\end{enumerate}
