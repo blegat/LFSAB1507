@@ -14,11 +14,11 @@ function [F] = deblur (f, algo, comp)
 [ratio partfForPSF] = compression(f,comp);
 
 %compute the estimation of the angle of PSF
-angle  = 5%robust_angle_estimator(partfForPSF, 0)
+angle  = robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
 
 %compute the estimation of the length of PSF
-len = 20%length_estimator(partfForPSF, angle, 2, 5, 0)
+len = length_estimator(partfForPSF, angle, 2, 5, 0)
 
 % Reduce the number of pixels to a defined size if the picture 
 % is too big
@@ -76,8 +76,16 @@ if algo == 1
        
 end
 if algo == 2
-  % f = edgetaper(f,psf);
+   f = edgetaper(f,psf);
   F = deconvwnr(f,psf,nsr);
+  
+   psf_abs = abs(psf);
+  figure()
+  %plot(fftshift(psf_abs));
+ % fftshift(psf_abs)
+  surf(fftshift(psf_abs))
+shading interp, camlight, colormap jet
+xlabel('PSF FFT magnitude')
   % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);
@@ -87,7 +95,7 @@ end
 if algo == 3
    f = edgetaper(f,psf);
    [F arg] = deconvreg(f,psf,nsr);
-   
+
   %save_image(F,'deb',2);
   %F = wiener2(F, [2 2]);
   %save_image(F,'wi',2);
