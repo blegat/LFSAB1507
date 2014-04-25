@@ -52,7 +52,7 @@ I = double(imread('SagarL25A10.jpg'));
 save_image(I, 'test', 2);
 
 %%% Deblur the image
-deblurred = deblur(I,algo);
+deblurred = deblur(I,algo,0);
 
 
 %%%Show the deblurred image
