@@ -1,14 +1,14 @@
-\section{Item supplémentaire : ``Real-Time''}
+\section{Bonus item : ``Real-Time''}
 
-Our additional item is a close attention to the computation time of deblurring. 
-We develop different techniques to reduce this time and fix as objective around 1 second by picture's deblurring.  
+Our additional item is a close attention to the computation time of deblurring.
+We develop different techniques to reduce this time and fix as objective around 1 second by picture's deblurring.
 
-The first point is naturally to pay attention to the implementation of our different algorithms. We try to reduce the number of nested loop, even if with color image, and image in general, loops are quite unavoidable. 
+The first point is naturally to pay attention to the implementation of our different algorithms. We try to reduce the number of nested loop, even if with color image, and image in general, loops are quite unavoidable.
 
-The second point is to crop the image when the whole one is unnecessary. Indeed, for the angle and length estimation of the PSF, we only need a relatively small part of a big picture and we  use the whole image for small pictures. After several tests, we conclude that a $256 \times 256 $ matrix is relevant (i.e. $\pm 1$ degree and $\pm 3$ pixels) for most of the blur and the computation time is then around maximum 0.7 second for the angle estimator and maximum 0.05 second for the length estimator, regardless the size of the initial picture. For example the figure \ref{fig:SagarShort} is computed with our crop and needs $0.684 $ [s] and $0.0463$ [s] for the angle and the length respectively whereas the figure \ref{fig:SagarLong} is computed with the whole figure and needs $11.42$ [s] and $1.128$ [s]. So the difference of time is quite big while the difference of quality is acceptable. 
+The second point is to crop the image when the whole one is unnecessary. Indeed, for the angle and length estimation of the PSF, we only need a relatively small part of a big picture and we  use the whole image for small pictures. After several tests, we conclude that a $256 \times 256 $ matrix is relevant (i.e. $\pm 1$ degree and $\pm 3$ pixels) for most of the blur and the computation time is then around maximum 0.7 second for the angle estimator and maximum 0.05 second for the length estimator, regardless the size of the initial picture. For example the figure \ref{fig:SagarShort} is computed with our crop and needs $0.684 $ [s] and $0.0463$ [s] for the angle and the length respectively whereas the figure \ref{fig:SagarLong} is computed with the whole figure and needs $11.42$ [s] and $1.128$ [s]. So the difference of time is quite big while the difference of quality is acceptable.
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.4\textwidth} 
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width= \textwidth]{../Images/SagarShortEstimation.png}
 \vspace{-30pt}
 \caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
@@ -24,17 +24,17 @@ The second point is to crop the image when the whole one is unnecessary. Indeed,
 \caption{Different matrix's size for the PSF estimation.}
 \end{figure}
 
-Another change is the image's resizing before the deconvolution. The goal is to reduce the number of pixels and so reduce the size of the matrix and the number of iterations needed in our loops.  However this resizing presents some challenges due to artifacts which can appear during the process. 
+Another change is the image's resizing before the deconvolution. The goal is to reduce the number of pixels and so reduce the size of the matrix and the number of iterations needed in our loops.  However this resizing presents some challenges due to artifacts which can appear during the process.
 
-The main artifacts which can occur depending on the algorithm are the moiré pattern and picture's softening.  
-The first one, the moiré pattern is due to an insufficient number of pixels to replicate a specific pattern. However when a picture is blurred, as the pixels of the pattern are spread, these artifact is less problematic. The figure \ref{fig:bricksOriginal} is processed in two different ways. The first one is a resizing using the Nearest Neighbor algorithm, figure \ref{fig:bricksCompressed}, the second one is a artificial blur then a resizing and a deblur using the same resizing algorithm as before, figure \ref{fig:bricksDeblurred}. On the one hand, there is a strong moiré pattern on the figure \ref{fig:bricksCompressed}. On the other hand the deblurred picture \ref{fig:bricksDeblurred} has still a bit of Moiré, but the result is much better than the other picture. 
-The second artifact, the picture's softening, is due to image processing which try to reduce the moiré artifact. 
+The main artifacts which can occur depending on the algorithm are the moiré pattern and picture's softening.
+The first one, the moiré pattern is due to an insufficient number of pixels to replicate a specific pattern. However when a picture is blurred, as the pixels of the pattern are spread, these artifact is less problematic. The figure \ref{fig:bricksOriginal} is processed in two different ways. The first one is a resizing using the Nearest Neighbor algorithm, figure \ref{fig:bricksCompressed}, the second one is a artificial blur then a resizing and a deblur using the same resizing algorithm as before, figure \ref{fig:bricksDeblurred}. On the one hand, there is a strong moiré pattern on the figure \ref{fig:bricksCompressed}. On the other hand the deblurred picture \ref{fig:bricksDeblurred} has still a bit of Moiré, but the result is much better than the other picture.
+The second artifact, the picture's softening, is due to image processing which try to reduce the moiré artifact.
 
-So, as we have to deal with blurred image and want the sharpest result possible, we can reasonably use resizing algorithm which allow the best sharpness even if they produce Moiré pattern. 
+So, as we have to deal with blurred image and want the sharpest result possible, we can reasonably use resizing algorithm which allow the best sharpness even if they produce Moiré pattern.
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.3\textwidth} 
+\begin{subfigure}{0.3\textwidth}
 % The image is missing
 %\includegraphics[width= \textwidth]{../Images/bricks.jpg}
 \vspace{-30pt}
@@ -42,7 +42,7 @@ So, as we have to deal with blurred image and want the sharpest result possible,
 \label{fig:bricksOriginal}
 \end{subfigure}
 ~
-\begin{subfigure}{0.4\textwidth} 
+\begin{subfigure}{0.4\textwidth}
 \includegraphics[width= \textwidth]{../Images/bricksCompressed.png}
 \vspace{-30pt}
 \caption{Picture resized using Nearest-Neighbor algorithm and no blur. }
@@ -57,14 +57,14 @@ So, as we have to deal with blurred image and want the sharpest result possible,
 \end{subfigure}
 \caption{Difference between resizing and resizing with blur.}
 \end{figure}
- 
+
 There exist many different algorithms to resize pictures and some are better to preserve the sharpness. Among these, there is the Nearest-neighbor algorithm already used before. It operates in a easy way and is quick, around $0.002$ [s] to resize.  This algorithm selects points at constant distance depending on the resizing required and replaces all the other points by their nearest neighbor. %TODO source: wiki
- However the results are far from perfect. 
+ However the results are far from perfect.
 
 So we decide to use another algorithm. The algorithm which is known to present %TODO source??
-the sharpest result is lanczos. It is based on a sinc multiplied by a windowing function. For example the two-lobed Lanczos-windowed sinc function is defined as 
+the sharpest result is lanczos. It is based on a sinc multiplied by a windowing function. For example the two-lobed Lanczos-windowed sinc function is defined as
 \begin{equation*}
-Lanczos2(x) = 
+Lanczos2(x) =
 \begin{cases}
 \frac{\sin(\pi x )}{\pi x} \frac{\sin (\pi \frac{x}{2}) }{\pi \frac{x}{2}}, & |x| < 2\\
 0, & |x| \geq 2
@@ -72,11 +72,7 @@ Lanczos2(x) =
 \end{equation*}
 %TODO source : ResamplingFilters.pdf
 
-%Notre critère supplémentaire est une attention particulière au temps de calcul nécessaire pour le défloutage. 
-%Nous avons donc mis divers procédés en place pour réduire le temps de calcul 
+%Notre critère supplémentaire est une attention particulière au temps de calcul nécessaire pour le défloutage.
+%Nous avons donc mis divers procédés en place pour réduire le temps de calcul
 %
 %Comprimer l'image s'avère nécessaire dans certains cas pour ramener le temps de calcul dans des limites acceptables, et plus particulièrement pour notre item supplémentaire, le \textit{``real time''} (cf. section).
-
-
-
- 

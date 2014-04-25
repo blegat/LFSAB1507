@@ -22,12 +22,12 @@ Blurring is the operation of mixing the spatial information of an image. In this
 
 Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation:
 \begin{equation}
-g(x,y) = \mathcal{H}\left\lbrace f(x,y) \right\lbrace.
+g(x,y) = \mathcal{H}\left\lbrace f(x,y) \right\rbrace.
 \end{equation}
 
 We suppose the blurring operator to be linear. This assumption will be verified in the specific situations we have chosen (train and camera). Mathematically, we write:
 \begin{equation}
-\mathcal{H}\left\lbrace \alpha f_1(x,y) + \beta f_2(x,y) \right\lbrace =  \alpha \mathcal{H}\left\lbrace f_1(x,y)\right\lbrace + \beta \mathcal{H}\left\lbrace f_2(x,y)\right\lbrace,
+\mathcal{H}\left\lbrace \alpha f_1(x,y) + \beta f_2(x,y) \right\rbrace =  \alpha \mathcal{H}\left\lbrace f_1(x,y)\right\rbrace + \beta \mathcal{H}\left\lbrace f_2(x,y)\right\rbrace,
 \end{equation}
 for $\alpha, \beta \in \mathbb{R}$.
 Secondly, we may assume the operator is shift-invariant: when the input signal is shifted, the output signal is shifted by the same amount. This implies that the blurring system responds identically, no matter where on the plan the input is applied, which seems intuitively correct for images where all the objects of the scene are approximatively on the same vertical plane (this is an assumption we will make in the specific situations, cfr. infra). Mathematically:
@@ -44,7 +44,7 @@ where $\ast$ is the convolution symbol. So blurring is spreading the value of a 
 
 When we take a picture, the image that we get is usually affected by additive noise. Additive means that the noise does not depend on the input signal. If $e(x,y)$ denotes the additive noise, we can represent the system by the scheme  given in figure (??) or by the following equation:
 \begin{eqnarray}
-g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\lbrace + e(x,y) \\
+g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace + e(x,y) \\
  &=& f(x,y) \ast h(x,y) + e(x,y).
 \label{generaleq}
 \end{eqnarray}
