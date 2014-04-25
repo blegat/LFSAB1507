@@ -1,4 +1,4 @@
-function [] = testCam (test, algo)
+function [] = testCam (len, angle, test, algo, iter)
 % testBlurDeblur for cam
 close all;
 if test == 1
@@ -11,39 +11,29 @@ elseif test == 2
     bg = double(imread('Back.bmp'));
 %A = double(imread('Sub.bmp'));
 %D = abs(A - bg);
-    sub = double(imread('h2g2.jpg'));
-    save_image(bg, 'bg', 2);
-    save_image(sub, 'sub', 2);
-    [N M k] = size(bg)
-    [n m k] = size(sub)
+    sub = double(imread('h2g2_blue.jpg'));
+    name = 'dontpanic_blue';
+    mix = 1;
+elseif test == 3
+    bg = double(imread('Back.bmp'));
+    fg = double(imread('Blur100-0.bmp'));
+elseif test == 4
+    n = 100;
+    bg = ones(n, n)*10;
+    sub = ones(51,51)*200;
+    name = 'square';
+    mix = 1;
+end
+if mix
+    [N M k] = size(bg);
+    [n m k] = size(sub);
     a = floor((N-n)/2);
     b = floor((M-m)/2);
     intx = a:a+n-1;
     inty = b:b+m-1;
     fg = bg * 0;
     fg(intx,inty,:) = sub;
-    save_image(fg, 'fg', 2);
-    fg = blur_cam(fg, bg, 40, 0);
-    save_image(fg, 'fgb', 2);
-elseif test == 3
-    bg = double(imread('Back.bmp'));
-    fg = double(imread('Blur100-0.bmp'));
-elseif test == 4
-    n = 100;
-    a = n/4;
-    b = 3*n/4;
-    bg = ones(n, n)*10;
-    ratio = zeros(n,n);
-    ratio(a:b,a:b) = 1;
-    save_image(100*ratio,'sol', 2);
-    ratio = blur(ratio,10,0,3);
-    %figure
-    %imshow(ratio);
-    %figure
-    %imshow(bg);
-    save_image(ratio, 'ratio', 2);
-    save_image(ratio * 100, 'deblurme', 2);
-    fg = bg .* (1-ratio) + ratio .* 100;
+    fg = blur_cam(fg, bg, len, angle);
 end
 
 %bg = double(imread('01.jpg'));
@@ -53,8 +43,9 @@ end
 %bg = double(imread('bgArUp.JPG'));
 %I = double(imread('ArUp.JPG'));
 %save_image(fg, 'blu', 2);
-
-save_image(abs(fg - bg), 'dif', 2);
-F = cam(fg, bg, algo, 0);
-save_image(F, 'deblu', 2);
+blurr = sprintf('%s-%d_%d', name, len, angle);
+deblu = sprintf('%s-%d_%d-%d_%d-%d', name, len, angle, test, algo, iter);
+save_image(fg, blurr, 2);
+F = cam(fg, bg, algo, iter, 0);
+save_image(F, deblu, 2);
 end
