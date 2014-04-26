@@ -2,31 +2,27 @@ S'attribuer ce qu'il y a dans le To Do et le mettre dans le In progress puis au 
 
 To Do 
 =====
-Traitement du bruit (NSR) => potentiellement Arnaud qui s'en occupe
-
-
-
 
 
 In progress
 ===========
 Benoit 
-	Finir le calcul d'angle	
+	report: Angle estimation with radon
+	report: Length estimation with cepstrum
+	report: Deconvolution with lucy
 
 Arnaud
-	Algorithme de défloutage 
+	report: Conclusion
 
 Jonathan
-	Inteface graphique 
+	report: GUI
+	report: Comparison of results in a reproducible way
+	report: Background estimator for cam
 
 Geoffroy
-	Détection du foreground - background
+	report: Détection du foreground - background: matlab
+	report: angle estimation with Gabor
 
 
 Done
 ==== 
-
-Critère de défloutage
-Lien angle longueur
-Calcul longeur
-
