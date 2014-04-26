@@ -13,6 +13,8 @@ Benoit
 
 Arnaud
 	report: Conclusion
+	report: Wiener
+	report: regularization
 
 Jonathan
 	report: GUI
@@ -22,6 +24,8 @@ Jonathan
 Geoffroy
 	report: Détection du foreground - background: matlab
 	report: angle estimation with Gabor
+	report: Direct matrix resolution (show that it is useless, too sensible)
+	report: nsr estimation
 
 
 Done
