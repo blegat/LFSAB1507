@@ -18,19 +18,19 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         % iterate towards ML estimate for the latent image
         for i = 1:iterations
             % latent_est est l'estimation actuelle,
-            % voyons voir ce que ça donne en le floutant
+            % let's see what is looks like when it's blurred
             est_conv         = conv2(latent_est, psf, 'same');
             relative_blur    = observed ./ est_conv;
             % pour chaque pixel, on regarde l'erreur sous
             % la forme d'un coefficient correcteur
-            % e.g. si ça vaut 6 et non 12, on se dit qu'il faudrait
-            % faire x2 au pixels qui sont convolués pour avoir ce pixel
+            % e.g. si ca vaut 6 et non 12, on se dit qu'il faudrait
+            % faire x2 au pixels qui sont convolues pour avoir ce pixel
             error_est        = conv2(relative_blur, psf_hat, 'same');
             % Pour chaque pixel, on regarde les coefficients correcteurs
-            % de tous les pixels qui sont influencés par ce pixel là
+            % de tous les pixels qui sont influences par ce pixel la
             % lors de la convolution et on fait une convolution
             % (en gros la moyenne) de ces coefficients.
-            % Pour faire celà, on fait la convolution de la matrice
+            % Pour faire cela, on fait la convolution de la matrice
             % des coefficients correcteurs avec la PSF inverse
 
             % N'updatons que le foreground par contre :D
@@ -123,39 +123,40 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         bg = imrotate(bg, angle);
         [n m] = size(observed);
         slope = zeros(n, m-len);
+        % 0,1,...,len <- len+1 diff
+        L = len+1;
         K = len;
         %mask(150,1:m) = 1:m;
         for k = 1:n
             % slope = SXY / SXX
             % SXX = m_2x - m_1x**2
             % SXY = m_2xy - m_1x * m_1y
-            x = 1:len;
+            x = 1:L;
             y = mask(k,x);
             s_1x = sum(x);
             s_1y = sum(y);
             s_2x = sum(x.*x);
             s_2xy = sum(x.*y);
-            slope(k,1) = (s_2xy - len * s_1x * s_1y) / (s_2x - len*s_1x*s_1x);
-            for j = 2:size(slope,2);
+            slope(k,1) = (s_2xy - L * s_1x * s_1y) / (s_2x - L*s_1x*s_1x);
+            for j = 2:size(slope,2)
                 prevx = j-1;
-                nextx = j+len-1;
+                nextx = j+L-1;
                 prevy = mask(k,prevx);
                 nexty = mask(k,nextx);
                 s_1x = (s_1x - prevx + nextx);
                 s_1y = (s_1y - prevy + nexty);
                 s_2x = (s_2x - prevx*prevx + nextx*nextx);
                 s_2xy = (s_2xy - prevx*prevy + nextx*nexty);
-                slope(k,j) = (s_2xy - s_1x*s_1y/len) / (s_2x - s_1x*s_1x/len);
+                slope(k,j) = (s_2xy - s_1x*s_1y/L) / (s_2x - s_1x*s_1x/L);
             end
         end
         if debug
-            figure
-            imshow(slope/max(max(slope)));
+            save_image(abs(slope)/max(max(abs(slope))) * 255, 'slope', 2);
         end
         start = m*ones(n,1);
         endit = ones(n,1);
         contour = zeros(n, m);
-        threshold = 0.15;
+        threshold = 0.1;
         for k = 1:n
             for j = K+1:size(slope,2)-K
                 if slope(k,j) > threshold && slope(k,j) == max(slope(k,j-K:j+K)) % j-K:j also makes sense
@@ -199,18 +200,20 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         end
         fg = observed;
         fg = fg - bg .* (1 - Bcontour);
-        fg(Bcontour == 0) = 0;
+        fg(Bcontour == 0) = 0; % avoid negative
         if debug
-            figure
-            imshow(fg/255);
+            save_image(fg, 'foreground', 2);
         end
 
-        latent_est = contour/2; % grey
+        latent_est = contour; % grey
         for i = 1:iterations
             if debug
                 figure
+                subplot(3,2,1);
+                imshow(fg/255);
                 subplot(3,2,2);
                 imshow(latent_est/255);
+                title(latent_est);
             end
             %est_conv         = filter2(psf, latent_est, 'same');
             est_conv = imfilter(latent_est, centered_psf);
@@ -225,18 +228,18 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
             relative_blur(est_conv == 0) = 0;
             if debug
                 subplot(3,2,4);
-                imshow((relative_blur+0.5)/2.55);
+                imshow(relative_blur);
             end
             %rev_relative_blur = relative_blur(end:-1:1,end:-1:1);
             %error_est = filter2(psf, rev_relative_blur, 'same');
             %error_est = imfilter(rev_relative_blur, centered_psf, 'replicate');
             %error_est = error_est(end:-1:1,end:-1:1);
-            error_est = 1 + imfilter(relative_blur, centered_psf_hat);
+            error_est = 1+imfilter(relative_blur, centered_psf_hat);
             if debug
                 subplot(3,2,5);
-                imshow((error_est-0.5)/2.55);
+                imshow(error_est);
             end
-            latent_est       = latent_est .* error_est;
+            latent_est       = latent_est .* (error_est);
             if debug
                 subplot(3,2,6);
                 imshow(latent_est/255);
@@ -246,16 +249,12 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         end
         latent_est = latent_est + bg .* (1 - contour);
         if debug
-            figure
-            imshow(latent_est/255);
+            save_image(latent_est, 'latent_est', 2);
         end
         latent_est = imrotate(latent_est, -angle);
         if debug
-            figure
-            imshow(latent_est/255);
+            save_image(latent_est, 'latent_est rotated', 2);
         end
-        size(latent_est)
-        size(observed)
     end
 end
 

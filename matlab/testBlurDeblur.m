@@ -19,8 +19,8 @@ close all;
 %circle
 %I = double(imread('circle.png'));
 
-%Moiré pattern
-%I = double(imread('Moiré_Pattern.jpg'));
+%Moire pattern
+%I = double(imread('Moire_Pattern.jpg'));
 %I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture
@@ -52,7 +52,8 @@ I = double(imread('SagarL25A10.jpg'));
 save_image(I, 'test', 2);
 
 %%% Deblur the image
-deblurred = deblur(I,algo, 1);
+
+deblurred = deblur(I,algo,0);
 
 
 %%%Show the deblurred image
