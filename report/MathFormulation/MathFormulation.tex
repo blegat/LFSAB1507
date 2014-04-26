@@ -2,14 +2,12 @@
 
 An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is grey-scaled, the output is a scalar:
 \begin{eqnarray}
-f:\Omega \rightarrow \mathbb{R} \\
-(x,y) \mapsto f(x,y)
-\end{eqnarray},
+f:\Omega \rightarrow \mathbb{R}: (x,y) \mapsto f(x,y),
+\end{eqnarray}
 where $\Omega \rightarrow \mathbb{R}^2$. If we have a coloured image, we adopt a RGB (Red-Green-Blue) representation and the output will be 3-dimensional (one dimension per primitive colour):
 \begin{eqnarray}
-f:\Omega \rightarrow \mathbb{R}^3 \\
-(x,y) \mapsto f(x,y)
-\end{eqnarray}.
+f:\Omega \rightarrow \mathbb{R}^3 : (x,y) \mapsto f(x,y).
+\end{eqnarray}
 Along this report, we will only consider grey-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bytes so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
 
 \section{What is blurring?}
@@ -18,7 +16,7 @@ Blurring is the operation of mixing the spatial information of an image. In this
 
 \subsection{Continuous model}
 
-Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation:
+Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation: %TODO figure
 \begin{equation}
 g(x,y) = \mathcal{H}\left\lbrace f(x,y) \right\rbrace.
 \end{equation}
@@ -32,7 +30,7 @@ Secondly, we may assume the operator is shift-invariant: when the input signal i
 
 if $\mathcal{H}\left\lbrace f(x,y) \right\rbrace = g(x,y)$, then $\mathcal{H}\left\lbrace f(x-x_0,y-y_0) \right\rbrace = g(x-x_0,y-y_0)$.
 
-
+%TODO ref
 The input signal can be represented by a weighted superposition of shifted impulses ( cfr cours de signaux et systèmes ref??). Because of the linearity of the system, the output is a weighted superposition of the responses of the system to each shifted impulse. The system is also shift-invariant so the system's response to a shifted impulse is a shifted version of the system's response to an impulse. Hence, the output is given by a weighted superposition of shifted impulse responses. This weighted superposition is called $\emph{convolution}$. So, if $f(x,y)$ is the input, $h(x,y)=\mathcal{H}\left\lbrace \delta(x,y) \right\rbrace$ ($\delta(x,y)$ is an impulse) is the system's impulse response and $g(x,y)$ is the output, then we write:
 \begin{eqnarray}
 g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace \\
@@ -46,7 +44,7 @@ g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace + e(x,y) \\
  &=& f(x,y) \ast h(x,y) + e(x,y).
 \label{generaleq}
 \end{eqnarray}
-This noise represents measurement and round-off errors and also errors due to the model we use to represent blurring. 
+This noise represents measurement and round-off errors and also errors due to the model (convolution) we use to represent blurring. 
 
 
 \subsection{Discrete model}
@@ -80,12 +78,40 @@ But in a real situation, we only have the blurred image $\emph{g}$ and we don't 
 \hat{\emph{f}} = \hat{H}^{-1} \emph{g} = \hat{H}^{-1}H\emph{f} + \hat{H}^{-1}\emph{e} \approx \emph{f} + \hat{H}^{-1}\emph{e}.
 \end{equation}
 
-\section{Situations}
+\section{Specific situations}
 
-Like we said in the previous section, to approximate the blurring operator, we need some information on the reason why the image image has been blurred. We have chosen two typical situations in which blur effect occur. The first one is a a picture that has been taken from a moving train wtih known or unknown speed. The second one is a picture depicted by a security camera. The goal is to deblur the part the image where a subject is moving. We also dispose of several statistical image without the subject.
+Like we said in the previous section, to approximate the blurring operator, we need some information on the reason why the image has been blurred. We have chosen two typical situations in which blur effect occur. The first one is a a picture that has been taken from a moving train wtih known or unknown speed. The second one is a picture depicted by a security camera. The goal is to deblur the part of the image where a subject is moving. We also dispose of several statistical images without the subject.
 
 \subsection{Train}
 
-Firstly we need to make some assumptions about the circumstances to get an idea of what $H$ should look like.
+First we need to make some assumptions about the circumstances to get an idea of what $H$ should look like. We assume that the picture has been taken with the camera parallel to the train (hyp. 1). This means that the blur effect will only appear horizontally on the picture. We also assume that the speed of the train is constant during the short period of time when the picture is taken (hyp. 2). This allows us to suppose the blurring operator to be linear: every pixel is modified in the same way. If the speed isn't constant, the parts of the image where the camera is going faster, are influenced by more pixels then the parts where the camera is going slower. The operation is not linear anymore and we won't take this case into account. We will first treat the case where the speed of the train is known and then when it is unknown. Finally we suppose the subjects on the picture to be in the same vertical plane (hyp. 3). So every subject lies approximatively on the same distance away from the camera. This also means that blurring will approximatively have the same effect everywhere on the image. If this was not the case, the blur effect would be more visible on subjects near the camera.
+
+Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: "How is a pixel of $g$ constructed based on the pixels of $f$?". Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $g$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
+\begin{equation}
+H=\sum_{i=0}^{k} c_i D^{i}.
+\end{equation}
+Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: %TODO figure
+\begin{equation}
+W = 2 \eta \tan\left(\frac{\phi}{2}\right).
+\end{equation}
+A row of the matrix associated to the image ($F$) represents then a real line of the image of lenth $W$. If $F$ has $N$ columns, the width of one pixel $W_e$ is
+\begin{eqnarray}
+W_e &=& \frac{W}{N} \\
+&=& \frac{2 \eta }{N}\tan\left(\frac{\phi}{2}\right).
+\end{eqnarray}
+We now want to know the time it takes to a real segment of length $W_e$ to be represented by the next pixel. We denote this time by $\Delta t_e$ and we get:
+\begin{eqnarray}
+\Delta t_e &=&\frac{W_e}{v}\\
+&=& \frac{2 \eta }{Nv}\tan\left(\frac{\phi}{2}\right).
+\end{eqnarray}
+Finally, we compute $k$ knowing that it is the number of times $\Delta t_e$ can be put in the opening time $\Delta t$ of the camera:
+\begin{eqnarray}
+k &=& \frac{\Delta t}{\Delta t _e} \\
+&=& \dfrac{Nv\Delta t}{2 \ eta \tan\left(\frac{\phi}{2}\right)}.
+\end{eqnarray}
+
+From this equation, we see that when $v$ increases, $k$ also does, which seems intuitively correct. Same reasoning stays for $\Delta t$. On the opposite side, $k$ decreases when $\eta$ goes up. This was already observed in the beginning of this subsection.
+
+%TODO explications c_i
 
 \subsection{Security camera}
