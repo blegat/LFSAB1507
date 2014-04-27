@@ -1,0 +1,10 @@
+\section{blur metrics}
+
+To compare different methods of deblurring, we need to be able to give the perceptual quality of an image. Suppose we have the original image. ... SNR... PSNR
+
+We only know the original image when we blur it ourselves and then test our deblurring methods. But in a real situation, we don't know it and we would like to have a technique that determines the quality of an image objectively and without referential image. The technique that we found is a no-reference blur metric that is based on the analysis of the spread of the edges in an image. No-reference means that the metric is not relative to the original but is a absolute value associated to an image.
+
+When an image is blurred, its high spatial frequency values in the spectrum are attenuated. Blur is perceptually apparent along edges so the technique is based on the smoothing effect of it on the edges. According to SOOOOOURCE (marziliano2002),it is sufficient to measure blur along vertical edgdes. Here is the algorithm:\\
+First we detect the edges by a Sobel filter for example. Then we scan each row of the image. When we detect a pixel that corresponds to an edge, we look for the local maximum and minimum. The distance (in pixels) between those extrema represents the local blur. Finally, we get the global blur measure for whole the image by averaging the local blur values over all edge locations.
+
+%TODO résultats
