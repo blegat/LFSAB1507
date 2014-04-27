@@ -1,2 +1,22 @@
 \section{Deconvolution}
+We could adapt our methods on the train differently to the camera.
+We can first just use the methods on the subimage
+talked about in the section~\ref{sec:fg}.
+
+We could also only change pixels that are part of the solid
+shape filled by the flood-fill.
+That is how we have modified Wiener.
+
 \subsection{Lucy-Richardson}
+For Lucy-Richarson, we can do it at each iteration.
+Which means that we only update pixels that are part of our
+rough estimate of the background at each iteration.
+
+A much finer solution would be to estimate the foreground
+before it has been blurred more closely.
+We would then be able to estimate the ratio of background
+and foreground for each pixel.
+Then we can remove the part of background to the pixels
+which are not entirely foreground.
+We will then have all the information to do an ``exact''
+resolution.
