@@ -16,7 +16,8 @@ for i = 1:n
 end
 A;
 Out = DetectBackgroundColor(A); % Que en noir et blanc 
-%imshow(uint8(Out{1}))
+
+imshow(Out{1}/255)
 
 %% Terrase
 % n = 29;

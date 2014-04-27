@@ -11,7 +11,7 @@ close all;
 
 %%%%%%%%%%%%        Must be blurred         %%%%%%%%%%%%
 %cameraman
-I = double(imread('cameraman.tif'));
+%I = double(imread('cameraman.tif'));
 
 %little girl
 %load fille.mat;
@@ -19,12 +19,12 @@ I = double(imread('cameraman.tif'));
 %circle
 %I = double(imread('circle.png'));
 
-%Moiré pattern
-%I = double(imread('Moiré_Pattern.jpg'));
+%Moire pattern
+%I = double(imread('Moire_Pattern.jpg'));
 %I = double(imread('Moirebricks.jpg'));
 
 %%% Blur the picture
-%I = blur(I,50,30,2);
+%I = blur(I,20,5,2);
 
 
 %%%%%%%%%%%%        Already blurred         %%%%%%%%%%%%
@@ -52,9 +52,10 @@ I = double(imread('SagarL25A10.jpg'));
 save_image(I, 'test', 2);
 
 %%% Deblur the image
-deblurred = deblur(I,algo);
+
+deblurred = deblur(I,algo,0);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'bricksCompressed',2);
+save_image(deblurred, 'cameraman',2);
 end

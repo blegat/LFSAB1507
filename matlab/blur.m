@@ -11,8 +11,8 @@ if meth == 1
    % save_image(f,'blurred',2);
 elseif meth == 2
     h = fspecial('motion', len, angle);
-    f = imfilter(I,h,'replicate');
+    f = imfilter(I,h,'circular');
 else
     h = oneway_psf(len, angle);
-    f = imfilter(I, h, 'replicate');
+    f = imfilter(I, h);
 end

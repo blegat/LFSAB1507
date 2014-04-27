@@ -10,5 +10,6 @@
 *.fls
 *.log
 *.pdf
+*.toc
 
 Thumbs.db

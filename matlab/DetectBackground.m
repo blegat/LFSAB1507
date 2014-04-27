@@ -1,6 +1,6 @@
 function Out = DetectBackground(Serie)%, InitialBackground)
 % Prend une serie d'images en input et en output renvoie le background de
-% la caméra de cette série. Serie est une "matrice" à 3 dimensions
+% la camera de cette serie. Serie is a 3D matrix
 
 Dim = size(Serie{1});
 VariablesStat = cell(1,3);
