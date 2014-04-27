@@ -221,7 +221,7 @@ Let's take an example with a 1-D blur to the right
 For $f_0$ we usually start with a gray image (unicolor) which gives acceptable results.
 That way,
 \begin{align*}
-  f_{k+1}(x,y) & = f_0(x,y)\left(\frac{g(x,y)}{(h*f_0)(x,y)} * h(-x,-y)\right)\\
+  f_1(x,y) & = f_0(x,y)\left(\frac{g(x,y)}{(h*f_0)(x,y)} * h(-x,-y)\right)\\
                & = F_0\left(\frac{g(x,y)}{F_0} * h(-x,-y)\right)\\
                & = g(x,y) * h(-x,-y).
 \end{align*}

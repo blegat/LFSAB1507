@@ -10,10 +10,12 @@ Benoit
 	report: Angle estimation with radon
 	report: Length estimation with cepstrum
 	report: Deconvolution with lucy
+	report: Foreground estimation for cam
 
 Arnaud
 	report: Conclusion
-	report: Wiener
+	report: Wiener train
+	report: Wiener cam
 	report: regularization
 	report: Direct matrix resolution (show that it is useless, too sensible)
 
