@@ -3,7 +3,7 @@ if nargin < 6
     var = 5;
 end
 
-dif = abs(fg(:,:,1) - bg(:,:,1)) ./ var;
+dif = abs(fg(:,:,1) - bg(:,:,1)) ./ sqrt(var);
 
 B = dif;
 
