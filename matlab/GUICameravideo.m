@@ -75,8 +75,11 @@ for n = 1:numel(list)
      Out = UpdateBackgroundColor(Out, img);
      imshow(img,'parent',axe2);
      imshow(Out{1}/255,'parent',axe1);
-     DeblurCam = cam(double(img), Out{1}, 1);%, Out{3});
+     algo = 1;
+     comp = 1;
+     DeblurCam = cam(double(img), Out{1}, algo, comp, 2);%Out{3});
      imshow(DeblurCam/255,'parent',axe3);
+    % saveas(DeblurCam/255, sprintf('%s/%d',directoryname,n), 'png');
      pause(0.01)
 end
 
