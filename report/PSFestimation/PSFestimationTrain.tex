@@ -1,0 +1,62 @@
+\section{Estimation of the PSF}
+In the spatial domain, we have
+\[ g = h * f \]
+so in the fourier domain
+\[ G = H \cdot F \]
+$H$ is a 2-D $\sinc$ which can be detected in
+various ways.
+
+\subsection{Angle estimation with Radon}
+The idea of Radon is, for a certain angle $\alpha$,
+integrate over the perpendicular lines of the line at
+angle $\theta$ passing by $(0,0)$.
+The value of each integral is a function of the
+point at which the perpendicular line intersects the
+line.
+
+When $\theta+\frac{\pi}{2}$ is the angle of blur,
+we integrate along the peeks of the $\sinc$.
+The function at this angle can be dinstinguished
+by the value of its max or variance which is
+greater than the others.
+
+However, we need to be careful to several things which
+are
+\begin{itemize}
+  \item If the image is not squared, the angle found
+    is not linked with the same formula to the angle
+    of blue. We solve it by cropping the image for
+    it to be squared.
+  \item The perpendicular line is longer for angles
+    like $\frac{\pi}{4}$ so we need to divide by
+    the length of the line.
+    We divide our radon transform by the
+    radon transform of an unit image to solve
+    this problem.
+  \item When we do a fourier transform, the
+    signal is supposed to be periodic.
+    However, with the blur, the pixels at each
+    sides of the borders influence the image.
+    Since the image is rectangular, this
+    problem only appears along $x$ and $y$ axis
+    and that creates artifacts at $0$ and $\frac{\pi}{2}$.
+    This can be solved by multiplying our image
+    by a hann window before applying the
+    fourier transform.
+\end{itemize}
+
+\subsection{Angle estimation with Gabor}
+
+\subsection{Length with Cepstrum}
+We can verify that in
+\[ \log(\F(|\log(|g|)|)), \]
+along the angle of blur,
+there is a peek at the center and a second peek
+at a distance of $L$ in units of the discretization.
+
+A peek detection algorithm can then be applied
+to find $L$.
+
+The problem is that it depends on the angle
+and is sensible to errors in the angle
+estimation.
