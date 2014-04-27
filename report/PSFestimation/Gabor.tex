@@ -1,0 +1,22 @@
+\subsection{angle estimation with the Gabor filter}
+
+The Gabor filter is a gaussian filter modulated by a sinusoidal wave. The function of this filter is given by:
+\begin{equation}
+B(x,y)=dfrac{1}{2\pi \sigma_x \sigma_y} exp\left[-\frac{1}{2}\left(\frac{x^2}{\sigma_x^2}+ \frac{y^2}{\sigma_y^2} \right) -j\omega(xcos\phi + ycos\phi)\right],
+\label{filtreGabor}
+\end{equation}
+where $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ directions. The parameters $\phi$ and $\omega$ are the direction and the frequency of the filter respectively. Only $\phi$ will vary while the other parameters stay fixed. According to the article (?? ref dash20.. ??), experimentation has shown that good values for $\sigma$ and $\omega$ are $3$ and $1.75$ respectively. The method consists in applying the Gabor filter to the power spectrum of the blurred image and then detecting the blur angle $\theta_{blur}$ by searching for the $\phi$ that gives the highest response value. This value can be calculated using $L_2$ norm. The $\phi$ obtained by this method is the blur angle. Here are the steps of the algorithm:
+
+1. computation of the spectrum of the blurred image by a two dimensional Fourier transform\\
+2. taking the logarithm of it\\
+3. convolving this with the Gabor function given by equation $(\ref{filtreGabor})$ for different $\phi$, the result is $R(\phi)$\\
+4. for every $\phi$, taking the $L_2$ norm: $||R(\phi)||$
+5. the blur angle is the parameter $phi$ that gives the biggest norm:
+\begin{equation}
+\theta_{blur} = arg \left\lbrace max_{\phi}R(\phi)\right\rbrace.
+\end{equation}
+
+This algorithm is implemented by our matlab function $angle_estimator_Gabor(f,thetamin, thetamax)$, where the input $f$ is the blurred image. The parameter $\phi$ will vary from $thetamin$ to $thetamax$. If those inputs are not specified, we set them to $0$ for $thetamin$ and $180$ for $thetamax$.
+
+%TODO Resultats en images
+
