@@ -18,7 +18,7 @@ To solve this problem, use an iterative algorithm that starts with $d_0$.
   \item Sets
     \[ d_{k+1}(x,y) =
       \begin{cases}
-        0 & \text{if }m(x,y) < \epsilon
+        0 & \text{if }m(x,y) < \epsilon\\
         1 & \text{else}
       \end{cases}
     \]
@@ -28,6 +28,7 @@ The problem of the mean is that a change $N$ makes a big differencewhile it is o
 A gaussian blur is therefore used instead which is much better since it gives more weight to the pixels close to $(x,y)$, so the weight of the borders is very small and therefore $N$ has less influence.
 There is however still a variance to give as a parameter to the gaussian blur which is arbitrary.
 The gaussian blur however is still better due to its smoother borders.
+\todo{Show it !}
 A disadvrantage is that it needs $\bigoh(nmN^2)$ to be computed while the mean can be computed in $\bigoh(nm)$ if we precomputes the sum from $(0,0)$ to $(i,j)$ for all $(i,j)$.
 
 To avoid the noise, we make $\epsilon$ 2 times smaller at each iteration and we stop at a small value of $\epsilon$.
