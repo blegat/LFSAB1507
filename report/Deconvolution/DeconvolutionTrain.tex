@@ -76,20 +76,164 @@ As explained in the mathematical model,
 so we have
 \[ \nabla l(f) = \frac{g(x,y)}{(h*f)(x,y)} * h(-x,-y) - 1. \]
 To get the minimum of $l(f)$, $\nabla l(f)$ needs to be 0.
-Therefore % TODO Justify hessienne
-\[ \frac{g(x,y)}{(h*\hat{f})(x,y)} * h(-x,-y) = 1. \]
+Therefore
+\begin{equation}
+  \label{eq:lucy-cond}
+  \frac{g(x,y)}{(h*\hat{f})(x,y)} * h(-x,-y) = 1.
+\end{equation}
 If we multiply each side by $f(x,y)$, we get
 \[ f(x,y)\left(\frac{g(x,y)}{(h*\hat{f})(x,y)} * h(-x,-y)\right) = f(x,y) \]
 which can be solved iteratively using the fixed point method which gives us
 \[ f_{k+1}(x,y) = f_k(x,y)\left(\frac{g(x,y)}{(h*f_k)(x,y)} * h(-x,-y)\right). \]
 
-\section{Wiener Deconvolution}
+If we converge to $f$, we know that $\nabla l(f) = 0$
+so $f$ is a critical point of $l(f)$.
+However, we can't say that it maximize $l$ even
+if we proof that the hessian is negatively definite since
+the solution of the equation~\eqref{eq:lucy-cond}
+is not unique.
+
+For example, in 1-D, if
+\begin{align*}
+  h & = \frac{1}{2}
+  \begin{pmatrix}
+    1 & 1
+  \end{pmatrix},\\
+  g & =
+  \begin{pmatrix}
+    \cdots & 1 & 1 & 1 & \cdots
+  \end{pmatrix},
+\end{align*}
+we have the two following solutions
+\begin{align*}
+  f_1 & = \frac{1}{2}
+  \begin{pmatrix}
+    \cdots & 1 & 1 & 1 & 1 & \cdots
+  \end{pmatrix},\\
+  f_2 & =
+  \begin{pmatrix}
+    \cdots & 0 & 2 & 0 & 2 & \cdots
+  \end{pmatrix}.
+\end{align*}
+However, since $h * f_1 = h * f_2 = g$ so they maybe both maximize $l$.
+%For example, in 1-D, if
+%\begin{align*}
+%  h & = \frac{1}{2}
+%  \begin{pmatrix}
+%    1 & 1
+%  \end{pmatrix},\\
+%  g & =
+%  \begin{pmatrix}
+%    \cdots & 1 & \frac{3}{2} & 1 & \frac{3}{2} & \cdots
+%  \end{pmatrix},
+%\end{align*}
+%we have the two following solutions
+%\begin{align*}
+%  f_1 & = \frac{1}{2}
+%  \begin{pmatrix}
+%    \cdots & \frac{1}{2} & \frac{3}{2} & \frac{3}{2} & \frac{1}{2} & \frac{5}{2} & \cdots
+%  \end{pmatrix},\\
+%  f_2 & =
+%  \begin{pmatrix}
+%    \cdots & 3 & 1 & 2 & 2 & 1 & 3 & 1 & 2 & 2 & 1 & \cdots
+%  \end{pmatrix}.
+%\end{align*}
+
+\subsubsection{Intuitive understanding}
+A big advantage with this method is that we can understand
+it intuitively.
+Let's analyse an iteration.
+\begin{enumerate}
+  \item We start with an estimate $f_k$ and we compute
+    $h * f_k$ which would be $g$ if $f_k = f$.
+  \item We then compute, for each pixel, the ratio between
+    the expected value $g(x,y)$ and what we currently have
+    (i.e.  $(h * g)(x,y)$).
+    Let's call it $r(x,y)$.
+  \item If $h$ was $\delta(x,y)$, we could just take
+    $f_{k+1} = f_k \cdot r$ and we would be done in one
+    iteration.
+    But here $g(x,y)$ is not only influenced by
+    $f(x,y)$ but also by neighbouring values of $f$.
+  \item The idea is therefore to spread $r$ on the values
+    that have influenced $g(x,y)$.
+    And $r(x,y)$ will influence a pixel in $f_k$ with the same
+    weight that it influence $g(x,y)$.
+    That's why we convolve $r$ with $h(-x,-y)$.
+  \item Since each pixel has a sum of weight of 1,
+    it will be influenced by a weight of 1 of elements of $r$.
+    The ratio in $r(x,y) * h(-x, -y)$ is then multiplied to
+    $f_k(x,y)$ to get $f_{k+1}(x,y)$.
+\end{enumerate}
+\[ f_{k+1}(x,y) = f_k(x,y)\left(\frac{g(x,y)}{(h*f_k)(x,y)} * h(-x,-y)\right). \]
+
+\subsubsection{Practical case}
+For the train case, $f$ and $g$ are given in a finite rectangle
+and they have the same size which causes problems on their borders.
+To compute $h * f$ on the border of $f$ we do not have enough
+information. The same problem appears when we need to
+convolve with $h(-x,-y)$.
+
+Let's take an example with a 1-D blur to the right
+2 pixels long. The first index is 1 and the last is $n$.
+\begin{itemize}
+  \item For the convolution with $h(-x,-y)$,
+    we have a problem with $f(n)$ because it influences
+    $g(n)$ and $g(n+1)$ and since $g(n+1)$ is unknown.
+    A solution would be to only listen to the feedback given
+    by $g(n)$ but the sum of the weight of the feedbacks
+    will not be 1.
+    Consequently, we need to modify the method.
+    We will not spread $r$ but $r-1$ and then do $+1$
+    after the convolution with $h(-x)$ which gives (in 2-D)
+    \begin{equation}
+      \label{eq:lucy_iter_modif}
+      f_{k+1}(x,y) = f_k(x,y)\left(1+\left(\frac{g(x,y)}{(h*f_k)(x,y)}-1\right) * h(-x,-y)\right).
+    \end{equation}
+    That way, $f(n)$ is influenced by $g(n)$ the same
+    way it influence $g(n)$ which seems mandatory and
+    the effet of $g(n+1)$ is the same as if
+    $g(n+1) = (h*f)(n+1)$.
+  \item For $h * f$,
+    let's assume that we have a 1-D blur to the right of 2 pixels
+    (index starting at 1).
+    $(h*f)(1)$ depends on both $f(1)$ and $f(0)$ but $f(0)$ is not processed.
+    \begin{enumerate}
+      \item An first idea would be to make $f$ starts at 2.
+        We would approximate $\hat{f}(1)$ with $g(1)$.
+        $g(2)$ will be influence by $f(2)$ which is being estimated
+        and $\hat{f}(1)$ which is considered to be known.
+        The only difference will be that we do not update $\hat{f}(1)$
+        each iteration.
+        To get an better estimate for $\hat{f}(1)$, we can take
+        $g(1+L/2)$ where $L$ is the length of the blur since
+        that is the mean of the $L/2$ neighbours on the right and left
+        of $g(1)$.
+      \item A second idea would be to estimate $f$ from 0
+        it would only be influenced by $g(1)$.
+        We would therefore use equation~\eqref{eq:lucy_iter_modif}
+        for the iteration for the reasons explained earlier.
+        For the general case, we add pior values of $f$ to the
+        estimation process until $2-L$.
+    \end{enumerate}
+\end{itemize}
+
+For $f_0$ we usually start with a gray image (unicolor) which gives acceptable results.
+That way,
+\begin{align*}
+  f_{k+1}(x,y) & = f_0(x,y)\left(\frac{g(x,y)}{(h*f_0)(x,y)} * h(-x,-y)\right)\\
+               & = F_0\left(\frac{g(x,y)}{F_0} * h(-x,-y)\right)\\
+               & = g(x,y) * h(-x,-y).
+\end{align*}
+which is already correct if $g$ is unicolor.
+
+\subsection{Wiener Deconvolution}
  Another deconvolution is the wiener one. 
 
 
 
 
-\section{Regularisation}
+\subsection{Regularisation}
 %TODO
 The last deconvolution method is the deconvolution using regularized filter. 
 Instead of a simple inverse 
