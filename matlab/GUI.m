@@ -1,8 +1,8 @@
-%TODO : Put a legend for the graphs and  if we want to convert the image in
-%B&W + adapt in video camera + register
-%veut convertir l'image en NB (+ adapter dans camera video) + enregistrer les images automatiquement pour
-%la camra 
-% Cleaner le code
+
+% TODO : Mettre graph legends for camera + add button if we want
+%   to convertir l'image en NB (+ adapt in camera video) + save
+%   images automatically for camera
+%   Clean le code
 
 function GUI
 global MainWindow 

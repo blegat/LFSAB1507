@@ -1,7 +1,7 @@
 
 %% Creation des boutons
 function GUITrain(hObject, eventdata, handles)  
-global MainWindow ArtificialBlurButton DeblurButton1
+global MainWindow ArtificialBlurButton DeblurButton1 GorRGB
 
 h=findall(gcf,'parent',gcf);
  for i = 1:length(h)
@@ -13,6 +13,8 @@ menu1 = uimenu(MainWindow, 'label', 'Case');
 smenu1 = uimenu(menu1,'label', 'Train', 'callback', @GUITrain);
 smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', @GUICameravideo);
 
+GorRGB = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'no|yes' , 'units','Normalized', 'position', [0.50,0.8,0.2,0.05]);
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.30,0.8,0.2,0.05],'string','convert image in gray-scaled image ?');
 
 UploadButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 'Upload Image' , 'fontsize' , 15, 'position', [250,500,150,30] );
 set(UploadButton,'Callback',@LoadFunction);
@@ -36,7 +38,7 @@ guidata(MainWindow,handles)
 
 function LoadFunction(hObject, eventdata, handles)  
 %% attention code trouve sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
-global ArtificialBlurButton DeblurButton1 a
+global ArtificialBlurButton DeblurButton1  GorRGB
 a = 0;
 nomfichier=[]; 
 [filename,pathname] = uigetfile({'*.png';'*.jpg';'*.tiff';'*.bmp'},'File Selector');% recupere le 
@@ -52,9 +54,12 @@ else
     disp(['Image acquise ', fullpath]);
     I = imread(chemin);
     %I=rgb2gray(imread(filename));
-    size(I)
     %I = rgb2gray(I);
-    I = im2double(I);
+    if get(GorRGB,'value') == 1
+       I = im2double(I);
+    elseif get(GorRGB,'value') == 2
+       I=im2double(rgb2gray(imread(filename)));
+    end
     save('LALA','I')
     imshow(I);% Afficher l'image
     title('original image');
@@ -101,7 +106,7 @@ guidata(hObject,handles)
 
 function DeblurFunction1(hObject, eventdata, handles)  
 
-global choix1 Enregistrer2Button Method
+global choix1 Enregistrer2Button Method ParaLength
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off','Name','Deblurring','NumberTitle','off');
@@ -112,10 +117,11 @@ title('Image before deblurring');
 axis off; 
 handles.ImgPret=I; 
 
-choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05], 'Callback',@CBchoix1);
-get(choix1)
+choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
 
+ParaLength = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , '1|2|3' , 'units','Normalized', 'position', [0.60,0.7,0.2,0.05]);
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Parameter length estimator');
 
 Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Method of deblurring');
@@ -135,7 +141,7 @@ guidata(hObject,handles)
 
 function DeblurFunction2(hObject, eventdata, handles)  
 % modifier pour a
-global choix1  Enregistrer2Button Method
+global choix1  Enregistrer2Button Method ParaLength
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off', 'Name','Deblurring','NumberTitle','off');
@@ -149,10 +155,11 @@ handles.ImgPret=L;
 
 
 
-choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05], 'Callback',@CBchoix1);
-get(choix1)
+choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
 
+ParaLength = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , '1|2|3' , 'units','Normalized', 'position', [0.60,0.7,0.2,0.05]);
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Parameter length estimator');
 
 Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Method of deblurring');
@@ -181,15 +188,15 @@ set(Enregistrer1Button,'Enable','on');
 set(DeblurButton2,'Enable','on');
 
 function Defloute1(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1
+global Enregistrer2Button Method choix1 ParaLength
 load Lala;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
 if get(choix1,'Value') == 1
-  I = deblur(I,get(Method,'Value'),1);
+  I = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'));
 elseif get(choix1,'Value') == 2
-  I = deblur(I,get(Method,'Value'),0);  
+  I = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'));  
 end
 imshow(I,'parent',axe1);
 Final = I;
@@ -198,15 +205,15 @@ set(Enregistrer2Button,'Enable','on');
 %guidata(hObject,handles) 
 
 function Defloute2(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1
+global Enregistrer2Button Method choix1 ParaLength
 load BlurredImage ;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
 if get(choix1,'Value') == 1
-  L = deblur(L,get(Method,'Value'),1);
+  L = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'));
 elseif get(choix1,'Value') == 2
-  L = deblur(L,get(Method,'Value'),0);  
+  L = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'));  
 end
 imshow(L, 'parent', axe1);
 Final = L;

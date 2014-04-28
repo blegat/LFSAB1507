@@ -1,4 +1,4 @@
-function [] = save_image (L, name, graph)
+function [] = save_image (f, name, graph)
 % graph: 1 export in png
 %        2 just show
 %        else do nothing
@@ -8,13 +8,14 @@ if graph == 1 || graph == 2
         set(gcf,'Visible','off');
     end
     colormap(gray);
-    title(name);
-    set(gcf,'name',name,'numbertitle','off');
-    imshow(double(L)/255);
+    full_name = build_full_name(name);
+    title(full_name);
+    set(gcf,'name',full_name,'numbertitle','off');
+    imshow(double(f)/255);
     axis off;
     if graph == 1
         %saveas(gcf, name, 'png');
-        saveas(gcf, sprintf('../Images/%s',name), 'png');
+        saveas(gcf, sprintf('../Images/%s',full_name), 'png');
     end
 end
 end
