@@ -1,0 +1,46 @@
+\section{Foreground estimation}
+\label{sec:fg}
+Now that we have the background mean $b$ and the variance $v$ for each
+pixel, we can try to detect the foreground in a new image $s$.
+By the mean value theorem, we know that we can
+verify whether $s(x,y)$ belongs to the background or not
+by looking at $\frac{|b(x,y) - s(x,y)|}{\sqrt{v(x,y)}}$.
+
+When comparing it to a threshold, setting $d_0(x,y)$ to 0
+when it is below it and else to 1, we
+get an estimate of the foreground when $d_0(x,y) = 1$ would mean
+that the pixel at $(x,y)$ belongs to the foreground.
+
+However, there is still some noise if the threshold is low
+and the foreground has many holes in it if the threshold is high.
+To solve this problem, use an iterative algorithm that starts with $d_0$.
+\begin{enumerate}
+  \item Sets $m(x,y)$ to a mean of the pixels in the $N \times N$ sqare around $d_{k}(x,y)$ where $N > 1$ is arbitrary.
+  \item Sets
+    \[ d_{k+1}(x,y) =
+      \begin{cases}
+        0 & \text{if }m(x,y) < \epsilon\\
+        1 & \text{else}
+      \end{cases}
+    \]
+    where $\epsilon$ is arbitrary such that $\epsilon > 0$.
+\end{enumerate}
+The problem of the mean is that a change $N$ makes a big differencewhile it is only arbitrary.
+A gaussian blur is therefore used instead which is much better since it gives more weight to the pixels close to $(x,y)$, so the weight of the borders is very small and therefore $N$ has less influence.
+There is however still a variance to give as a parameter to the gaussian blur which is arbitrary.
+The gaussian blur however is still better due to its smoother borders.
+\todo{Show it !}
+A disadvrantage is that it needs $\bigoh(nmN^2)$ to be computed while the mean can be computed in $\bigoh(nm)$ if we precomputes the sum from $(0,0)$ to $(i,j)$ for all $(i,j)$.
+
+To avoid the noise, we make $\epsilon$ 2 times smaller at each iteration and we stop at a small value of $\epsilon$.
+After a few iterations, we get a solid shape.
+
+An $\bigoh(nm)$ algorithm (with the same kind of computation than the mean) can then be applied to get the biggest square of foreground inside the image.
+From the square, a flood-fill algorithm is applied to get the whole connected shape containing the square.
+This is the shape that we will deblur.
+For speed, we take a subimage around this shape and we apply the rest only to this subimage
+
+After debluring this shape, we could remove it and find the biggest square again to detect another shape to deblur and so on.
+This idea can therefore be applied to deblur several shapes on a scene.
+However, we only deblur one shape in our algorithms for simplicity
+since we've just seen that it is trivial to adapt it to several shapes.

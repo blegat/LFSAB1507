@@ -1,4 +1,4 @@
-S'attribuer ce qu'il y a dans le To Do et le mettre dans le In progress puis au plus dans le Done :)
+﻿S'attribuer ce qu'il y a dans le To Do et le mettre dans le In progress puis au plus dans le Done :)
 
 To Do 
 =====
@@ -10,11 +10,14 @@ Benoit
 	report: Angle estimation with radon
 	report: Length estimation with cepstrum
 	report: Deconvolution with lucy
+	report: Foreground estimation for cam
 
 Arnaud
 	report: Conclusion
-	report: Wiener
+	report: Wiener train
+	report: Wiener cam
 	report: regularization
+	report: Direct matrix resolution (show that it is useless, too sensible)
 
 Jonathan
 	report: GUI
@@ -24,8 +27,10 @@ Jonathan
 Geoffroy
 	report: Détection du foreground - background: matlab
 	report: angle estimation with Gabor
-	report: Direct matrix resolution (show that it is useless, too sensible)
 	report: nsr estimation
+	report: mathematical formulation
+	report: CDC
+	report: critère de netteté
 
 
 Done

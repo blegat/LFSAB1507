@@ -1,4 +1,4 @@
-% TODO explain that int_x int_y h(x,y) dx dy = 1
+% TODO explain that int_x int_y h(x,y) dx dy = 1 
 \section{What is an image?}
 
 An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is grey-scaled, the output is a scalar:
@@ -68,7 +68,7 @@ with $I_n$ the identity matrix of dimension $n$. By equation $(\ref{eqvec})$, we
 
 %La dernière phrase est compréhensible? Sinon je la baque mais je trouve ça badant de reprendre à chaque fois le tilde sur le H
 
-\section{What is deblurring?} 
+\section{What is deblurring?} %TODO considérer sans bruit et puis tikhonov avec bruit
 
 Deblurring is the inverse operation of blurring. So it consists in getting the image $\emph{f}$ from the blurred image $\emph{g}$. If the blurring matrix $H$ is known and if it is invertible, deblurring becomes very easy and we get the exact solution by:
 \begin{equation}
@@ -87,15 +87,17 @@ Like we said in the previous section, to approximate the blurring operator, we n
 
 First we need to make some assumptions about the circumstances to get an idea of what $H$ should look like. We assume that the picture has been taken with the camera parallel to the train (hyp. 1). This means that the blur effect will only appear horizontally on the picture. We also assume that the speed of the train is constant during the short period of time when the picture is taken (hyp. 2). This allows us to suppose the blurring operator to be linear: every pixel is modified in the same way. If the speed isn't constant, the parts of the image where the camera is going faster, are influenced by more pixels then the parts where the camera is going slower. The operation is not linear anymore and we won't take this case into account. We will first treat the case where the speed of the train is known and then when it is unknown. Finally we suppose the subjects on the picture to be in the same vertical plane (hyp. 3). So every subject lies approximatively on the same distance away from the camera. This also means that blurring will approximatively have the same effect everywhere on the image. If this was not the case, the blur effect would be more visible on subjects near the camera.
 
-Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: "How is a pixel of $g$ constructed based on the pixels of $f$?". Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $g$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
+Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: "How is a pixel of $G$ constructed based on the pixels of $F$?". Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $G$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
 \begin{equation}
 H=\sum_{i=0}^{k} c_i D^{i}.
+\label{eqHtrain}
 \end{equation}
-Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: %TODO figure
+
+Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. Intuitively, we expect $k$ to be increasing when the speed or the opening time also do. On the opposite, $k$ should decrease when the average distance $eta$ goes up. We already mentioned that before. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: %TODO figure
 \begin{equation}
 W = 2 \eta \tan\left(\frac{\phi}{2}\right).
 \end{equation}
-A row of the matrix associated to the image ($F$) represents then a real line of the image of lenth $W$. If $F$ has $N$ columns, the width of one pixel $W_e$ is
+A row of the matrix associated to the image ($F$) represents then a real line of the image of length $W$. If $F$ has $N$ columns, the width of one pixel $W_e$ is
 \begin{eqnarray}
 W_e &=& \frac{W}{N} \\
 &=& \frac{2 \eta }{N}\tan\left(\frac{\phi}{2}\right).
@@ -111,8 +113,59 @@ k &=& \frac{\Delta t}{\Delta t _e} \\
 &=& \dfrac{Nv\Delta t}{2 \ eta \tan\left(\frac{\phi}{2}\right)}.
 \end{eqnarray}
 
-From this equation, we see that when $v$ increases, $k$ also does, which seems intuitively correct. Same reasoning stays for $\Delta t$. On the opposite side, $k$ decreases when $\eta$ goes up. This was already observed in the beginning of this subsection.
+From this equation, we can verify our expectations: $k$ is proportional to $v$ and $\Delta t$, and inversely proportional to $eta$.
 
-%TODO explications c_i
+Now what about the coefficients $c_i$? Let's suppose the train is travelling to the right, so a pixel $G(m,n)$ is a weighted sum of the $k$ pixels to the left of the corresponding pixel $f(m,n)$ (plus itself). As the speed of the train is constant, every weight should be equal. Pixels of $G$ also have a range from $0$ to $255$ so the weighted sum must not exceed the maximum. That's why we have $c_i=\frac{1}{k+1}$.
+
+The last thing we need to determine in  equation $(\ref{eqHtrain})$ is the matrix $D$. A first version of it for a $3 \times 3$ image could be (we are still considering the train is moving to the right):
+$$
+\begin{pmatrix}
+a & b & c \\
+c & d & e \\
+f & g & h \\
+\end{pmatrix}
+\begin{pmatrix}
+0 & 1 & 0 \\
+0 & 0 & 1 \\
+0 & 0 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+0 & a & b \\
+0 & c & d \\
+0 & f & g \\
+\end{pmatrix}.
+$$
+Suppose we model the blurring of this $3 \times 3$ matrix $F$ with $k=1$ (we neglect the noise effect). We then have $G(i,3) = \frac{1}{2} F(i,2) + \frac{1}{2} F(i,3)~i=1,2,3$, just like we expected. It also works for the second column. But for the first column, we get: $G(i,1) = \frac{1}{2} F(i,1)~i=1,2,3$ so it only makes the left border of the original image darker (as 0 is black and 255 is white). If we took a bigger $k$, we would observe this for all the columns for which $n \leq k$ as they need some information out of the image. Actually, with this matrix $D$, we considered that everything that is beyond the scope of the image is black, and that is of course a bad approximation. So to get a better information about what is beyond the left edge of the image, we could approximate it by extrapolation. A simple example is the polynomial extrapolation of order 0. This consists in putting the first column $k$ times on the left of the image. Using the same example, we get:
+$$
+\begin{pmatrix}
+a & b & c \\
+c & d & e \\
+f & g & h \\
+\end{pmatrix}
+\begin{pmatrix}
+1 & 1 & 0 \\
+0 & 0 & 1 \\
+0 & 0 & 0
+\end{pmatrix}
+=
+\begin{pmatrix}
+a & a & b \\
+c & c & d \\
+f & f & g \\
+\end{pmatrix}.
+$$
+Now we have : $G(i,1) = F(i,1)~i=1,2,3$, which is a bit better than the previous model. If we take a higher order of extrapolation, we get a better approximation of the real blurring effect.
+
+%TODO pas compris le truc avec le C_1-j pour l'extrapolation d'ordre 1
+
+Another way to treat those "edge problems" is by modelling the blur effect on a smaller image. If we apply our model on the image defined by $F_{small} = F(m,n)$ for $m>k$, then we have all the 'missing information' and we don't need to extrapalte anymore.
+
 
 \subsection{Security camera}
+
+Our next situation is a fixed camera taking a sample of pictures with everytime the same scene but sometimes disturbed by a person walking around. The goal is to deblur the part of the image where a person is walking. There are three differences compared to the situation with the train. Firstly, only a part of the image is blurred, so deblurring will also be only applied on that part. Moreover, if the person is not too close to the edges of the image, we don't have any 'edge problems' anymore. And finally, the person could walk in any direction so we don't have a perfect horizontal blur effect anymore.
+
+Now how can we detect a walking person on an image? If we have a high number of images, we can build a background-image that contains the average value of each pixel. If we take the difference between the blurred image and this image, we get an image that contains very small values (near to zero) for the regions where the person is not present and bigger values for the regions that we call the foreground. Next we extract the foreground and we deblur this new image.
+
+% modélisation mathématique de comment trouver l'angle?

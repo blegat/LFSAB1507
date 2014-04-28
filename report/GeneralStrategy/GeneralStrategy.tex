@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 % TODO : ANGLE + mettre fonction matlab en latex
 
 
@@ -17,17 +16,17 @@ let us consider the case of a linear motion blur of the entire image with unknow
 First of all we estimate the angle of blurring ... (GABOR ou RADON ??)
 
 \subsection{Length}
-When we have a good estimation of the angle, we estimate the length parameter with the Matlab function length_estimator.m. This function requires processing on the signal cepstrum. 
-LIMITATION ??
+When we have a good estimation of the angle, we estimate the length parameter with the Matlab function \verb|length_estimator.m|. This function requires processing on the signal cepstrum. 
+% TODO LIMITATION ??
 
 \section{Deconvolution}
 
 When the PSF is known, we can debluring the input image. We chose to code three differents methods of deconvolution.
-\\
+
 The first one is Richardson–Lucy algorithm that is an iterative procedure. For that we use the Matlab function deconvlucy.m. The final result depends largely on the number of iterations.
-\\ 
+
 We can also use the Wiener method. This deconvolution is a mathematical operation in the spectral domain and is applied thanks to deconvwnr.m .
-\\
+
 Finally, we have the algorithm of Reguralization with the function deconvreg.m.
 
 \section{Situations}
@@ -37,14 +36,14 @@ Indeed, while the case of the train just requires deblurring of an image, the su
 
 \subsection{Train}
  
-the strategy of deblurring developed can be applied without modification to the case of taking an image of a train. Indeed, we have a mixting of pixels that is along the direction of the train and linearly (we assume the speed of the train constant). 
-\\
+The strategy of deblurring developed can be applied without modification to the case of taking an image of a train. Indeed, we have a mixting of pixels that is along the direction of the train and linearly (we assume the speed of the train constant). 
+
 This case is similar in theory to the artificial blurring with blur.m but in practice, a real image taken from a train will be much more complicated to deblurring (many external pertubations). 
 
 \subsection{Security camera}
 
 This case is more complicated. We just have to deblur the foreground of image taken by the security camera(that is for instance a man running through the camera range). So we applied the strategy above with the foreground only.
-\\
+
 First we seek to have the background (whithout foreground). For that two possibilities : the background is given or we have to estimate it with a serie of images taken by the video camera. This is possible thanks to a statistical analysis of each pixels of the images in the serie.
 
 After that , the main difficulty is to isolate the foreground of the background and we use statistical methods for it in the function deblurcam.m which take the backgroung in argument and deblur the foreground.
@@ -53,7 +52,7 @@ As the backgroung can change with time (new item, different brightness,...), we 
 
 \section{Fast computing}
 
-=======
+\todo[inline]{Merge from here...}
 \section{Train}
 Let's summarize the model.
 We know $g(x,y)$ and we know that there is a $h(x,y)$ such that
@@ -74,4 +73,4 @@ Once we have an estimate of $h(x,y)$, we then deconvolve
 $g(x,y)$ to get an estimate $\hat{f}(x,y)$.
 For some deconvolution method, we need an estimate of
 some properties of the noise which is done only using $g(x,y)$.
->>>>>>> 3f4bb88c3293725ad7cff7ed48f58682c7d1a324
+\todo[inline]{...to here somewhere :)}
