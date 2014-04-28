@@ -1,4 +1,4 @@
-function interface2
+function GUI
 global MainWindow 
 
 MainWindow = figure('color',[0 1 0]); %vert
