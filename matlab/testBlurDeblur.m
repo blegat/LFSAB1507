@@ -51,7 +51,8 @@ if test == 2
 elseif test == 4
     %Blurred with Gimp function
     I = double(imread('SagarL25A10.jpg'));
-    test_name = 'sagar'; % (25, 170)
+    test_name = 'sagar'; % (25, 171)
+    % Needs k = 7 for length_estimator
 end
 
 %Pictures on internet

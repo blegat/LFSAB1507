@@ -1,6 +1,9 @@
 *~
 *.png
 *.mat
+*.jpg
+*.bmp
+*.gif
 
 # LaTeX
 *.aux

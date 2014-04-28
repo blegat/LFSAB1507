@@ -1,5 +1,6 @@
-function plothot(R, thetas, xp, name)
+function plothot(R, thetas, xp, name, graph)
 if nargin < 2
+    graph = 2;
     [x y] = size(R);
     thetas = 1:x;
     xp = 1:y;
@@ -11,7 +12,7 @@ iptsetpref('ImshowAxesVisible','on')
 imshow(R,[],'Xdata',thetas,'Ydata',xp,...
             'InitialMagnification','fit');
 colormap(hot), colorbar
-if nargin > 3
+if graph == 1
     saveas(gcf, sprintf('../Images/%s', full_name), 'png');
 end
 iptsetpref('ImshowAxesVisible','off')
