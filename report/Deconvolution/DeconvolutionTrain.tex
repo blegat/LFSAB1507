@@ -19,8 +19,8 @@ However it's clear that if we add some noise this model doesn't work anymore. In
 
 \begin{figure}
 \centering
-\missingfigure{T'as oublié de la pusher}
-%\includegraphics[scale=0.5]{../Images/psfFFT.png}
+%\missingfigure{T'as oublié de la pusher}
+\includegraphics[scale=0.5]{../Images/psfFFT.png}
 \caption{FFT of the psf}
 \label{fig:psfFFT}
 \end{figure}
@@ -236,16 +236,20 @@ which is already correct if $g$ is unicolor.
 \subsection{Regularisation}
 %TODO
 The last deconvolution method is the deconvolution using regularized filter. 
-Instead of a simple inverse 
-\begin{equation}
-\sum_{m,n} \left[ (g(m,n) - h(m,n)*f(m,n))^2 + \alpha (l(m,n)*f(m,n))^2 \right]
-\end{equation}
+Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the estimated image. The second term is used to smooth the image to a certain extent. The term $l(m,n)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be. %TODO source mathworks t
 
 \begin{equation}
-\sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
+\sum_{m,n} \left[ (g(m,n) - h(m,n)*\f_e(m,n))^2 + \alpha (l(m,n)*f_e(m,n))^2 \right]
 \end{equation}
 
-
+The using the Fourier transform, we get
 \begin{equation}
-\hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\sum_{k,l} \{ [G(k,l) - H(k,l)F_e(k,l)]^2 + \alpha [L(k,l)F_e(k,l)]^2\}
 \end{equation}
+
+With the derivative we obtain
+\begin{equation}
+\hat{F_e}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\end{equation}
+So when the value of $H_e$ is near zero, the term $\alpha |L(k,l)|^2$ is there to avoid a too small denominator. 
+

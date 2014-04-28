@@ -1,4 +1,4 @@
-function [F] = deblur (f, algo, comp)
+function [F] = deblur (f, algo, comp, ParaLength)
 % Deblur the picture given in argument by evaluation of the psf and then 
 % deconvolution using lucy, wiener or regularisation
 %
@@ -18,7 +18,13 @@ angle  = robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
 
 %compute the estimation of the length of PSF
-len = length_estimator(partfForPSF, angle, 2, 5, 0)
+if ParaLength == 1
+len = length_estimator(partfForPSF, angle, 2, 3, 0)
+elseif ParaLength == 2
+    len = length_estimator(partfForPSF, angle, 2, 5, 0)
+elseif ParaLength == 3
+    len = length_estimator(partfForPSF, angle, 2, 8, 0)  
+end
 
 % Reduce the number of pixels to a defined size if the picture 
 % is too big
@@ -79,13 +85,13 @@ if algo == 2
    f = edgetaper(f,psf);
   F = deconvwnr(f,psf,nsr);
   
-   psf_abs = abs(psf);
-  figure()
+%    psf_abs = abs(psf);
+%   figure()
   %plot(fftshift(psf_abs));
  % fftshift(psf_abs)
-  surf(fftshift(psf_abs))
-shading interp, camlight, colormap jet
-xlabel('PSF FFT magnitude')
+%   surf(fftshift(psf_abs))
+% shading interp, camlight, colormap jet
+% xlabel('PSF FFT magnitude')
   % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);

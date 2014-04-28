@@ -11,13 +11,14 @@ We know that the blurred image $g$ is the sum of a signal $f$ (the initial image
   
 \section{Estimation of PSF}
 
-let us consider the case of a linear motion blur of the entire image with unknown angle and length of blurring. In this step we search a estimation of these two parameters that will allow us to calculate the PSF. 
-\subsection{Angle}
+let us consider the case of a linear motion blur of the entire image with unknown angle and length of blurring. In this step we search a estimation of these two parameters that will allow us to calculate the PSF.
+ 
+\subsection{Angle} \todo{BENOIT}
 First of all we estimate the angle of blurring ... (GABOR ou RADON ??)
 
 \subsection{Length}
 When we have a good estimation of the angle, we estimate the length parameter with the Matlab function \verb|length_estimator.m|. This function requires processing on the signal cepstrum. 
-% TODO LIMITATION ??
+\todo{Limitations}
 
 \section{Deconvolution}
 

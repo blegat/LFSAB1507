@@ -1,6 +1,6 @@
 
 function GUICameravideo(hObject, eventdata, handles)  
-global MainWindow axe1 axe2 axe3 UploadCameraButton SaveButton Saisie1
+global MainWindow axe1 axe2 axe3 UploadCameraButton SaveButton Saisie1 GorRGB
 
 h=findall(gcf,'parent',gcf);
  for i = 1:length(h)
@@ -13,6 +13,8 @@ menu1 = uimenu(MainWindow, 'label', 'Case');
 smenu1 = uimenu(menu1,'label', 'Train', 'callback', @GUITrain);
 smenu2 = uimenu(menu1, 'label', 'Camera video', 'callback', @GUICameravideo);
 
+GorRGB = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'no|yes' , 'units','Normalized', 'position', [0.25,0.9,0.1,0.05]);
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.05,0.9,0.2,0.05],'string','convert images in gray-scaled image ?');
 
 axe1 = axes('units', 'Normalized', 'position', [0.4,0.61, 0.3, 0.3], 'tag','axes1');
 axis off
@@ -45,7 +47,7 @@ guidata(MainWindow,handles)
 
 
 function UploadBackground(hObject, eventdata, handles)  
-global axe1 UploadCameraButton Out SaveButton Saisie1
+global axe1 UploadCameraButton Out SaveButton Saisie1 GorRGB
 set(UploadCameraButton,'Enable','on')
 set(SaveButton, 'Enable','on');
 set(Saisie1,'Enable','on')
@@ -55,20 +57,25 @@ chemin = fullfile(directoryname,ext);
 list = dir(chemin);
 n = numel(list);
 A = cell(1,n);
-% for i = 1:n
-%     A{i} = rgb2gray(imread(fullfile(directoryname, list(i).name)));
-% end
-% Out = DetectBackground(A); % Que en noir et blanc 
+ 
+if get(GorRGB,'value') == 1
 for i = 1:n
-    A{i} = imread(fullfile(directoryname, list(i).name));
+    [ratio A{i}] = compression(imread(fullfile(directoryname, list(i).name)), 2);
 end
-Out = DetectBackgroundColor(A); % Que en noir et blanc 
+Out = DetectBackgroundColor(A); 
+elseif get(GorRGB,'value') == 2
+for i = 1:n
+    [ratio A{i}] = compression(rgb2gray(imread(fullfile(directoryname, list(i).name))), 2);
+end
+Out = DetectBackground(A); % Que en noir et blanc
+end
 imshow(Out{1}/255,'parent',axe1)
+title(axe1,'Background'); 
 save('Bg','Out');
 
 
 function UploadCamera(hObject, eventdata, handles)  
-global axe1 axe2 axe3 Out Saisie1
+global axe1 axe2 axe3 Out Saisie1 GorRGB
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
@@ -77,14 +84,23 @@ iter = str2double(get(Saisie1,'String'));
 for n = 1:numel(list)
 %      img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
 %      Out = UpdateBackground(Out, img);
-     img = imread(fullfile(directoryname, list(n).name));
+     
+     if get(GorRGB,'value') == 1
+     [ratio img] = compression(imread(fullfile(directoryname, list(n).name)),2);
      Out = UpdateBackgroundColor(Out, img);
+     elseif get(GorRGB,'value') == 2     
+     [ratio img] = compression(rgb2gray(imread(fullfile(directoryname, list(n).name))),2);
+     Out = UpdateBackground(Out, img);
+     end
      imshow(img,'parent',axe2);
+     title(axe2,'Blurred image'); 
      imshow(Out{1}/255,'parent',axe1);
+     title(axe1,'Background'); 
      algo = 1;
-     comp = 1;
+     comp = 0;
      DeblurCam = cam(double(img), Out{1}, iter, algo, comp, 2);%Out{3});
      imshow(DeblurCam/255,'parent',axe3);
+     title(axe3,'Deblurred image'); 
     % saveas(DeblurCam/255, sprintf('%s/%d',directoryname,n), 'png');
      pause(0.01)
 end

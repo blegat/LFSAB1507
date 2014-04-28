@@ -1,7 +1,12 @@
 function Out = DetectBackground(Serie)%, InitialBackground)
 % Prend une serie d'images en input et en output renvoie le background de
 % la camera de cette serie. Serie is a 3D matrix
-
+if length(Serie) == 1
+  Dim = size(Serie{1});
+  VariablesStat = cell(1,2);
+  VariablesStat{1} = double(Serie{1});
+  VariablesStat{2} = zeros(Dim(1),Dim(2)); 
+else
 Dim = size(Serie{1});
 VariablesStat = cell(1,3);
 VariablesStat{1} = zeros(Dim(1),Dim(2));
@@ -26,15 +31,15 @@ for i = 1:Dim(1)
         
     end
 end
-
+end
 Out = VariablesStat; 
 end
 
 function A = F1(vec, Interquart, Med)
 % calcule la nouvelle moyenne de vec sans tenir compte des valeurs de vac
 % qui sont en dehors de [Med - 1.5 Interquart; Med + 1.5 Interquart]
-binf = Med - 1*Interquart;
-bsup = Med + 1*Interquart;
+binf = Med - 1.5*Interquart;
+bsup = Med + 1.5*Interquart;
 Tmp = length(vec);
 for i = 1:length(vec)
     if (vec(i) < binf) || (vec(i) > bsup)
