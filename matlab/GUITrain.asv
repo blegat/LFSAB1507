@@ -50,7 +50,7 @@ if isequal(filename,0)
 else
     fullpath = fullfile(pathname, filename);
     disp(['Image acquise ', fullpath]);
-    I = imread(chemin);
+    I = imread(filename);
     %I=rgb2gray(imread(filename));
     size(I)
     %I = rgb2gray(I);
