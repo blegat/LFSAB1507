@@ -5,12 +5,14 @@ if nargin < 2
     xp = 1:y;
 end
 figure
+full_name = build_full_name(name);
+set(gcf,'name',full_name,'numbertitle','off');
 iptsetpref('ImshowAxesVisible','on')
 imshow(R,[],'Xdata',thetas,'Ydata',xp,...
             'InitialMagnification','fit');
 colormap(hot), colorbar
 if nargin > 3
-    saveas(gcf, name, 'png');
+    saveas(gcf, sprintf('../Images/%s', full_name), 'png');
 end
 iptsetpref('ImshowAxesVisible','off')
 end
