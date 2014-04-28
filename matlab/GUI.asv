@@ -1,7 +1,6 @@
 %TODO : Mettre légende des graphes pour la caméra + rajouter bouton si on
-%veut convertir l'image en NB (+ adapter dans camera video) + enregistrer les images automatiquement pour
-%la caméra 
-% Cleaner le code
+%veut convertir l'image en NB + enregistrer les images automatiquement pour
+%la caméra
 
 function GUI
 global MainWindow 

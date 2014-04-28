@@ -1,6 +1,6 @@
 
 function GUICameravideo(hObject, eventdata, handles)  
-global MainWindow axe1 axe2 axe3 UploadCameraButton SaveButton
+global MainWindow axe1 axe2 axe3 UploadCameraButton SaveButton Saisie1
 
 h=findall(gcf,'parent',gcf);
  for i = 1:length(h)
@@ -33,6 +33,10 @@ uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.05,0.2,
 
 axe3 = axes('units', 'Normalized', 'position', [0.65,0.11, 0.3, 0.3], 'tag','axes1');
 axis off
+
+Saisie1 = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.23,0.35,0.05,0.05], 'Max' , 1 , 'string' , '0' );
+set(Saisie1,'Enable','off')
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.03,0.35,0.2,0.05],'string','Iter Lucy');
 %%
 
 % Stockage des identifiants utiles
@@ -41,9 +45,10 @@ guidata(MainWindow,handles)
 
 
 function UploadBackground(hObject, eventdata, handles)  
-global axe1 UploadCameraButton Out SaveButton
+global axe1 UploadCameraButton Out SaveButton Saisie1
 set(UploadCameraButton,'Enable','on')
 set(SaveButton, 'Enable','on');
+set(Saisie1,'Enable','on')
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
@@ -63,11 +68,12 @@ save('Bg','Out');
 
 
 function UploadCamera(hObject, eventdata, handles)  
-global axe1 axe2 axe3 Out
+global axe1 axe2 axe3 Out Saisie1
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
 list = dir(chemin);
+iter = str2double(get(Saisie1,'String'));
 for n = 1:numel(list)
 %      img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
 %      Out = UpdateBackground(Out, img);
@@ -77,8 +83,7 @@ for n = 1:numel(list)
      imshow(Out{1}/255,'parent',axe1);
      algo = 1;
      comp = 1;
-     pause(1);
-     DeblurCam = cam(double(img), Out{1}, algo, comp, 2);%Out{3});
+     DeblurCam = cam(double(img), Out{1}, iter, algo, comp, 2);%Out{3});
      imshow(DeblurCam/255,'parent',axe3);
     % saveas(DeblurCam/255, sprintf('%s/%d',directoryname,n), 'png');
      pause(0.01)
