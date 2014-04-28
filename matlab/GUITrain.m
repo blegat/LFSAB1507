@@ -208,7 +208,7 @@ if get(choix1,'Value') == 1
 elseif get(choix1,'Value') == 2
   L = deblur(L,get(Method,'Value'),0);  
 end
-Imshow(L, 'parent', axe1);
+imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')
 set(Enregistrer2Button,'Enable','on');

@@ -79,13 +79,13 @@ if algo == 2
    f = edgetaper(f,psf);
   F = deconvwnr(f,psf,nsr);
   
-   psf_abs = abs(psf);
-  figure()
+%    psf_abs = abs(psf);
+%   figure()
   %plot(fftshift(psf_abs));
  % fftshift(psf_abs)
-  surf(fftshift(psf_abs))
-shading interp, camlight, colormap jet
-xlabel('PSF FFT magnitude')
+%   surf(fftshift(psf_abs))
+% shading interp, camlight, colormap jet
+% xlabel('PSF FFT magnitude')
   % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);

@@ -1,6 +1,7 @@
-%TODO : Mettre légende des graphes pour la caméra + rajouter bouton si on
+%TODO : Put a legend for the graphs and  if we want to convert the image in
+%B&W + adapt in video camera + register
 %veut convertir l'image en NB (+ adapter dans camera video) + enregistrer les images automatiquement pour
-%la caméra 
+%la camra 
 % Cleaner le code
 
 function GUI
