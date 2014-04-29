@@ -117,7 +117,7 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         %latent_est(:,marginy) = observed(:,marginy+len/2);
         latent_est(marginx,:) = observed(marginx,:);
         latent_est(:,marginy) = observed(:,marginy);
-    else
+    elseif meth == 4
         observed = imrotate(observed, angle);
         mask = imrotate(mask, angle);
         bg = imrotate(bg, angle);
@@ -255,6 +255,83 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         if debug
             save_image(latent_est, 'latent_est rotated', 2);
         end
+    else
+        centered_psf = oneway_psf(len, angle);
+        centered_psf_hat = centered_psf(end:-1:1,end:-1:1);
+        if debug
+            figure
+            subplot(1,2,1);
+            imshow(centered_psf*len);
+            subplot(1,2,2);
+            imshow(centered_psf_hat*len);
+        end
+
+        observed = double(observed);
+        %psf = double(psf);
+        [n m] = size(observed);
+        N = n + len;
+        M = m + len;
+        angle = angle + 90;
+        [insidex marginx] = getInsideMargin(N, len*sign(cos(angle/180*pi)));
+        [insidey marginy] = getInsideMargin(M, len*sign(sin(angle/180*pi)));
+        %[insidex marginx] = getInsideMargin(N, len);
+        %[insidey marginy] = getInsideMargin(M, len);
+
+        inside = zeros(N, M);% could do better with mean shift
+        %cheat = double(imread('cameraman.tif'));
+        %margin = cheat;
+        inside(insidex,insidey) = observed;
+        if debug
+            save_image(inside, 'inside', 2);
+        end
+
+        %latent_est = inside;
+        latent_est = 255*ones(size(inside))/2;
+
+        for i = 1:iterations
+            if debug
+                figure
+                subplot(3,2,1)
+                imshow(inside/255);
+                subplot(3,2,2);
+                imshow(latent_est/255);
+            end
+            %est_conv         = filter2(psf, latent_est, 'same');
+            est_conv = imfilter(latent_est, centered_psf);
+            if debug
+                subplot(3,2,3);
+                imshow(est_conv/255);
+            end
+            % We take the difference with one so that
+            % if a pixel influence in total, less than 1 pixel,
+            % it does not get dark
+            relative_blur    = inside ./ est_conv - 1;
+            relative_blur(marginx,:) = 0;
+            relative_blur(:,marginy) = 0;
+            relative_blur(est_conv == 0) = 0;
+            if debug
+                subplot(3,2,4);
+                imshow((relative_blur+0.5)/2.55);
+            end
+            %rev_relative_blur = relative_blur(end:-1:1,end:-1:1);
+            %error_est = filter2(psf, rev_relative_blur, 'same');
+            %error_est = imfilter(rev_relative_blur, centered_psf, 'replicate');
+            %error_est = error_est(end:-1:1,end:-1:1);
+            error_est = 1 + imfilter(relative_blur, centered_psf_hat);
+            if debug
+                subplot(3,2,5);
+                imshow((error_est-0.5)/2.55);
+            end
+            latent_est       = latent_est .* error_est;
+            if debug
+                subplot(3,2,6);
+                imshow(latent_est/255);
+            end
+        end
+        %latent_est(marginx,:) = observed(marginx+len/2,:);
+        %latent_est(:,marginy) = observed(:,marginy+len/2);
+        %latent_est(marginx,:) = observed(marginx,:);
+        %latent_est(:,marginy) = observed(:,marginy);
     end
 end
 
@@ -268,5 +345,6 @@ else
     m = abs(m);
     margin = 1:m;
     inside = m+1:n;
+end
 end
 end

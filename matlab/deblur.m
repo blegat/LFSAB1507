@@ -115,4 +115,11 @@ if algo == 4
     [F P]  = deconvblind(f,psf);
 end
 
+if algo == 5
+    F = lucy(f, psf, len, angle, 15, 0, 3);
+end
+
+if algo == 6
+    F = lucy(f(len:end,:), psf, len, angle, 15, 0, 5);
+end
 end
