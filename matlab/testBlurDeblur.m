@@ -12,9 +12,11 @@ global L;
 global angle;
 global blur_method;
 
-if nargin < 5
-    blur_meth = 2;
+if nargin < 6
     iter = 16;
+    if nargin < 5
+        blur_meth = 2;
+    end
 end
 
 close all;
