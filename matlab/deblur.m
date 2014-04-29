@@ -1,4 +1,4 @@
-function [F] = deblur (f, algo, comp, ParaLength)
+function [F] = deblur (f, algo, comp, ParaLength, iter)
 % Deblur the picture given in argument by evaluation of the psf and then 
 % deconvolution using lucy, wiener or regularisation
 %
@@ -71,7 +71,7 @@ if algo == 1
    tic
    for i=1:iterColorOrGray
       f(:,:,i) = edgetaper(f(:,:,i),psf);
-      F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
+      F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
    %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
@@ -117,13 +117,13 @@ end
 
 if algo == 5
     for i=1:iterColorOrGray
-        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 3);
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, iter, 0, 3);
     end
 end
 
 if algo == 6
     for i=1:iterColorOrGray
-        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 5);
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, iter, 0, 5);
     end
 end
 end
