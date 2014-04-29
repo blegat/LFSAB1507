@@ -116,10 +116,14 @@ if algo == 4
 end
 
 if algo == 5
-    F = lucy(f, psf, len, angle, 15, 0, 3);
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 3);
+    end
 end
 
 if algo == 6
-    F = lucy(f(len:end,:), psf, len, angle, 20, 0, 5);
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 5);
+    end
 end
 end
