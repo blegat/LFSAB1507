@@ -239,46 +239,46 @@ which is already correct if $g$ is unicolor.
 \label{subsec:Wiener}
  Another deconvolution is the wiener one. The wiener filter is more robust than the inverse filter because it doesn't ignore the noise. We have in the frequency domain
 \begin{equation}
-G = HF + N,
+G(k,l) = H(k,l)F(k,l) + N(k,l),
 \label{eq:FeHF}
 \end{equation} 
  where $N$ is the DF transform of a noise $n$ with mean $0$. We want to estimate $\hat{F}$ based on the image observed $F$ and a filter $L$ which still need to be defined, i.e. 
  \begin{equation}
-\hat{F} = LF.
+\hat{F}(k,l) = L(k,l)F(k,l).
  \label{eq:feLF}
  \end{equation}
 
 We want a filter $L$ such as it minimizes 
 \begin{equation}
-\min \mathbb{E}\{|F - \hat{F}|^2\},
+\min \mathbb{E}\{|F(k,l) - \hat{F}(k,l)|^2\},
 \label{eq:FFe}
 \end{equation}
-and so, using equations \eqref{eq:FeHF} and \eqref{eq:feLF} we can transform equation \eqref{eq:FFe} in 
+and so, using equations \eqref{eq:FeHF} and \eqref{eq:feLF} we can transform equation \eqref{eq:FFe} (we don't write $(k,l)$) in 
 \begin{align*}
-\mathbb{E}\{|F - F_e|^2\} &= \mathbb{E}\{|F - L(HF+N)|^2\}\\
+\mathbb{E}\{|F - \hat{F}|^2\} &= \mathbb{E}\{|F - L(HF+N)|^2\}\\
 	&= \mathbb{E}\{|(1-LH)F - LN|^2\}
 \end{align*}
 
 Then, let's introduce some notations concerning the power spectrum :
 \begin{itemize}
-\item $S_f = \mathbb{E}\{|F|^2\}$ is the signal power spectrum
-\item $S_n = \mathbb{E}\{|N|^2\}$ is noise power spectrum 
+\item $S_f(k,l) = \mathbb{E}\{|F(k,l)|^2\}$ is the signal power spectrum
+\item $S_n(k,l) = \mathbb{E}\{|N(k,l)|^2\}$ is noise power spectrum 
 \end{itemize}
 
 After some computation and taking the derivative, we get
 
 \begin{equation}
-L = \frac{H^*+S_f}{|H|^2 S_f + S_n}.
+L(k,l)= \frac{H^*(k,l)+S_f(k,l)}{|H|^2 S_f(k,l) + S_n(k,l)}.
 \label{eq:LsemiFinal}
 \end{equation}
 
 Finally, defining $NSR = \frac{S_n}{S_f}$, we can rewrite $L$ as 
 \begin{equation}
-L = \frac{H^*}{|H|^2 + NSR}.
+L (k,l)= \frac{H^*(k,l)}{|H(k,l)|^2 + NSR}.
 \end{equation}
 and 
 \begin{equation}
- \hat{F} = \frac{H^*}{|H|^2 + NSR} G.
+ \hat{F}(k,l) = \frac{H^*(k,l)}{|H(k,l)|^2 + NSR} G(k,l).
 \end{equation}
 So the filter $L$ gives the minimum mean-square error estimate of $F$.
 However, this filter needs an estimation of the noise and image variances, which are difficult to estimate. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
@@ -286,20 +286,25 @@ However, this filter needs an estimation of the noise and image variances, which
 \subsection{Regularisation}
 \label{subsec:Reg}
 The last deconvolution method is the deconvolution using regularized filter. 
-Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the original image we are looking for. The second term is used to smooth the image to a certain extent. The term $l(m,n)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be. %TODO source mathworks t
+Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the original image we are looking for. The second term is used to smooth the image to a certain extent. 
 
 \begin{equation}
-\sum_{m,n} \left[ (g(m,n) - h(m,n)*f(m,n))^2 + \alpha (l(m,n)*f(m,n))^2 \right]
+\min \sum_{x,y} \left[ (g(x,y) - h(x,y)*f(x,y))^2 + \alpha (l(x,y)*f(x,y))^2 \right]
 \end{equation}
 
-The using the Fourier transform, we get
+And using the Fourier transform, we get
 \begin{equation}
-\sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
+\min \sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
+\label{eq:FTreg}
 \end{equation}
+
+The term $L(k,l)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. Indeed the noise is a high frequency in the frequency domain as it is a big change between two pixels. 
+
+The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be\cite{mathWorksWiener}. Indeed if $\alpha$ is big, it amplifies more the high frequencies from $LF$ and because we want to minimise the expression \eqref{eq:FTreg} the low frequencies will be preferred.
 
 With the derivative we obtain
 \begin{equation}
-\hat{F_e}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
 \end{equation}
-So when the value of $H_e$ is near zero, the term $\alpha |L(k,l)|^2$ is there to avoid a too small denominator. 
+So when the value of $H$ is near zero, the term $\alpha |L(k,l)|^2$ is there to avoid a too small denominator. 
 
