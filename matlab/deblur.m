@@ -18,12 +18,13 @@ angle  = robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
 
 %compute the estimation of the length of PSF
+squared = squareborder(partfForPSF, 0);
 if ParaLength == 1
-len = length_estimator(partfForPSF, angle, 2, 3, 0)
+    len = length_estimator(squared, angle, 2, 3, 0)
 elseif ParaLength == 2
-    len = length_estimator(partfForPSF, angle, 2, 5, 0)
+    len = length_estimator(squared, angle, 2, 5, 0)
 elseif ParaLength == 3
-    len = length_estimator(partfForPSF, angle, 2, 8, 0)  
+    len = length_estimator(squared, angle, 2, 8, 0)
 end
 
 % Reduce the number of pixels to a defined size if the picture 
@@ -69,8 +70,8 @@ if algo == 1
    % psf = fspecial('motion', psf, angle);
    tic
    for i=1:iterColorOrGray
-      f(:,:,i) = edgetaper(f(:,:,i),psf);
-      F(:,:,i) = deconvlucy(f(:,:,i), psf, 15);
+      %f(:,:,i) = edgetaper(f(:,:,i),psf);
+      F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
    %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
@@ -114,4 +115,15 @@ if algo == 4
     [F P]  = deconvblind(f,psf);
 end
 
+if algo == 5
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 3);
+    end
+end
+
+if algo == 6
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 15, 0, 5);
+    end
+end
 end

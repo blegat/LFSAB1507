@@ -3,7 +3,7 @@ if nargin < 3
     thetas = 0:180;
 end
 if debug == 1
-    save_image(f, 'hann', 1);
+    save_image(f, 'hann', 2);
 end
 
 fc = f - mean(mean(f)); % centered
