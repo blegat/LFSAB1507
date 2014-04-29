@@ -15,5 +15,6 @@
 *.pdf
 *.toc
 *.out
+*.gz
 
 Thumbs.db

@@ -1,0 +1,21 @@
+
+We finally finished our image deblurring project and we have here presented our main results. Let's remember the main points of our project. 
+
+After some time spent on understanding the problem, we wrote the mathematical model which enabled us to structure our ideas and identify the key challenges of deblurring. This model is written in chapter \ref{mathModel}. We decided to manage two cases : the train, i.e. a linear motion blur with an angle and the camera, i.e. a sharp background and a blurred foreground which we restrain to the same type of blur as in the train case. 
+
+We then split our problem in three main parts : the estimation of the psf for the train, the deconvolution for the train and then the adaptation for the camera. 
+
+Estimating the psf needs different values. The first one is the angle of the psf. To compute this angle, we implemented different methods, one using radon and the other using gabor, as explained in subsections \ref{subsec:Radon} and \ref{subsec:Gabor}. Then we estimated the length of the psf. To do this, we used a modified cepstrum as explained in subsection \ref{subsec:Cep}. This psf estimation gives accurate results most of the time even if for some pictures we don't get the exact psf. 
+
+Once we had our estimated psf, we focused on the deconvolution. After a quick review of the simple inverse filter, we used three different algorithms for this deconvolution : Lucy-Richardson, Wiener and regularisation. Lucy-Richardson is based on a poisson distribution and on a fix point method for the iterations i order to converge to the MLE, as explained in subsection \ref{subsec:Lucy}. Wiener deconvolution gives the minimum mean-square error estimate of the initial image using an estimation of the noise's and image's power spectrum. The regularisation is based on an inverse filter to which was added a term.  This term penalizes the high frequencies and so the noise and avoid the problems experienced with the inverse filter. For further details, please refer to the subsections \ref{subsec:Wiener} and \ref{subsec:Reg}.
+
+Besides these deconvolutions, we implemented some complementary treatments. Estimating the nsr required a smooth region. We wanted a mathematical criterion to compare the sharpness of different results for the same blurred image, we also managed the problem with the edges and some details with the colors, as written in section \ref{sec:CompTr}.
+
+
+We then moved to the camera. The first aspect is to have a proper background without interference,such as  people walking in front of the camera for example. Then we can detect the foreground by comparing the new picture with the estimated background. We finally have to compute our psf based on the foreground only. All these aspects are explained in chapter \ref{chap:Camera}. 
+
+The "real-time" was our bonus item. As exact real-time was difficult to achieve and we found it less interesting in the context of image deblurring than others aspects available to reduce the computation time we decide to implement an image resizing and a psf estimation on a smaller part of the image as described in section \ref{sec:RealTime}. 
+
+Finally, in chapter \ref{chap:Comparison}, we test different aspects of our methods like the computation time, the quality of the psf estimation, and last but not least real images.  Some results were encouraging, some others less. We finally identify the main improvements that could be implemented for even better results.
+
+ 

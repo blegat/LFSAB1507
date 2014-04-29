@@ -1,5 +1,5 @@
 \section{Complementary Treatment}
-
+\label{sec:CompTr}
 \subsection{Estimation of the noise-to-signal power ratio (NSR)}
 \label{subsec:NSREstimation}
 Deconvolution by the method of Wiener needs the NSR of the additive noise in the image. The problem of computing the NSR is that we need the original image, which we usually don't have, otherwise deblurring would have no meaning anymore. That is why we try to estimate the NSR by the following reasoning. The pixels of a zone that represent a background (e.g. an area of a blue sky) should be approximatively constant. So the variance of this area would me mostly due to the noise. So we will estimate the power of noise by the variance of such an area. This is the main idea of our matlab function $nsrEstimation(f,psf)$, with $f$ the processed image. % ca sert à quoi psf? %cmt choisir intervention humaine ou pas? if true..?
@@ -27,6 +27,7 @@ The problem of both methods is that we need the original image. That is only pos
 When an image is blurred, its high spatial frequency values in the spectrum are attenuated. Blur is perceptually apparent along edges so the technique is based on the smoothing effect of it on the edges. According to \cite{marziliano2002no},it is sufficient to measure blur along vertical edgdes. Here is the algorithm:\\
 First we detect the edges by a Sobel filter for example. Then we scan each row of the image. When we detect a pixel that corresponds to an edge, we look for the local maximum and minimum on that row. The distance (in pixels) between those extrema represents the local blur. Finally, we get the global blur measure for whole the image by averaging the local blur values over all edge locations.
 
+<<<<<<< HEAD
 The matlab function $blurmetric(I,meth,tresh,direction)$ implements this algorithm. The inputs are the processed image $I$, the method used to determine the edges ($1=Sobel, 2=Prewitt, 3=Canny$), a treshold for those methods that is fixed at $0.0215$ if it is not specified and finally the direction of the edges (vertical or horizontal). We have done some tests with the picture of the little girl on figure $(\ref{littleGirl})$. With blurred this picture with our matlab function $blur$ ($meth=2$$) for different angles and lengths of blur. The image is of dimensions $171 \times 151$ so we tested for a blur length from $0$ to $40$. Bigger values gave non-logical results. 
 
 \begin{table}
@@ -54,11 +55,27 @@ We observe on table $(\ref{tableblurmetric})$ that for a fixed angle, the blur m
 \caption{Orginal image of little girl}
 \label{littleGirl}
 \end{figure}
+=======
+The matlab function $bordSobel(I,meth,tresh,direction)$ implements this algorithm. The inputs are the processed image $I$, the method used to determine the edges ($1=Sobel, 2=Prewitt, 3=Canny$), a threshold for those methods that is fixed at $0.0215$ if it is not specified and finally the direction of the edges (vertical or horizontal).
+
+%TODO résultats
+%TODO changer nom de bordSobel car ca peut une autre meth que Sobel
+>>>>>>> 2ae741c6701c6ca5ebdfd97ca4f4fc99f322f0fd
 
 
 \subsection{EdgeTaper}
+%TODO source : http://www.mathworks.nl/help/images/avoiding-ringing-in-deblurred-images.html
+One of the main characteristic of the frequency domain is its periodicity. It means that we have to deal somehow with the edges of the image because the Fourier transform will consider that the image is replicated one after the other. It's problematic because of the difference which can occur between the two sides of the picture. Indeed this difference will generate high frequencies which can create some artifacts  when we deblur. 
+To avoid this problem, we use the function \texttt{edgetaper} from matlab. This function smooth the edge of the picture and so reduce the high frequencies in the Fourier domain and the artifacts in the deblurred picture. 
+An example of deblurred picture without \texttt{edgetaper} used is shown at figure \ref{fig:sagarNoEdgeTaper}, and one with \texttt{edgetaper} used at figure \ref{fig:sagarEdgeTaper}.
+\begin{myfig}{edgeTaper}
+  {Effect of smoothing the edge of the picture}
+  \mysubfig{sagarNoEdgeTaper}{Image deblurred without the edges smoothed}{0.4}
+  \mysubfig{sagarEdgeTaper}{Image deblurred with the edges smoothed}{0.4}
+\end{myfig}
 
-One of the main characteristic of the frequency domain is its periodicity. It means that at the edges of the pictures \todo{To be continued after getting a nap} 
+
+
 
 \subsection{RGB - grayscaled images : analysis and treatment}
 

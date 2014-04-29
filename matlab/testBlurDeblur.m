@@ -1,4 +1,4 @@
-function [] = testBlurDeblur(test, algo, len, blur_angle)
+function [] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter)
 %Test function, 
 % -choose a picture to deblur
 % -blur it artificially if  not already blurred
@@ -10,6 +10,14 @@ function [] = testBlurDeblur(test, algo, len, blur_angle)
 global test_name;
 global L;
 global angle;
+global blur_method;
+
+if nargin < 6
+    iter = 16;
+    if nargin < 5
+        blur_meth = 2;
+    end
+end
 
 close all;
 
@@ -32,15 +40,20 @@ elseif test == 7
     I = double(imread('Moire_Pattern.jpg'));
     test_name = 'pattern';
 elseif test == 9
-    I = double(imread('Moirebricks.jpg'));
+    I = double(imread('../Images/bricks.jpg'));
     test_name = 'bricks';
 end
 
 %%% Blur the picture
 if mod(test,2) == 1
-    I = blur(I,len,blur_angle,2);
+    I = blur(I,len,blur_angle,blur_meth);
     L = len;
     angle = blur_angle;
+    if blur_meth == 2
+        blur_method = 'circ';
+    else
+        blur_method = 'black';
+    end
 end
 
 
@@ -76,9 +89,10 @@ save_image(I, 'g', 2);
 
 %%% Deblur the image
 
-deblurred = deblur(I,algo,0,k_len);
+
+deblurred = deblur(I,algo,0,k_len,iter);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'f', 2);
+    save_image(deblurred, 'bricksLanczos', 1);
 end

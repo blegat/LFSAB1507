@@ -72,7 +72,11 @@ end
 function [peek] = peek_finder_2(array, center, k)
 end_of_center = peek_finder_1(array, center, k, 0);
 [m peek] = max(array(end_of_center:end));
-peek = peek + end_of_center - 1;
+if numel(peek) == 0
+    peek = end_of_center;
+else
+    peek = peek + end_of_center - 1;
+end
 end
 
 function [x, y] =  max_coord_mat (A)

@@ -1,3 +1,4 @@
+
 function [F] = blurmetric(I,meth,tresh,direction)
 if nargin == 1
     meth=1;
