@@ -13,6 +13,7 @@ global angle;
 
 close all;
 
+k_len = 2;
 %%%%%%%%%%%%        Must be blurred         %%%%%%%%%%%%
 if test == 1
     %cameraman
@@ -52,7 +53,7 @@ elseif test == 4
     %Blurred with Gimp function
     I = double(imread('SagarL25A10.jpg'));
     test_name = 'sagar'; % (25, 171)
-    % Needs k = 7 for length_estimator
+    k_len = 3;
 end
 
 %Pictures on internet
@@ -74,7 +75,7 @@ save_image(I, 'g', 2);
 
 %%% Deblur the image
 
-deblurred = deblur(I,algo,0);
+deblurred = deblur(I,algo,0,k_len);
 
 
 %%%Show the deblurred image
