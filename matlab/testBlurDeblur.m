@@ -12,9 +12,11 @@ global L;
 global angle;
 global blur_method;
 
-if nargin < 5
-    blur_meth = 2;
+if nargin < 6
     iter = 16;
+    if nargin < 5
+        blur_meth = 2;
+    end
 end
 
 close all;
@@ -38,7 +40,7 @@ elseif test == 7
     I = double(imread('Moire_Pattern.jpg'));
     test_name = 'pattern';
 elseif test == 9
-    I = double(imread('Moirebricks.jpg'));
+    I = double(imread('../Images/bricks.jpg'));
     test_name = 'bricks';
 end
 
@@ -87,9 +89,10 @@ save_image(I, 'g', 2);
 
 %%% Deblur the image
 
+
 deblurred = deblur(I,algo,0,k_len,iter);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'f', 2);
+    save_image(deblurred, 'bricksLanczos', 1);
 end

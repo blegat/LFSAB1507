@@ -332,6 +332,9 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         %latent_est(:,marginy) = observed(:,marginy+len/2);
         %latent_est(marginx,:) = observed(marginx,:);
         %latent_est(:,marginy) = observed(:,marginy);
+        if debug
+            save_image(big_latent_est, 'fullmagic', 2);
+        end
         latent_est = big_latent_est(insidex,insidey);
     end
 end

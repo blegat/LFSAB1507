@@ -96,7 +96,7 @@ for n = 1:numel(list)
      imshow(Out{1}/255,'parent',axe1);
      title(axe1,'Background'); 
      algo = 1;
-     comp = 0;
+     comp = 1;
      DeblurCam = cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
      save_imageCam (DeblurCam, 'CamDeblurred', 1,directoryname, n);
      imshow(DeblurCam/255,'parent',axe3);

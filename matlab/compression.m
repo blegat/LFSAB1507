@@ -37,7 +37,7 @@ if type ==1
     
     
 elseif type ==2
-    sizeFormat = 750;
+    sizeFormat = 250;
     if max(d(1),d(2)) > sizeFormat
         ratio = sizeFormat/max(d(1),d(2)); % international norm TO BE CONFIRMED
     end
