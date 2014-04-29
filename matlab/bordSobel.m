@@ -1,4 +1,5 @@
 function [F] = bordSobel(I,meth,tresh,direction)
+%
 if nargin == 1
     meth=1;
     tresh=0.0215;

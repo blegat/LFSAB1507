@@ -96,8 +96,8 @@ for n = 1:numel(list)
      title(axe2,'Blurred image'); 
      imshow(Out{1}/255,'parent',axe1);
      title(axe1,'Background'); 
-     algo = 1;
-     comp = 0;
+     algo = 3;
+     comp = 1;
      DeblurCam = cam(double(img), Out{1}, iter, algo, comp, 2);%Out{3});
      imshow(DeblurCam/255,'parent',axe3);
      title(axe3,'Deblurred image'); 

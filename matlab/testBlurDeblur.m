@@ -32,13 +32,13 @@ elseif test == 7
     I = double(imread('Moire_Pattern.jpg'));
     test_name = 'pattern';
 elseif test == 9
-    I = double(imread('Moirebricks.jpg'));
+    I = double(imread('../Images/bricks.jpg'));
     test_name = 'bricks';
 end
 
 %%% Blur the picture
 if mod(test,2) == 1
-    I = blur(I,len,blur_angle,2);
+ %   I = blur(I,len,blur_angle,2);
     L = len;
     angle = blur_angle;
 end
@@ -75,9 +75,9 @@ save_image(I, 'g', 2);
 
 %%% Deblur the image
 
-deblurred = deblur(I,algo,0,k_len);
+deblurred = deblur(I,algo,1,k_len);
 
 
 %%%Show the deblurred image
-save_image(deblurred, 'f', 2);
+    save_image(deblurred, 'bricksLanczos', 1);
 end

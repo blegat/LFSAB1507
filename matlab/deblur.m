@@ -1,5 +1,5 @@
 function [F] = deblur (f, algo, comp, ParaLength)
-% Deblur the picture given in argument by evaluation of the psf and then 
+% Deblur the picture given in argument by evaluation of the psf and then
 % deconvolution using lucy, wiener or regularisation
 %
 % IN :  -f the function which need to be deblurred
@@ -7,7 +7,7 @@ function [F] = deblur (f, algo, comp, ParaLength)
 %           1: Lucy-Richardson
 %           2: Wiener
 %           3: Regularization
-%		-ParaLength depending on the size of the picture allow 
+%		-ParaLength depending on the size of the picture allow
 %		 better estimation of the length
 % OUT:  -F the deblurred image
 
@@ -29,7 +29,7 @@ elseif ParaLength == 3
     len = length_estimator(squared, angle, 2, 8, 0)
 end
 
-% Reduce the number of pixels to a defined size if the picture 
+% Reduce the number of pixels to a defined size if the picture
 % is too big
 tic
 [ratio f] = compression(f,2*comp);
@@ -56,45 +56,61 @@ F = zeros(size(f));
 
 %Lucy Richardson
 if algo == 1
-   tic
-   for i=1:iterColorOrGray
-      f(:,:,i) = edgetaper(f(:,:,i),psf);
-      F(:,:,i) = deconvlucy(f(:,:,i), psf, 15);
-   %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
-   %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
-   end
-   toc      
+    tic
+    for i=1:iterColorOrGray
+        f(:,:,i) = edgetaper(f(:,:,i),psf);
+        F(:,:,i) = deconvlucy(f(:,:,i), psf, 15);
+        %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
+        %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
+    end
+    toc
 end
 if algo == 2
-   f = edgetaper(f,psf);
-  F = deconvwnr(f,psf,nsr);
-  
-%    psf_abs = abs(psf);
-%   figure()
-  %plot(fftshift(psf_abs));
- % fftshift(psf_abs)
-%   surf(fftshift(psf_abs))
-% shading interp, camlight, colormap jet
-% xlabel('PSF FFT magnitude')
-  % save_image(F,'deb',2);
+    
+    
+%%% Plot the DFT of the image
+   %figure()
+     %  plot(fft(f))
+    % shading interp, camlight, colormap jet
+    
+%    save_image(f, 'f', 2);
+%    psfEdge = fspecial('gaussian', 50, 10);
+% f = edgetaper(f,psfEdge);
+%     f = edgetaper(f,psf);
+% save_image(f, 'sagarNoEdgeTaper', 1);
+  %   figure()
+  %     plot(fftshift(f))
+ %   F = deconvwnr(f,psf,nsr);
+    
+%%% Plot the psf 
+    %    psf_abs = abs(psf);
+    %   figure()
+    %   surf(fftshift(psf_abs))
+    % shading interp, camlight, colormap jet
+    % xlabel('PSF FFT magnitude')
+    
+    
+    
+    
+    % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);
-  % F = f;
-  
+     F = f;
+    
 end
 if algo == 3
-   f = edgetaper(f,psf);
-   [F arg] = deconvreg(f,psf,nsr);
-
-  %save_image(F,'deb',2);
-  %F = wiener2(F, [2 2]);
-  %save_image(F,'wi',2);
-  %F = medfilt2(F);
- 
+    f = edgetaper(f,psf);
+    [F arg] = deconvreg(f,psf,nsr);
+    
+    %save_image(F,'deb',2);
+    %F = wiener2(F, [2 2]);
+    %save_image(F,'wi',2);
+    %F = medfilt2(F);
+    
 end
 
 if algo == 4
-   % f = edgetaper(f,psf);
+    % f = edgetaper(f,psf);
     [F P]  = deconvblind(f,psf);
 end
 

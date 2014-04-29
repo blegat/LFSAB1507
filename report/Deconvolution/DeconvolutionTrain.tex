@@ -27,6 +27,7 @@ However it's clear that if we add some noise this model doesn't work anymore. In
 
 
 \subsection{Lucy-Richarson}
+\label{subsec:Lucy}
 \subsubsection{Theory behind the method}
 The method was introduced in~\cite{richardson1972bayesian} and
 then in~\cite{lucy1974iterative} by Richarson and Lucy respectively.
@@ -228,6 +229,7 @@ That way,
 which is already correct if $g$ is unicolor.
 
 \subsection{Wiener}
+\label{subsec:Wiener}
  Another deconvolution is the wiener one. The wiener filter is more robust than the inverse filter because it doesn't ignore the noise. We have in the frequency domain
 \begin{equation}
 F_e = HF + N,
@@ -271,6 +273,7 @@ L = \frac{H^*}{|H|^2 + NSR}.
 However, this filter needs an estimation of the noise and image variances, which are difficult to estimate. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
 
 \subsection{Regularisation}
+\label{subsec:Reg}
 %TODO
 The last deconvolution method is the deconvolution using regularized filter. 
 Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the original image we are looking for. The second term is used to smooth the image to a certain extent. The term $l(m,n)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be. %TODO source mathworks t
