@@ -3,7 +3,7 @@
 % with the name and display the results if graph = 1 or
 % save the result if graph = 2
 function [] = tester (realf, psf, mat, noise, name, graph)
-load fille;
+%load fille;
 save_image(realf, sprintf('start-%s', name), graph);
 
 fmat = noise(mat * realf);

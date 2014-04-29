@@ -1,3 +1,4 @@
+%%
 %load fille;
 I = double(imread('cameraman.tif'));
 n = size(I,1);
