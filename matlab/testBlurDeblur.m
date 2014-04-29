@@ -54,20 +54,21 @@ elseif test == 4
     I = double(imread('SagarL25A10.jpg'));
     test_name = 'sagar'; % (25, 171)
     k_len = 3;
+elseif test == 6
+    %Pictures on internet
+    %I = double(imread('Car.jpg'));
+    %I = double(imread('carRed.jpg'));
+    %I = double(imread('ambulance.jpg'));
+    I = double(imread('Aaron.png'));
+    test_name = 'aaron';
+    %I = double(imread('Sea.png'));
+elseif test == 8
+    % Taken by us
+    %I = double(imread('IMG_3993.JPG'));
+    %I = double(imread('computerGray.jpg'));
+    %I = double(imread('OfficeGray1HD.jpg'));
+    %I = double(imread('CarGray2HDCrop.png'));
 end
-
-%Pictures on internet
-%I = double(imread('Car.jpg'));
-%I = double(imread('carRed.jpg'));
-%I = double(imread('ambulance.jpg'));
-%I = double(imread('Aaron.png'));
-%I = double(imread('Sea.png'));
-
-% Taken by us
-%I = double(imread('IMG_3993.JPG'));
-%I = double(imread('computerGray.jpg'));
-%I = double(imread('OfficeGray1HD.jpg'));
-%I = double(imread('CarGray2HDCrop.png'));
 
 
 %%%Show the blurred image
