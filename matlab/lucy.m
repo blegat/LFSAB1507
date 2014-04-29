@@ -286,7 +286,7 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         end
 
         %latent_est = inside;
-        latent_est = 255*ones(size(inside))/2;
+        big_latent_est = 255*ones(size(inside))/2;
 
         for i = 1:iterations
             if debug
@@ -294,10 +294,10 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
                 subplot(3,2,1)
                 imshow(inside/255);
                 subplot(3,2,2);
-                imshow(latent_est/255);
+                imshow(big_latent_est/255);
             end
             %est_conv         = filter2(psf, latent_est, 'same');
-            est_conv = imfilter(latent_est, centered_psf);
+            est_conv = imfilter(big_latent_est, centered_psf);
             if debug
                 subplot(3,2,3);
                 imshow(est_conv/255);
@@ -322,16 +322,17 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
                 subplot(3,2,5);
                 imshow((error_est-0.5)/2.55);
             end
-            latent_est       = latent_est .* error_est;
+            big_latent_est       = big_latent_est .* error_est;
             if debug
                 subplot(3,2,6);
-                imshow(latent_est/255);
+                imshow(big_latent_est/255);
             end
         end
         %latent_est(marginx,:) = observed(marginx+len/2,:);
         %latent_est(:,marginy) = observed(:,marginy+len/2);
         %latent_est(marginx,:) = observed(marginx,:);
         %latent_est(:,marginy) = observed(:,marginy);
+        latent_est = big_latent_est(insidex,insidey);
     end
 end
 
@@ -345,6 +346,5 @@ else
     m = abs(m);
     margin = 1:m;
     inside = m+1:n;
-end
 end
 end
