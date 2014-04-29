@@ -46,11 +46,7 @@ end
 
 %%% Blur the picture
 if mod(test,2) == 1
-<<<<<<< HEAD
- %   I = blur(I,len,blur_angle,2);
-=======
     I = blur(I,len,blur_angle,blur_meth);
->>>>>>> a94995541b65f40d536f851710dd87c7b08576f1
     L = len;
     angle = blur_angle;
     if blur_meth == 2
