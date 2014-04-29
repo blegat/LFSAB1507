@@ -99,9 +99,9 @@ for n = 1:numel(list)
      algo = 3;
      comp = 1;
      DeblurCam = cam(double(img), Out{1}, iter, algo, comp, 2);%Out{3});
+     save_imageCam (DeblurCam, 'CamDeblurred', 1,directoryname, n);
      imshow(DeblurCam/255,'parent',axe3);
      title(axe3,'Deblurred image'); 
-    % saveas(DeblurCam/255, sprintf('%s/%d',directoryname,n), 'png');
      pause(0.01)
 end
 

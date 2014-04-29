@@ -1,4 +1,4 @@
-function [] = testBlurDeblur(test, algo, len, blur_angle)
+function [] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter)
 %Test function, 
 % -choose a picture to deblur
 % -blur it artificially if  not already blurred
@@ -10,6 +10,12 @@ function [] = testBlurDeblur(test, algo, len, blur_angle)
 global test_name;
 global L;
 global angle;
+global blur_method;
+
+if nargin < 5
+    blur_meth = 2;
+    iter = 16;
+end
 
 close all;
 
@@ -38,9 +44,18 @@ end
 
 %%% Blur the picture
 if mod(test,2) == 1
+<<<<<<< HEAD
  %   I = blur(I,len,blur_angle,2);
+=======
+    I = blur(I,len,blur_angle,blur_meth);
+>>>>>>> a94995541b65f40d536f851710dd87c7b08576f1
     L = len;
     angle = blur_angle;
+    if blur_meth == 2
+        blur_method = 'circ';
+    else
+        blur_method = 'black';
+    end
 end
 
 
@@ -54,20 +69,21 @@ elseif test == 4
     I = double(imread('SagarL25A10.jpg'));
     test_name = 'sagar'; % (25, 171)
     k_len = 3;
+elseif test == 6
+    %Pictures on internet
+    %I = double(imread('Car.jpg'));
+    %I = double(imread('carRed.jpg'));
+    %I = double(imread('ambulance.jpg'));
+    I = double(imread('Aaron.png'));
+    test_name = 'aaron';
+    %I = double(imread('Sea.png'));
+elseif test == 8
+    % Taken by us
+    %I = double(imread('IMG_3993.JPG'));
+    %I = double(imread('computerGray.jpg'));
+    %I = double(imread('OfficeGray1HD.jpg'));
+    %I = double(imread('CarGray2HDCrop.png'));
 end
-
-%Pictures on internet
-%I = double(imread('Car.jpg'));
-%I = double(imread('carRed.jpg'));
-%I = double(imread('ambulance.jpg'));
-%I = double(imread('Aaron.png'));
-%I = double(imread('Sea.png'));
-
-% Taken by us
-%I = double(imread('IMG_3993.JPG'));
-%I = double(imread('computerGray.jpg'));
-%I = double(imread('OfficeGray1HD.jpg'));
-%I = double(imread('CarGray2HDCrop.png'));
 
 
 %%%Show the blurred image
@@ -75,7 +91,8 @@ save_image(I, 'g', 2);
 
 %%% Deblur the image
 
-deblurred = deblur(I,algo,1,k_len);
+
+deblurred = deblur(I,algo,0,k_len,iter);
 
 
 %%%Show the deblurred image

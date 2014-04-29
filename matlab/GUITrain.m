@@ -107,7 +107,7 @@ guidata(hObject,handles)
 
 function DeblurFunction1(hObject, eventdata, handles)  
 
-global choix1 Enregistrer2Button Method ParaLength
+global choix1 Enregistrer2Button Method ParaLength IterL1
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off','Name','Deblurring','NumberTitle','off');
@@ -118,13 +118,16 @@ title('Image before deblurring');
 axis off; 
 handles.ImgPret=I; 
 
+IterL1 = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.6,0.65,0.05,0.05], 'Max' , 1 , 'string' , '0' );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy');
+
 choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
 
 ParaLength = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , '1|2|3' , 'units','Normalized', 'position', [0.60,0.7,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Parameter length estimator');
 
-Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
+Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization|Lucy Crop|Magic Lucy' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Method of deblurring');
 
 
@@ -142,7 +145,7 @@ guidata(hObject,handles)
 
 function DeblurFunction2(hObject, eventdata, handles)  
 % modifier pour a
-global choix1  Enregistrer2Button Method ParaLength
+global choix1  Enregistrer2Button Method ParaLength IterL2
 MainWindow = figure('color',[1 0 0]); 
 set(MainWindow,'MenuBar','none');
 set(MainWindow, 'Units', 'Normalized', 'Position', [0.3 0.2 0.5 0.7], 'Resize', 'off', 'Name','Deblurring','NumberTitle','off');
@@ -154,7 +157,8 @@ title('Image before deblurring');
 axis off; 
 handles.ImgPret=L; 
 
-
+IterL2 = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.6,0.65,0.05,0.05], 'Max' , 1 , 'string' , '0' );
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy');
 
 choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
@@ -162,7 +166,7 @@ uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,
 ParaLength = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , '1|2|3' , 'units','Normalized', 'position', [0.60,0.7,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.7,0.2,0.05],'string','Parameter length estimator');
 
-Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
+Method = uicontrol( MainWindow , 'style' ,'popup'  , 'String' , 'Lucy|Wiener|Reguralization|Lucy Crop|Magic Lucy' ,'units', 'Normalized', 'position',[0.60,0.75,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.75,0.2,0.05],'string','Method of deblurring');
 
 GoDeblurButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'units', 'Normalized','string' , 'Go !' , 'fontsize' , 15, 'position', [0.80,0.75,0.2,0.05] );
@@ -189,16 +193,25 @@ set(Enregistrer1Button,'Enable','on');
 set(DeblurButton2,'Enable','on');
 
 function Defloute1(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1 ParaLength
+global Enregistrer2Button Method choix1 ParaLength IterL1
 load Lala;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
+iter = str2double(get(IterL1,'String'));
 tic
-if get(choix1,'Value') == 1
-  I = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'));
+if get(choix1,'Value') == 1 
+    if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
+       I = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
+    elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
+       I = deblur(I,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
+    end
 elseif get(choix1,'Value') == 2
-  I = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'));  
+    if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
+       I = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
+    elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
+       I = deblur(I,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
+    end 
 end
 Temps = toc
 imshow(I,'parent',axe1);
@@ -208,16 +221,25 @@ set(Enregistrer2Button,'Enable','on');
 %guidata(hObject,handles) 
 
 function Defloute2(hObject, eventdata, handles)  
-global Enregistrer2Button Method choix1 ParaLength
+global Enregistrer2Button Method choix1 ParaLength IterL2
 load BlurredImage ;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
+iter = str2double(get(IterLL,'String'));
 tic
-if get(choix1,'Value') == 1
-  L = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'));
+if get(choix1,'Value') == 1 
+    if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
+       L = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
+    elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
+        L = deblur(L,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
+    end
 elseif get(choix1,'Value') == 2
-  L = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'));  
+    if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
+       L = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
+    elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
+        L = deblur(L,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
+    end 
 end
 Temps = toc
 imshow(L, 'parent', axe1);

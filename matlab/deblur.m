@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 function [F] = deblur (f, algo, comp, ParaLength)
 % Deblur the picture given in argument by evaluation of the psf and then
+=======
+function [F] = deblur (f, algo, comp, ParaLength, iter)
+% Deblur the picture given in argument by evaluation of the psf and then 
+>>>>>>> a94995541b65f40d536f851710dd87c7b08576f1
 % deconvolution using lucy, wiener or regularisation
 %
 % IN :  -f the function which need to be deblurred
@@ -64,6 +69,8 @@ if algo == 1
         %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
     end
     toc
+
+
 end
 if algo == 2
     
@@ -114,4 +121,15 @@ if algo == 4
     [F P]  = deconvblind(f,psf);
 end
 
+if algo == 5
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, iter, 0, 3);
+    end
+end
+
+if algo == 6
+    for i=1:iterColorOrGray
+        F(:,:,i) = lucy(f(:,:,i), psf, len, angle, iter, 0, 5);
+    end
+end
 end

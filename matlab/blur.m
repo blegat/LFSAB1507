@@ -15,14 +15,15 @@ end
 %If no method specified, we use the oneway_psf 
 %function to create the psf
 if nargin < 4
-    meth = 3;
+    meth = 2;
 end
 %blur with conv2c
 if meth == 1
     f = conv2c(I, motion(len, angle));
 %blur with fspecial to create the psf and imfilter to blur    
 elseif meth == 2
-    h = fspecial('motion', len, angle);
+    %h = fspecial('motion', len, angle);
+    h = oneway_psf(len,angle);
     f = imfilter(I,h,'circular');
 %oneway_psf function to create the psf and imfilter to blur
 else

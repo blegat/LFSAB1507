@@ -210,12 +210,25 @@ Let's take an example with a 1-D blur to the right
         $g(1+L/2)$ where $L$ is the length of the blur since
         that is the mean of the $L/2$ neighbours on the right and left
         of $g(1)$.
+        Let's call this method ``crop-lucy'' since it crops the image.
+        We have implemented the first idea, which is to approximate
+        $\hat{f}(1)$ with $g(1)$ since it was easier to implements
+        and our faith was more in ``magic-lucy''.
       \item A second idea would be to estimate $f$ from 0
-        it would only be influenced by $g(1)$.
+        which would only be influenced by $g(1)$.
         We would therefore use equation~\eqref{eq:lucy_iter_modif}
         for the iteration for the reasons explained earlier.
         For the general case, we add pior values of $f$ to the
         estimation process until $2-L$.
+        With this method, we will estimate an image larger than
+        the original image.
+        We cannot hope to achieve it perfectly since the degrees since
+        we have more unknowns than constraints but allowing
+        lucy to search for values beyond the borders actually helps
+        remove artifacts due to borders.
+        Since estimating more pixels that we have on the blurred image
+        is considered impossible and we are trying to do it,
+        let's call this method ``magic-lucy''.
     \end{enumerate}
 \end{itemize}
 
@@ -227,6 +240,62 @@ That way,
                & = g(x,y) * h(-x,-y).
 \end{align*}
 which is already correct if $g$ is unicolor.
+
+\begin{myfig}{cameraman-magic}
+  {Analysis of ``magic-lucy'' for the cameraman with 100 iterations.}
+  \mysubfig{cameraman-g-60_30-black}{Cameraman blurred with zeros beyond the borders.}{0.32}
+  \mysubfig{cameraman-fullmagic-60_30-black}{\figref{cameraman-g-60_30-black} deblurred ``magic-lucy''.}{0.32}
+  \mysubfig{cameraman-f-60_30-black}{\figref{cameraman-g-60_30-black} deblurred by ``magic-lucy'' then cropped.}{0.32}
+  \mysubfig{cameraman-g-60_30-circ}{Cameraman blurred with a circular image beyond the borders.}{0.32}
+  \mysubfig{cameraman-fullmagic-60_30-circ}{\figref{cameraman-g-60_30-black} deblurred ``magic-lucy''.}{0.32}
+  \mysubfig{cameraman-f-60_30-circ}{\figref{cameraman-g-60_30-black} deblurred by ``magic-lucy'' then cropped.}{0.32}
+\end{myfig}
+
+\begin{myfig}{cameraman-otherlucy}
+  {Analysis of ``lucy'' and ``crop-lucy'' for the cameraman with 100 iterations.}
+  \mysubfig{cameraman-lucy-60_30-black}{\figref{cameraman-g-60_30-black} deblurred by ``lucy''.}{0.45}
+  \mysubfig{cameraman-lucy-60_30-circ}{\figref{cameraman-g-60_30-circ} deblurred by ``lucy''.}{0.45}
+  \mysubfig{cameraman-croplucy-60_30-black}{\figref{cameraman-g-60_30-black} deblurred by ``crop-lucy''.}{0.45}
+  \mysubfig{cameraman-croplucy-60_30-circ}{\figref{cameraman-g-60_30-circ} deblurred by ``crop-lucy''.}{0.45}
+\end{myfig}
+
+To illustrate this method, let's see what it does on the cameraman
+with the \figref{cameraman-magic}.
+We have blurred it with a black extrapolation beyond the borders
+(see \figref{cameraman-g-60_30-black}) and with circular extrapolation
+(see \figref{cameraman-g-60_30-circ}).
+
+We can see that ``lucy'' has a lot of troubles with the black
+extrapolation but not with the circular interpolation.
+``lucy'' is done by the \lstinline|deconvlucy| function of MATLAB.
+We can guess that at each iteration of lucy,
+\lstinline|deconvlucy| do convolutions with ``replicate''
+extrapolation beyond the borders (set it to the pixel at the border).
+That's why it has trouble with the black extrapolation since this is
+very different from the pixel at the border.
+On the other hand, with the circular interpolation,
+the extrapolation is quite similar to the pixel at the border due
+to the borders of the cameraman being quite symmetrical.
+
+``crop-lucy'' doesn't work well due to the approximation of the pixels
+cropped which is not terrific.
+It makes this error propagate to all the images through the iterations.
+
+With those 2 examples, we can see the problems of many iterations.
+If we have errors (like the borders here), the more iterations
+we make, the more the error is propagated.
+
+On the other hand, ``magic-lucy'' thrives.
+We can see in~\figref{cameraman-fullmagic-60_30-black}
+that the extrapolation used has been correctly estimated.
+For \figref{cameraman-fullmagic-60_30-circ},
+on the left, it is extraordinarily accurate we even have the white
+spot at the limite between the ground and the sky present at the right of the image.
+Since the blur is circular, it appears there, which was expected.
+On the bottom, it has more trouble since the sky is quite different to the
+ground and our problem is underdetermined.
+Anyway, \figref{cameraman-f-60_30-circ} has no border artifacts which
+is the purpose.
 
 \subsection{Wiener}
 \label{subsec:Wiener}

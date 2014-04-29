@@ -10,10 +10,6 @@ if nargin < 3
     end
 end
 
-if debug
-    save_image(f, 'len', 2);
-end
-
 %save_image(frs,'frs',2);
 thetas = 0:180;
 %turns = [0 45];
