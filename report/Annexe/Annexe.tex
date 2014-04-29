@@ -21,6 +21,42 @@ In case the user chooses to deblur the original image (or the artificially blurr
 The user is prompted to select the folder containing the serie of images that we want to make the background (only one image in the folder if the background is known). The calculated background can then be optionally recorded.
 Then, the user selects the folder of all images to deblur (with blurred foreground) and for each of them, the deblurred image is displayed next to the original one. Simultaneously, the background is updated taking into account any changes (new item, change brightness, ...).
 
+\chapter{Specifications}
+
+\section{Train}
+
+\paragraph{Problem}
+A picture is taken from a moving train. We have to deblur the image with or without the knowledge of the speed.
+
+\paragraph{Assumptions}
+1. camera is parallel to the train 2. speed is constant during the short period of time when the picture is taken 3. all the subjects of the scene are approximatively in the same vertical plane: the distance to the camera is constant
+
+\paragraph{Input}
+1. the blurred image $G$. The pixels take values from $0$ to $255$ as we use a 8bits representation. If $G$ a is grey-scaled image, $G \in \mathbb{R}^{M \times N}$. If $G$ is a coloured image, $G \in \mathbb{R}^{M \times N \times 3}$. 2. If the train's speed is known: a. speed $v$ b. opening angle $\phi$ of the camera c. average distance $\eta$ from the camera to the scene c. exposure time $\Delta t$ of the camera 
+
+\paragraph{Output}
+deblurred image of $F$
+
+\paragraph{Performance}
+A criterion of quality computes the amount of blur in an image. Ideally, the criterion should be a no-referential blur metric, that means that it doesn't depend upon the original image. The value that this method returns is then an absolute value associated with the image.
+
+\section{Security Camera}
+
+\paragraph{Problem}
+A picture is taken by a security camera. We have to deblur a part of the image where a subject is moving. We also have a sample of statistical images taken without the subject.
+
+\paragraph{Assumptions}
+1. Camera is fixed 2. the luminance of the images of the sample don't vary too much
+
+\paragraph{Input}
+1. the blurred image $G$. The pixels take values from $0$ to $255$ as we use a 8bits representation. If $G$ a is grey-scaled image, $G \in \mathbb{R}^{M \times N}$. If $G$ is a coloured image, $G \in \mathbb{R}^{M \times N \times 3}$. 2. Sample of statistical images taken without the subject that have the same dimensions as $G$. 3. criterion of the user: a. quick processing at the expense of a good quality. Example: the client is in charge of the security in a bank and has a camera that takes pictures every second. He would like to have a usable version of those pictures on his screen. So the quality of the images doesn't matter, he only needs an idea of what's going on. b. high quality of deblurring, no matters the time spend in it. Example: the client needs a sharp image of the people's faces to determine their exact identity.
+
+\paragraph{Output}
+The ouput is the deblurred image according to the criterion given by the user.
+
+\paragraph{Performance}
+If the user chose for quality criterion, we apply the same method as for train. If he chose for the quickness criterion, we compute the time our algorithm takes and optimise it. 
+
 
 
 \chapter{Codes}
