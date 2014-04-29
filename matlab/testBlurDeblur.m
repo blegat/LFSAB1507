@@ -1,4 +1,4 @@
-function [] = testBlurDeblur(test, algo, len, blur_angle)
+function [] = testBlurDeblur(test, algo, len, blur_angle, blur_meth)
 %Test function, 
 % -choose a picture to deblur
 % -blur it artificially if  not already blurred
@@ -10,6 +10,11 @@ function [] = testBlurDeblur(test, algo, len, blur_angle)
 global test_name;
 global L;
 global angle;
+global blur_method;
+
+if nargin < 5
+    blur_meth = 2;
+end
 
 close all;
 
@@ -38,9 +43,14 @@ end
 
 %%% Blur the picture
 if mod(test,2) == 1
-    I = blur(I,len,blur_angle,2);
+    I = blur(I,len,blur_angle,blur_meth);
     L = len;
     angle = blur_angle;
+    if blur_meth == 2
+        blur_method = 'circ';
+    else
+        blur_method = 'black';
+    end
 end
 
 
