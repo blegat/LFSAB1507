@@ -14,5 +14,6 @@
 *.log
 *.pdf
 *.toc
+*.out
 
 Thumbs.db
