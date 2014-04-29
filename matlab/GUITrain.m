@@ -58,7 +58,8 @@ else
     if get(GorRGB,'value') == 1
        I = im2double(I);
     elseif get(GorRGB,'value') == 2
-       I=im2double(rgb2gray(imread(filename)));
+       Tmp = rgb2gray(I);
+       I=im2double(Tmp);
     end
     save('LALA','I')
     imshow(I);% Afficher l'image
@@ -193,11 +194,13 @@ load Lala;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
+tic
 if get(choix1,'Value') == 1
   I = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'));
 elseif get(choix1,'Value') == 2
   I = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'));  
 end
+Temps = toc
 imshow(I,'parent',axe1);
 Final = I;
 save('DeblurImage','Final')
@@ -210,11 +213,13 @@ load BlurredImage ;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
+tic
 if get(choix1,'Value') == 1
   L = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'));
 elseif get(choix1,'Value') == 2
   L = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'));  
 end
+Temps = toc
 imshow(L, 'parent', axe1);
 Final = L;
 save('DeblurImage','Final')

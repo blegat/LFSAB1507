@@ -1,7 +1,7 @@
 % TODO explain that int_x int_y h(x,y) dx dy = 1 
 \section{What is an image?}
 
-An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is grey-scaled, the output is a scalar:
+An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is gray-scaled, the output is a scalar:
 \begin{eqnarray}
 f:\Omega \rightarrow \mathbb{R}: (x,y) \mapsto f(x,y),
 \end{eqnarray}
@@ -9,7 +9,7 @@ where $\Omega \rightarrow \mathbb{R}^2$. If we have a coloured image, we adopt a
 \begin{eqnarray}
 f:\Omega \rightarrow \mathbb{R}^3 : (x,y) \mapsto f(x,y).
 \end{eqnarray}
-Along this report, we will only consider grey-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bits so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
+Along this report, we will only consider gray-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bits so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
 
 \section{What is blurring?}
 

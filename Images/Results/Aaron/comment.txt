@@ -1,0 +1,12 @@
+Particularité : image petite
+
+non comp : a = 90, L = 26
+comp : a = 90, L = 25
+
+Pour meth 1 et 2, pas de chmt de qualité si comp ou non comp !
+
+Pour meth 3, chmt significatif !
+
+meth 1 : ++
+meth 2 : +-
+meth 3 : - à -- 

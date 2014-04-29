@@ -1,0 +1,14 @@
+Si flouté longueur de 35 : 
+
+- Pas de différence d'estimation a et L si comp ou Ncomp et selon le choix du paramètre 1,2,3 (34 estimé au lieu de 35 et a exact)
+
+Si d'autres floues : 
+
+- Paramètre L estimator très important ! Ex si floue artificiel de 55
+  Si P = 1 ou 2 => L = 23 et défloutage de merde, si P = 3 => L = 54 et bons résultats ! 
+  1 : +-
+  2 : +
+  3 : ++
+
+- Floue à 40 :
+  on voit ici que Reg est très sensibles à une modif de L estimé ! 
