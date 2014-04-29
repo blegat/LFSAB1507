@@ -70,7 +70,7 @@ if algo == 1
    % psf = fspecial('motion', psf, angle);
    tic
    for i=1:iterColorOrGray
-      %f(:,:,i) = edgetaper(f(:,:,i),psf);
+      f(:,:,i) = edgetaper(f(:,:,i),psf);
       F(:,:,i) = deconvlucy(f(:,:,i), psf, 20);
    %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);

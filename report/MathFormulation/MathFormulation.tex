@@ -17,10 +17,30 @@ Blurring is the operation of mixing the spatial information of an image. In this
 
 \subsection{Continuous model}
 
-Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation: %TODO figure
+Let $\mathcal{H}$ denote the operator of blurring. If $f(x,y)$ is the original image and $g(x,y)$ the blurred version of it, then we can represent the operation of blurring by the system shown on figure (???) or by the following equation:
 \begin{equation}
 g(x,y) = \mathcal{H}\left\lbrace f(x,y) \right\rbrace.
 \end{equation}
+
+\begin{figure}
+begin{center}
+\begin{tikzpicture}[every text node part/.style={align=center}, every node/.style={scale=0.7},scale=0.7]
+
+\draw(3,0)--(7,0)--(7,3)--(3,3)--(3,0);
+
+\draw(5,1.5)node{blur \\ $\mathcal{H}$};
+
+\draw[->](0,1.5)--(3,1.5);
+\draw[->](7,1.5)--(10,1.5);
+
+\draw(0,1.5)node[above]{f(x,y)};
+\draw(10,1.5)node[above]{g(x,y)};
+
+\end{tikzpicture}
+\end{center}
+\caption{System representation of blurring}
+\label{system}
+\end{figure}
 
 We suppose the blurring operator to be linear. This assumption will be verified in the specific situations we have chosen (train and camera). Mathematically, we write:
 \begin{equation}
@@ -31,31 +51,55 @@ Secondly, we may assume the operator is shift-invariant: when the input signal i
 
 if $\mathcal{H}\left\lbrace f(x,y) \right\rbrace = g(x,y)$, then $\mathcal{H}\left\lbrace f(x-x_0,y-y_0) \right\rbrace = g(x-x_0,y-y_0)$.
 
-%TODO ref
-The input signal can be represented by a weighted superposition of shifted impulses ( cfr cours de signaux et systèmes ref??). Because of the linearity of the system, the output is a weighted superposition of the responses of the system to each shifted impulse. The system is also shift-invariant so the system's response to a shifted impulse is a shifted version of the system's response to an impulse. Hence, the output is given by a weighted superposition of shifted impulse responses. This weighted superposition is called $\emph{convolution}$. So, if $f(x,y)$ is the input, $h(x,y)=\mathcal{H}\left\lbrace \delta(x,y) \right\rbrace$ ($\delta(x,y)$ is an impulse) is the system's impulse response and $g(x,y)$ is the output, then we write:
+The input signal can be represented by a weighted superposition of shifted impulses \cite{haykin2007signals}. Because of the linearity of the system, the output is a weighted superposition of the responses of the system to each shifted impulse. The system is also shift-invariant so the system's response to a shifted impulse is a shifted version of the system's response to an impulse. Hence, the output is given by a weighted superposition of shifted impulse responses. This weighted superposition is called $\emph{convolution}$. So, if $f(x,y)$ is the input, $h(x,y)=\mathcal{H}\left\lbrace \delta(x,y) \right\rbrace$ ($\delta(x,y)$ is an impulse) is the system's impulse response and $g(x,y)$ is the output, then we write:
 \begin{eqnarray}
 g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace \\
 g(x,y) &=& h(x,y) \ast f(x,y),
 \end{eqnarray}
 where $\ast$ is the convolution symbol. So blurring is spreading the value of a pixel by a certain way which is determined by $h$. That's why we call $h$ also the Point Spread Function (PSF).
 
-When we take a picture, the image that we get is usually affected by additive noise. Additive means that the noise does not depend on the input signal. If $e(x,y)$ denotes the additive noise, we can represent the system by the scheme  given in figure (??) or by the following equation:
+When we take a picture, the image that we get is usually affected by additive noise. Additive means that the noise does not depend on the input signal. If $e(x,y)$ denotes the additive noise, we can represent the system by the scheme  given in figure $(\ref{systemnoise})$ or by the following equation:
 \begin{eqnarray}
 g(x,y) &=& \mathcal{H}\left\lbrace f(x,y) \right\rbrace + e(x,y) \\
  &=& f(x,y) \ast h(x,y) + e(x,y).
 \label{generaleq}
 \end{eqnarray}
-This noise represents measurement and round-off errors and also errors due to the model (convolution) we use to represent blurring. 
+This noise represents measurement and round-off errors and also errors due to the model (convolution) we use to represent blurring.
+
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}[every text node part/.style={align=center}, every node/.style={scale=0.7},scale=0.7]
+
+\draw(3,0)--(7,0)--(7,3)--(3,3)--(3,0);
+\draw(5,1.5)node{blur \\ $\mathcal{H}$};
+
+\draw(10.5,1.5)circle(0.5);
+\draw(10.5,1.5)node{$+$};
+
+\draw[->](0,1.5)--(3,1.5);
+\draw[->](7,1.5)--(10,1.5);
+\draw[->](10.5,5)--(10.5,2);
+\draw[->](11,1.5)--(14,1.5);
+
+\draw(0,1.5)node[above]{f(x,y)};
+\draw(11,1.5)node[above]{g(x,y)};
+\draw(10.5,5)node[right]{n(x,y)};
+
+\end{tikzpicture}
+\end{center}
+\caption{System representation of blurring with noise}
+\label{systemnoise}
+\end{figure}
 
 
 \subsection{Discrete model}
 
-Like we said earlier, in the discrete model, the signals can be represented by matrices. The operation of $\mathcal{H}$ on $f$ can then be replaced by a matrix multiplication of $H \in \mathbb{R}^{m \times m}$ (the matrix associated with the operator $\mathcal{H}$) with $F \in \mathbb{N}^{m \times n}$ (the matrix associated with the input signal $f$). Equation $(\ref{generaleq})$ becomes:
+Like we said earlier, in the discrete model, the signals can be represented by matrices. The operation of $\mathcal{H}$ on $f$ can then be replaced by a matrix multiplication of $H \in \mathbb{R}^{M \times M}$ (the matrix associated with the operator $\mathcal{H}$) with $F \in \mathbb{N}^{M \times N}$ (the matrix associated with the input signal $f$). Equation $(\ref{generaleq})$ becomes:
 \begin{equation}
 G = HF + E,
 \label{eqmatrix}
 \end{equation}
-where $E \in \mathbb{R}^{m \times n}$ is the matrix associated with the additive noise $e$. To handle this problem more easily, we would like to solve a linear system. That's why we are going to make a vector of a matrix representing an image. So if $F \in \mathbb{N}^{m \times n}$ is a matrix representing an image, then the corresponding vector is $\emph{f} = vec(F) \in \mathbb{N}^{mn \times 1}$. Watch out for the notation used: $f$ is a continuous signal, $F$ is the matrix associated with this signal and $\emph{f}$  is the vector corresponding to this matrix. Equation $(\ref{eqmatrix})$ becomes:
+where $E \in \mathbb{R}^{M \times N}$ is the matrix associated with the additive noise $e$. To handle this problem more easily, we would like to solve a linear system. That's why we are going to make a vector of a matrix representing an image. So if $F \in \mathbb{N}^{M \times N}$ is a matrix representing an image, then the corresponding vector $\emph{f} = vec(F) \in \mathbb{N}^{MN \times 1}$ is constructed by putting the columns of $F$ under each other. Watch out for the notation used: $f$ is a continuous signal, $F$ is the matrix associated with this signal and $\emph{f}$  is the vector corresponding to this matrix. Equation $(\ref{eqmatrix})$ becomes:
 \begin{equation}
 \emph{g} = \tilde{H}\emph{f} + \emph{e},
 \label{eqvec}
@@ -64,20 +108,16 @@ where $\tilde{H} \in \mathbb{R}^{mn \times mn}$ is the result of the following K
 \begin{equation}
 \tilde{H} = I_n \otimes H,
 \end{equation}
-with $I_n$ the identity matrix of dimension $n$. By equation $(\ref{eqvec})$, we clearly see that a pixel of the blurred image is a linear combination of pixels of the original image, plus some noise. In the following section, we will always consider the vector form equation $\ref{eqvec}$, so to simplify the notations, we won't overwrite the tilde on $H$ assuming that it is implicit that this is the $mn \times mn$ matrix and not the $m \times m$ matrix.
+with $I_N$ the identity matrix of dimension $N$. By equation $(\ref{eqvec})$, we clearly see that a pixel of the blurred image is a linear combination of pixels of the original image, plus some noise. In the following section, we will always take the matrix form of an image but the vector form can be easily get by the equations just above.
 
-%La dernière phrase est compréhensible? Sinon je la baque mais je trouve ça badant de reprendre à chaque fois le tilde sur le H
+\section{What is deblurring?}
 
-\section{What is deblurring?} %TODO considérer sans bruit et puis tikhonov avec bruit
-
-Deblurring is the inverse operation of blurring. So it consists in getting the image $\emph{f}$ from the blurred image $\emph{g}$. If the blurring matrix $H$ is known and if it is invertible, deblurring becomes very easy and we get the exact solution by:
+Deblurring is the inverse operation of blurring. So it consists in getting the image $F$ from the blurred image $G$. Let's take the model without noise:
 \begin{equation}
-f=H^{-1}(g-e).
+\emph{g}=H\emph{f}.
 \end{equation}
-But in a real situation, we only have the blurred image $\emph{g}$ and we don't know $H$. That's why we approximate $H$, knowing some information about how the image has been blurred. Finding this approximation is the subject of the following section. If $\hat{H}$ is the approximation of $H$ and if it is invertible, the approximative result $\hat{\emph{f}}$ of deblurring is obtained by:
-\begin{equation}
-\hat{\emph{f}} = \hat{H}^{-1} \emph{g} = \hat{H}^{-1}H\emph{f} + \hat{H}^{-1}\emph{e} \approx \emph{f} + \hat{H}^{-1}\emph{e}.
-\end{equation}
+If the blurring matrix $H$ is known, deblurring is just solving a linear system and there a lot of different algorithms to do that. But in a real situation, we only have the blurred image $G$ and we don't know $H$. That's why we approximate $H$, knowing some information about how the image has been blurred. Finding this approximation is the subject of the following section. If we take the noise into account, the problem becomes ill-posed. We then apply the regularisation of Tikhonov:
+%TODO Tikhonov
 
 \section{Specific situations}
 
@@ -89,11 +129,11 @@ First we need to make some assumptions about the circumstances to get an idea of
 
 Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: ``How is a pixel of $G$ constructed based on the pixels of $F$?''. Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $G$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
 \begin{equation}
-H=\sum_{i=0}^{k} c_i D^{i}.
+H=\sum\limits_{i=0}^{k} c_i D^{i}.
 \label{eqHtrain}
 \end{equation}
 
-Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. Intuitively, we expect $k$ to be increasing when the speed or the opening time also do. On the opposite, $k$ should decrease when the average distance $eta$ goes up. We already mentioned that before. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: %TODO figure
+Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. Intuitively, we expect $k$ to be increasing when the speed or the opening time also do. On the opposite, $k$ should decrease when the average distance goes up. We already mentioned that before. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: 
 \begin{equation}
 W = 2 \eta \tan\left(\frac{\phi}{2}\right).
 \end{equation}
@@ -115,7 +155,25 @@ k &=& \frac{\Delta t}{\Delta t _e} \\
 
 From this equation, we can verify our expectations: $k$ is proportional to $v$ and $\Delta t$, and inversely proportional to $eta$.
 
-Now what about the coefficients $c_i$? Let's suppose the train is travelling to the right, so a pixel $G(m,n)$ is a weighted sum of the $k$ pixels to the left of the corresponding pixel $f(m,n)$ (plus itself). As the speed of the train is constant, every weight should be equal. Pixels of $G$ also have a range from $0$ to $255$ so the weighted sum must not exceed the maximum. That's why we have $c_i=\frac{1}{k+1}$.
+\begin{figure}
+begin{center}
+\begin{tikzpicture}[every text node part/.style={align=center}, every node/.style={scale=0.7},scale=0.7]
+
+\draw(0,0)--(3,0)--(1.5,-6)--(0,0);
+\draw[<->](3.5,0)--(3.5,-6);
+\draw[<->](0,0.5)--(3,0.5);
+
+\draw(1.5,0.5)node[above]{$W$};
+\draw(3.5,-3)node[right]{$\eta$};
+\draw(1.5,-5)node{$\phi$};
+
+\end{tikzpicture}
+\end{center}
+\caption{Representation of the situation when the picture is taken.}
+\label{situation}
+\end{figure}
+
+Now what about the coefficients $c_i$? Let's suppose the train is travelling to the right, so a pixel $G(m,n)$ is a weighted sum of the $k$ pixels to the left of the corresponding pixel $F(m,n)$ (plus itself). As the speed of the train is constant, every weight should be equal. Pixels of $G$ also have a range from $0$ to $255$ so the weighted sum must not exceed the maximum. That's why we have $c_i=\frac{1}{k+1}$.
 
 The last thing we need to determine in  equation $(\ref{eqHtrain})$ is the matrix $D$. A first version of it for a $3 \times 3$ image could be (we are still considering the train is moving to the right):
 $$
@@ -166,6 +224,4 @@ Another way to treat those ``edge problems'' is by modelling the blur effect on 
 
 Our next situation is a fixed camera taking a sample of pictures with everytime the same scene but sometimes disturbed by a person walking around. The goal is to deblur the part of the image where a person is walking. There are three differences compared to the situation with the train. Firstly, only a part of the image is blurred, so deblurring will also be only applied on that part. Moreover, if the person is not too close to the edges of the image, we don't have any ``edge problems'' anymore. And finally, the person could walk in any direction so we don't have a perfect horizontal blur effect anymore.
 
-Now how can we detect a walking person on an image? If we have a high number of images, we can build a background-image that contains the average value of each pixel. If we take the difference between the blurred image and this image, we get an image that contains very small values (near to zero) for the regions where the person is not present and bigger values for the regions that we call the foreground. Next we extract the foreground and we deblur this new image.
-
-% modélisation mathématique de comment trouver l'angle?
+Now how can we detect a walking person on an image? If we have a high number of statistical images, we can build a background-image that contains the average value of each pixel. If we take the difference between the blurred image and this image, we get an image that contains very small values (near to zero) for the regions where the person is not present and bigger values for the regions that we call the foreground. Next we extract the foreground and we deblur this new image.
