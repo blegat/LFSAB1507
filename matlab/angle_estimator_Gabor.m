@@ -1,6 +1,8 @@
 function [ angle ] = angle_estimator_Gabor(f, thetamin, thetamax)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+%ANGLE_ESTIMATOR_GABOR Estimates the blur angle with the Gabor filter
+%   input: f is the blurred image. thetamin and thetamax is an interval
+%   that contains the blur angle. If they are not given, they are set 0 and
+%   180 respectively.
 
 if nargin < 2
     thetamin = 0;
@@ -17,7 +19,7 @@ I = log(F);
 sigma_x=3;
 sigma_y=3;
 w=1.75;
-G=f;
+G=f; % G has the same dimensions as f
 Rnorm=zeros(1,thetamax-thetamin+1);
 [m n]=size(f);
 for theta=thetamin:thetamax
@@ -30,7 +32,8 @@ for theta=thetamin:thetamax
    Rnorm(theta-thetamin+1)=norm(R,2);
 end
 
-[max,angle]=max(Rnorm);
+[~,angle]=max(Rnorm);
+angle = angle + thetamin-1;
 
 end
 
