@@ -119,7 +119,7 @@ axis off;
 handles.ImgPret=I; 
 
 IterL1 = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.6,0.65,0.05,0.05], 'Max' , 1 , 'string' , '0' );
-uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy');
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy (default : put 16)');
 
 choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
@@ -158,7 +158,7 @@ axis off;
 handles.ImgPret=L; 
 
 IterL2 = uicontrol( MainWindow , 'style' ,'edit' ,'units', 'Normalized', 'position', [0.6,0.65,0.05,0.05], 'Max' , 1 , 'string' , '0' );
-uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy');
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.4,0.65,0.2,0.05],'string','iteration if Lucy (default : put 16)');
 
 choix1 = uicontrol ( MainWindow , 'Style' , 'popup' , 'String' , 'yes|no' , 'units','Normalized', 'position', [0.60,0.8,0.2,0.05]);
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.40,0.8,0.2,0.05],'string','Compression of the image ?');
@@ -226,7 +226,7 @@ load BlurredImage ;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image'); 
 axis off; 
-iter = str2double(get(IterLL,'String'));
+iter = str2double(get(IterL2,'String'));
 tic
 if get(choix1,'Value') == 1 
     if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)

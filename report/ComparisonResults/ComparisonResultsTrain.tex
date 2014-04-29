@@ -8,8 +8,114 @@ The purpose of this section is to interpret and compare results on different pic
 
 We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section [???]). The noise was inserted by predefined functions of Matlab. The results are shown in figure ?????:
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/desert/Normal/input.png}
+\vspace{-30pt}
+\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\label{fig:NormalI}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/input.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:GaussI}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/input.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:SpeckleI}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/L.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:NormalL}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/L.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:GaussL}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/L.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:SpeckleL}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/W.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:NormalW}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/W.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:GaussW}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/W.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:SpeckleW}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/R.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:NormalR}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/R.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:GaussR}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/R.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:SpeckleR}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
 
-%TODO : mettre les images du dossier ../Images/Results/desert noise pour comparer les résultat obtenus. Je pensais mettre les images disposées en rectangle 4*3 où à l'horizontal on à les 3 cas (de gauche à droite : sans bruit, avec Gaussien et avec speckle) et en vertical l'image original + les 3 images défloutées (donc de haut en bas : image originale, Lucy, Wiener, Reguralisation). 
 
 We note that the algorithm reguralisation is much more sensitive to the presence of noise in the original image, for both type of noise injected at the start. The other two methods are also affected but the deblurring is not compromised (provided that the initial noise is not too important).
 
@@ -20,9 +126,170 @@ We note that the algorithm reguralisation is much more sensitive to the presence
 To estimate the PSF, it is necessary to estimate the length parameter of blurring (see section [ ??? ]). It's interesting to study the impact of this factor on the output and establish the sensitivity of the three methods used.
 The image used here is the famous photo taken in 1972 of Lena, playmate of playboy magazine, and is often used as test algorithms for image processing( REFERENCE TO WIKIPEDIA ). It has been artificially blurred here by an angle of 20 degrees and a length of 30 pixels. The principle is to fix the estimated length for the deblurring in order to see the influence of this value to the final result (it should be noted that the angle estimatated by this algorithm is 20 degrees what is right and so the length parameter is the only variable here). For each method, three cases were treated: the estimated length (that is fixed) is 20 pixels, 30 pixels (exact value) and 40 pixels.  The results are shown in figure ?????:
 
-%TODO dans ../Images/Results/Lena/Blur20deg30length. je pensais mettre d'abord l'image originale et l'image floutée artificiellement côte à cote puis en dessous rectangle 3*3 avec (notation matrice matlab) : [L20 L30 L40; W20 W30 W40; R20 R30 R40]
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/lenaOriginal.png}
+\vspace{-30pt}
+\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\label{fig:LOriginal}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/ArtificialBlurred.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:LenaBlurred}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/L20.png}
+\vspace{-30pt}
+\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\label{fig:L20}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L30.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:L30}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L40.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:L40}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W20.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:W20}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W30.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:W30}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W40.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:W40}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R20.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:R20}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R30.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:R30}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R40.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:R40}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+
 
 It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. Indeed, artifacts occur when the estimated parameter departs from the true value. The following example shows it (artificially blurred license plate at 0 degrees and 40 pixels):
+
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/originalimage.jpg}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:plaqueO}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/ArtificialBlur.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:ArtiBlur}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL38.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:RegL38}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL39.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:RegL39}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL40.png}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:RegL40}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R30}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:R30}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R40}
+\vspace{-30pt}
+\caption{Picture deblurred using the whole image.}
+\label{fig:R40}
+\end{subfigure}
+\caption{Different matrix's size for the PSF estimation.}
+\end{figure}
 
 %TODO dans ../Images/Results/plaque/Blur0angle40length. mettre d'abord plaque originale (originalimage) à côté de ArtificialBlur puis après [RegL38 RegL39 RegL40; RegL41 RegL42]
 
@@ -82,8 +349,5 @@ Below are the results obtained with the algorithm Lucy-Ridchrdson (with compress
 The results are pretty conclusive so far as the original blurred follows a minimum the assumptions which is not always given. Generally, Reguralisation is not valid for real images, this is explained by the fact that this method is very sensitive to the length parameter estimation and noise. However, in an image with a real blur, it's more difficult to properly estimate the length (blur not linear, "speed" of blurring non-constant) and the noise is very present (including photos taken above by a amateur camera). Lucy and Wiener are stronger, making it more interesting algorithm. However, Lucy is better than Wiener, but in return the execution time is more important.
 
 \subsection{conclusion}
-
-Les trois méthodes présentent chacun leur avantages et inconvénients. La méthode de reguralization est rapide mais beaucoup trop sensible au bruit et à l'estimation de longueur, elle n'est donc pas très robuste mais reste intéressante d'un point de vue théorique. Par contre, Les deux autres méthodes sont robustes. Wiener à l'avantage d'être plus rapide que Lucy mais les résultats obtenus sont en général moins bon que ceux de Lucy. 
-
 
 The three methods each have their advantages and disadvantages. Reguralization method is fast but too sensitive to noise and estimation of length, it's so not very robust but still interesting from a theoretical perspective. By contrast, The other two methods are robust. Wiener has the advantage of being faster than Lucy but the results are generally worse than those of Lucy.

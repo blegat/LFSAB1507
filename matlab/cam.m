@@ -6,14 +6,16 @@ end
 dif = abs(fg(:,:,1) - bg(:,:,1)) ./ sqrt(var);
 
 B = dif;
+save_image(B, 'Bd', 2);
 
 %save_image(B, 'test', 2)
 %var = graythresh(dif)
 %dif = im2bw(dif, var) * 255;
-B(B < 1) = 0;
-B(B > 1) = 255;
+threshold = 1;%mean(mean(B));
+B(B < threshold) = 0;
+B(B > threshold) = 255;
 %save_image(dif, 'dif', 2);
-
+save_image(B, 'Bt', 2);
 var = 128;
 n = 5;
 while var > 4
@@ -23,7 +25,7 @@ while var > 4
 end
 
 %B = biggest_square(I(:,:,1), dif, debug);
-%save_image(B, 'blurred', 2);
+save_image(B, 'blurred', 2);
 
 % angle  = robust_angle_estimator(I, 0, dif)
 % len = length_estimator(B, angle, 2, 5, 0)
