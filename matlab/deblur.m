@@ -7,6 +7,8 @@ function [F] = deblur (f, algo, comp, ParaLength)
 %           1: Lucy-Richardson
 %           2: Wiener
 %           3: Regularization
+%		-ParaLength depending on the size of the picture allow 
+%		 better estimation of the length
 % OUT:  -F the deblurred image
 
 
@@ -53,20 +55,6 @@ F = zeros(size(f));
 
 %Lucy Richardson
 if algo == 1
- %f = edgetaper(f,psf);
-%  len =2;
-% for i = 1:100
-%     len = len+1;
-%     psf = fspecial('motion', len, angle);
-%     F = deconvlucy(f, psf, 18);
-%     Sharpness = bordSobel(F)
-%     if val(1)<Sharpness
-%         val(1) = Sharpness;
-%         val(2) = len;
-%     end
-% end
-% val
-   % psf = fspecial('motion', psf, angle);
    tic
    for i=1:iterColorOrGray
       f(:,:,i) = edgetaper(f(:,:,i),psf);
@@ -74,12 +62,7 @@ if algo == 1
    %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
    %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
    end
-   toc
-   %imshow(F/255);
-  %  save_image(F,'deb',2);
-%  F = medfilt2(F);
-    
-       
+   toc      
 end
 if algo == 2
    f = edgetaper(f,psf);
