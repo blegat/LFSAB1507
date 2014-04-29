@@ -18,12 +18,13 @@ angle  = robust_angle_estimator(partfForPSF, 0)
 %angle = angle_estimator_Gabor(f)
 
 %compute the estimation of the length of PSF
+squared = squareborder(partfForPSF, 0);
 if ParaLength == 1
-len = length_estimator(partfForPSF, angle, 2, 3, 0)
+    len = length_estimator(squared, angle, 2, 3, 0)
 elseif ParaLength == 2
-    len = length_estimator(partfForPSF, angle, 2, 5, 0)
+    len = length_estimator(squared, angle, 2, 5, 0)
 elseif ParaLength == 3
-    len = length_estimator(partfForPSF, angle, 2, 8, 0)  
+    len = length_estimator(squared, angle, 2, 8, 0)
 end
 
 % Reduce the number of pixels to a defined size if the picture 
