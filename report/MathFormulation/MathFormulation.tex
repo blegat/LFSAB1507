@@ -1,7 +1,7 @@
 % TODO explain that int_x int_y h(x,y) dx dy = 1 
 \section{What is an image?}
 
-An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is grey-scaled, the output is a scalar:
+An image is a two dimensional signal $f(x,y)$ that takes the position of a point on a plan as argument and returns the luminance intensity at that point. If the image is gray-scaled, the output is a scalar:
 \begin{eqnarray}
 f:\Omega \rightarrow \mathbb{R}: (x,y) \mapsto f(x,y),
 \end{eqnarray}
@@ -9,7 +9,7 @@ where $\Omega \rightarrow \mathbb{R}^2$. If we have a coloured image, we adopt a
 \begin{eqnarray}
 f:\Omega \rightarrow \mathbb{R}^3 : (x,y) \mapsto f(x,y).
 \end{eqnarray}
-Along this report, we will only consider grey-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bits so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
+Along this report, we will only consider gray-scaled images but we can easily generalize the problem to coloured images. $f$ is a continuous signal. But to be able to manipulate an image, we will often have to discretize this signal. The discretized signal is then of the form $f(m,n)$, where $m=1...M$ and $n=1...N$ with $M,N \in \mathbb{N}_0$. The signal can then be represented by a matrix $F$ (3 matrices for coloured images). An element  of this matrix is called a pixel. The values of $f(m,n)$ are often represented by words of $8$ bits so $f(m,n)$ can take $256$ different values: $f(m,n) \in \left[0...255\right]$.
 
 \section{What is blurring?}
 
@@ -127,7 +127,7 @@ Like we said in the previous section, to approximate the blurring operator, we n
 
 First we need to make some assumptions about the circumstances to get an idea of what $H$ should look like. We assume that the picture has been taken with the camera parallel to the train (hyp. 1). This means that the blur effect will only appear horizontally on the picture. We also assume that the speed of the train is constant during the short period of time when the picture is taken (hyp. 2). This allows us to suppose the blurring operator to be linear: every pixel is modified in the same way. If the speed isn't constant, the parts of the image where the camera is going faster, are influenced by more pixels then the parts where the camera is going slower. The operation is not linear anymore and we won't take this case into account. We will first treat the case where the speed of the train is known and then when it is unknown. Finally we suppose the subjects on the picture to be in the same vertical plane (hyp. 3). So every subject lies approximatively on the same distance away from the camera. This also means that blurring will approximatively have the same effect everywhere on the image. If this was not the case, the blur effect would be more visible on subjects near the camera.
 
-Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: "How is a pixel of $G$ constructed based on the pixels of $F$?". Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $G$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
+Based on all those assumptions, we can now build an approximative form for the blurring matrix $H$. So we have to answer to the following question: ``How is a pixel of $G$ constructed based on the pixels of $F$?''. Through hypothesis 2, we know that only the pixels belonging to the same row as the pixel of $G$ that we are studying, will influence that pixel. If the train is travelling to the left (respectively to the right), a certain number of pixels on the right (respectively left) of that pixel will influence it. Let's denote this number of pixels by $k$. By linearity, we can say that the blurred image is a weighted superposition of shifted versions of the original image. If $D$ is a matrix representing the operator that shifts the image by one pixel horizontally, we can define the blurring matrix $H$ as:
 \begin{equation}
 H=\sum\limits_{i=0}^{k} c_i D^{i}.
 \label{eqHtrain}
@@ -217,11 +217,11 @@ Now we have : $G(i,1) = F(i,1)~i=1,2,3$, which is a bit better than the previous
 
 %TODO pas compris le truc avec le C_1-j pour l'extrapolation d'ordre 1
 
-Another way to treat those "edge problems" is by modelling the blur effect on a smaller image. If we apply our model on the image defined by $F_{small} = F(m,n)$ for $m>k$, then we have all the 'missing information' and we don't need to extrapalte anymore.
+Another way to treat those ``edge problems'' is by modelling the blur effect on a smaller image. If we apply our model on the image defined by $F_{small} = F(m,n)$ for $m>k$, then we have all the ``missing information'' and we don't need to extrapalte anymore.
 
 
 \subsection{Security camera}
 
-Our next situation is a fixed camera taking a sample of pictures with everytime the same scene but sometimes disturbed by a person walking around. The goal is to deblur the part of the image where a person is walking. There are three differences compared to the situation with the train. Firstly, only a part of the image is blurred, so deblurring will also be only applied on that part. Moreover, if the person is not too close to the edges of the image, we don't have any 'edge problems' anymore. And finally, the person could walk in any direction so we don't have a perfect horizontal blur effect anymore.
+Our next situation is a fixed camera taking a sample of pictures with everytime the same scene but sometimes disturbed by a person walking around. The goal is to deblur the part of the image where a person is walking. There are three differences compared to the situation with the train. Firstly, only a part of the image is blurred, so deblurring will also be only applied on that part. Moreover, if the person is not too close to the edges of the image, we don't have any ``edge problems'' anymore. And finally, the person could walk in any direction so we don't have a perfect horizontal blur effect anymore.
 
 Now how can we detect a walking person on an image? If we have a high number of statistical images, we can build a background-image that contains the average value of each pixel. If we take the difference between the blurred image and this image, we get an image that contains very small values (near to zero) for the regions where the person is not present and bigger values for the regions that we call the foreground. Next we extract the foreground and we deblur this new image.

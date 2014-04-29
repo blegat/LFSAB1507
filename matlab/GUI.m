@@ -1,3 +1,9 @@
+
+% TODO : Mettre graph legends for camera + add button if we want
+%   to convertir l'image en NB (+ adapt in camera video) + save
+%   images automatically for camera
+%   Clean le code
+
 function GUI
 global MainWindow 
 

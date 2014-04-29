@@ -15,12 +15,12 @@ Using $H_e$, the estimated psf in frequency domain, we can get $F_e$ an so $f_e$
 F_{e} = H_{e}^{-1} G
 \end{equation} 
 
-However it's clear that if we add some noise this model doesn't work anymore. Indeed as shown on figure \ref{fig:psfFFT}, $H_e$ has some value near zero. So when we divide $G$ by this, the noise is strongly amplified by the value near zero. This problem explains the results obtained on figure XXX. %TODO  
+However it's clear that if we add some noise this model doesn't work anymore. Indeed as shown on figure \ref{fig:psfFFT}, $H_e$ has some value near zero, especially at high frequencies because a blur typically reduces these frequencies. So when we divide $G$ by $H_e$, the noise is strongly amplified by the value near zero. This problem explains the results obtained on figure XXX. %TODO  
 
 \begin{figure}
 \centering
-\missingfigure{T'as oublié de la pusher}
-%\includegraphics[scale=0.5]{../Images/psfFFT.png}
+%\missingfigure{T'as oublié de la pusher}
+\includegraphics[scale=0.5]{../Images/psfFFT.png}
 \caption{FFT of the psf}
 \label{fig:psfFFT}
 \end{figure}
@@ -227,25 +227,66 @@ That way,
 \end{align*}
 which is already correct if $g$ is unicolor.
 
-\subsection{Wiener Deconvolution}
- Another deconvolution is the wiener one. 
+\subsection{Wiener}
+ Another deconvolution is the wiener one. The wiener filter is more robust than the inverse filter because it doesn't ignore the noise. We have in the frequency domain
+\begin{equation}
+F_e = HF + N,
+\label{eq:FeHF}
+\end{equation} 
+ where $N$ is the DF transform of a noise $n$ with mean $0$, and we want to estimate $F_e$ based on the image observed $F$ and a filter $L$, i.e. 
+ \begin{equation}
+ F_e = LF.
+ \label{eq:feLF}
+ \end{equation}
 
+To choose the filter $L$, we minimize 
+\begin{equation}
+\min \mathbb{E}\{|F - F_e|^2\},
+\label{eq:FFe}
+\end{equation}
+and so, using equations \eqref{eq:FeHF} and \eqref{eq:feLF} we can transform equation \eqref{eq:FFe} in 
+\begin{align}
+\mathbb{E}\{|F - F_e|^2\} &= \mathbb{E}\{|F - L(HF+N)|^2\}\\
+	&= \mathbb{E}\{|(1-LH)F - LN|^2\}
+\end{align}
 
+Then, let's introduce some notations concerning the power spectrum :
+\begin{align}
+S_f &= \mathbb{E}\{|F|^2\}\\
+S_n &= \mathbb{E}\{|N|^2\}\\
+\end{align}
 
+After some computation and taking the derivative, we get
+
+\begin{equation}
+L = \frac{H^*+S_f}{|H|^2 S_f + S_n}.
+\label{eq:LsemiFinal}
+\end{equation}
+
+Defining $NSR = \frac{S_n}{S_f}$, we can rewrite $L$ as 
+\begin{equation}
+L = \frac{H^*}{|H|^2 + NSR}.
+\end{equation}
+
+However, this filter needs an estimation of the noise and image variances, which are difficult to estimate. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
 
 \subsection{Regularisation}
 %TODO
 The last deconvolution method is the deconvolution using regularized filter. 
-Instead of a simple inverse 
+Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the original image we are looking for. The second term is used to smooth the image to a certain extent. The term $l(m,n)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be. %TODO source mathworks t
+
 \begin{equation}
 \sum_{m,n} \left[ (g(m,n) - h(m,n)*f(m,n))^2 + \alpha (l(m,n)*f(m,n))^2 \right]
 \end{equation}
 
+The using the Fourier transform, we get
 \begin{equation}
 \sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
 \end{equation}
 
-
+With the derivative we obtain
 \begin{equation}
-\hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\hat{F_e}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
 \end{equation}
+So when the value of $H_e$ is near zero, the term $\alpha |L(k,l)|^2$ is there to avoid a too small denominator. 
+

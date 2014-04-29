@@ -1,11 +1,11 @@
 \usepackage[utf8x]{inputenc}
-\usepackage[frenchb]{babel}
+\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{fullpage}
-%\graphicspath{{../img/}}
 \usepackage{epstopdf}
 \usepackage{graphicx}
+\graphicspath{{../Images/}}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{multirow}
@@ -25,6 +25,8 @@
 
 \usepackage{todonotes}
 
+\usepackage{hyperref}
+
 \usepackage{listings}
 \definecolor{gray}{rgb}{0.4,0.4,0.4}
 \definecolor{dkgreen}{rgb}{0.25,0.7,0.35}
@@ -42,6 +44,32 @@
 \NewDocumentEnvironment{mytable}{mm}
 {\begin{table}[!ht]\centering}
 {\caption{#2 Valeurs obtenues par le code du listing~\ref{lst:#1}.}\label{tab:#1}\end{table}}
+
+\NewDocumentEnvironment{myfig}{mm}
+{\begin{figure}[!ht]\centering}
+{\caption{#2}\label{fig:#1}\end{figure}}
+\NewDocumentEnvironment{myfigsub}{mmm}
+{\begin{subfigure}[b]{#3\textwidth}}
+{\caption{#2}\label{fig:#1}\end{subfigure}}
+
+\newcommand{\mysubfig}[3]
+{\begin{myfigsub}{#1}{#2}{#3}
+    \includegraphics[width=\textwidth]{#1.png}
+\end{myfigsub}}
+\newcommand{\mysubfigg}[4]
+{\begin{myfigsub}{#1}{#2}{#3}
+    \includegraphics[#4, width=\textwidth]{#1.png}
+\end{myfigsub}}
+
+
+\newcommand{\myfullfig}[3]
+{\begin{figure}[!ht]
+    \centering
+    \includegraphics[width=#3\textwidth]{#1.png}
+    \caption{#2}
+    \label{fig:#1}
+\end{figure}}
+
 
 \newcommand{\matlabplot}[2]
 {\begin{figure}[!ht]\centering
@@ -72,3 +100,10 @@
 
 \DeclareMathOperator{\pois}{Pois}
 \DeclareMathOperator{\sinc}{sinc}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\argmax}{argmax}
+
+\usepackage{parskip} % Ajoute de l'espace entre les paragraphes et mets l'indentation to 0
+\setlength{\parindent}{15pt} % Remets l'indentation par default
+
+\newcommand{\figref}[1]{figure~\ref{fig:#1}}

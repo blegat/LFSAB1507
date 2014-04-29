@@ -1,6 +1,9 @@
 *~
 *.png
 *.mat
+*.jpg
+*.bmp
+*.gif
 
 # LaTeX
 *.aux
@@ -11,5 +14,6 @@
 *.log
 *.pdf
 *.toc
+*.out
 
 Thumbs.db
