@@ -24,9 +24,9 @@ var = 10;
 focus_Bdif(focus_Bdif < var) = 0;
 
 if debug
-    save_image(255*focus_connected, 'focus_connected', 2);
-    save_image(10*focus_dif, 'focus_dif', 2);
-    save_image(10*focus_dif.*focus_connected, 'focus_dif.*focus_connected', 2);
+    save_image(255*focus_connected, 'connected', 2);
+    save_image(10*focus_dif, 'focusdiff', 2);
+    save_image(10*focus_dif.*focus_connected, 'focusdiffconnected', 2);
     save_image(10*focus_Bdif, 'focus_Bdif', 2);
 end
 
