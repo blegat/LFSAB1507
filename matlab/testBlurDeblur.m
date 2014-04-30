@@ -97,5 +97,5 @@ end
 
 
 %%%Show the deblurred image
-  %  save_image(deblurred, 'bricksLanczos', 2);
+    save_image(deblurred, 'bricksLanczos', 2);
 end
