@@ -2,102 +2,95 @@
 
 \section{Comparison and interpretation of results for the train}
 
-The purpose of this section is to interpret and compare results on different pictures deblurred by the three methods of deconvolution used: Lucy-Richardson, Wiener and regularization. We will test essentially ideal images artificially blurred in order to isolate the influence of certain parameters. Although most of the images used are not taken inside of a train as it indicated, the assumption of a linear motion blur is well respected and we are therefore in the first case treated (the train).
+The purpose of this section is to interpret and compare results on different pictures deblurred by the three methods of deconvolution used: Lucy-Richardson, Wiener and regularization. We will test essentially ideal images artificially blurred in order to isolate the influence of certain parameters. Although most of the images used are not taken inside a train as it indicated, the assumption of a linear motion blur is well respected and we are therefore in the first case treated (the train).
 
 \subsection{Noise influence}
 
-We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section [???]). The noise was inserted by predefined functions of Matlab. The results are shown in figure ?????:
+We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section \ref{sec:Comp}). The noise was inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}.
 
 \begin{figure}[h]
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/desert/Normal/input.png}
-\vspace{-30pt}
 \caption{Original image whithout noise}
 \label{fig:NormalI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/input.png}
-\vspace{-30pt}
 \caption{Original image whith Gaussian noise ($\mu = 0$, $\sigma = 0.01$)}
 \label{fig:GaussI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/input.png}
-\vspace{-30pt}
 \caption{Original image whith Speckle noise}
 \label{fig:SpeckleI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/L.png}
-\vspace{-30pt}
 \caption{Image deblurred with Lucy (no noise)}
 \label{fig:NormalL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/L.png}
-\vspace{-30pt}
 \caption{Image deblurred with Lucy (Gaussian noise)}
 \label{fig:GaussL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/L.png}
-\vspace{-30pt}
 \caption{Image deblurred with Lucy (Speckle noise)}
 \label{fig:SpeckleL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/W.png}
-\vspace{-30pt}
 \caption{Image deblurred with Wiener (no noise)}
 \label{fig:NormalW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/W.png}
-\vspace{-30pt}
+
 \caption{Image deblurred with Wiener (Gaussian noise)}
 \label{fig:GaussW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/W.png}
-\vspace{-30pt}
+
 \caption{Image deblurred with Wiener (Speckle noise)}
 \label{fig:SpeckleW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/R.png}
-\vspace{-30pt}
+
 \caption{Image deblurred with Reguralization (No noise)}
 \label{fig:NormalR}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/R.png}
-\vspace{-30pt}
+
 \caption{Image deblurred with Reguralization (Gaussian noise)}
 \label{fig:GaussR}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/R.png}
-\vspace{-30pt}
 \caption{Image deblurred with Reguralization (Speckle noise)}
 \label{fig:SpeckleR}
 \end{subfigure}
 \caption{Left: no noise, center: Gaussian noise, right: Speckle noise}
+\label{fig:AllNoises}
 \end{figure}
 
 
-We note that the algorithm reguralisation is much more sensitive to the presence of noise in the original image, for both type of noise injected at the start. The other two methods are also affected but the deblurring is not compromised (provided that the initial noise is not too important).
+We note that the regularisation algorithm is much more sensitive to both type of noise added in the original image. The other two methods are also affected but the deblurring is not compromised (provided that the initial noise is not too important).
 
 %TODO : possible d'expliquer ça mathématiquement ? 
 
@@ -110,14 +103,14 @@ The image used here is the famous photo taken in 1972 of Lena, playmate of playb
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/lenaOriginal.png}
-\vspace{-30pt}
+
 \caption{Original image - Lena}
 \label{fig:LOriginal}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/ArtificialBlurred.png}
-\vspace{-30pt}
+
 \caption{Artificial blur: $30$ pixels and $0$ degrees}
 \label{fig:LenaBlurred}
 \end{subfigure}
@@ -128,63 +121,63 @@ The image used here is the famous photo taken in 1972 of Lena, playmate of playb
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/L20.png}
-\vspace{-30pt}
+
 \caption{Lucy if length estimator = $20$ pixels}
 \label{fig:L20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L30.png}
-\vspace{-30pt}
+
 \caption{Lucy if length estimator = $30$ pixels (exact value)}
 \label{fig:L30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L40.png}
-\vspace{-30pt}
+
 \caption{Lucy if length estimator = $40$ pixels}
 \label{fig:L40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W20.png}
-\vspace{-30pt}
+
 \caption{Wiener if length estimator = $20$ pixels}
 \label{fig:W20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W30.png}
-\vspace{-30pt}
+
 \caption{Wiener if length estimator = $30$ pixels (exact value)}
 \label{fig:W30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W40.png}
-\vspace{-30pt}
+
 \caption{Wiener if length estimator = $40$ pixels.}
 \label{fig:W40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R20.png}
-\vspace{-30pt}
+
 \caption{Reguralization if length estimator = $20$ pixels}
 \label{fig:R20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R30.png}
-\vspace{-30pt}
+
 \caption{Reguralization if length estimator = $30$ pixels (exact value)}
 \label{fig:R30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R40.png}
-\vspace{-30pt}
+
 \caption{Reguralization if length estimator = $40$ pixels}
 \label{fig:R40}
 \end{subfigure}
@@ -197,14 +190,14 @@ It directly seems that the regularization method is much more sensitive to the p
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/originalimage.jpg}
-\vspace{-30pt}
+
 \caption{Original image}
 \label{fig:plaqueO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/ArtificialBlur.png}
-\vspace{-30pt}
+
 \caption{Artificial blur: $40$ pixels and $0$ degrees}
 \label{fig:plaqueBlur}
 \end{subfigure}
@@ -215,35 +208,35 @@ It directly seems that the regularization method is much more sensitive to the p
 \center
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL38.png}
-\vspace{-30pt}
+
 \caption{Reguralization method with length estimator $= 38$}
 \label{fig:RegL38}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL39.png}
-\vspace{-30pt}
+
 \caption{Reguralization method with length estimator $= 39$}
 \label{fig:RegL39}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL40.png}
-\vspace{-30pt}
+
 \caption{Reguralization method with length estimator $= 40$ (exact value)}
 \label{fig:RegL40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL41.png}
-\vspace{-30pt}
+
 \caption{Reguralization method with length estimator $= 41$}
 \label{fig:RegL41}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL42.png}
-\vspace{-30pt}
+
 \caption{Reguralization method with length estimator $= 42$}
 \label{fig:RegL42}
 \end{subfigure}
@@ -262,14 +255,14 @@ Our bonus item relates to the time computation of deblurring. It's important to 
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/lena.jpg}
-\vspace{-30pt}
+
 \caption{Original image - Lena}
 \label{fig:LenaO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
-\vspace{-30pt}
+
 \caption{Artificial blur: $80$ pixels and $50$ degrees}
 \label{fig:Blur80a50}
 \end{subfigure}
@@ -280,42 +273,42 @@ Our bonus item relates to the time computation of deblurring. It's important to 
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Lucy}
 \label{fig:Lulu}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Wiener}
 \label{fig:Wiwi}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Reguralization}
 \label{fig:Rere}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy-Comp.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Lucy (compressing process)}
 \label{fig:Lucycomp}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener-Comp.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Wiener (compressing process)}
 \label{fig:Wienercomp}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg-Comp.png}
-\vspace{-30pt}
+
 \caption{Picture deblurred with Reguralization (compressing process)}
 \label{fig:Regcom}
 \end{subfigure}
@@ -354,21 +347,21 @@ As explained in subsection \ref{subsec:Cep}, computing the length of the psf req
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
-\vspace{-30pt}
+
 \caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=3$ (length estimation = $19$ pixels)}
 \label{fig:LB19E19K3}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
-\vspace{-30pt}
+
 \caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=3$ (length estimation = $36$ pixels)}
 \label{fig:LB20E36K3}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
-\vspace{-30pt}
+
 \caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=3$ (length estimation = $21$ pixels)}
 \label{fig:LB21E21K3}
 \end{subfigure}
@@ -379,7 +372,7 @@ As explained in subsection \ref{subsec:Cep}, computing the length of the psf req
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
-\vspace{-30pt}
+
 \label{fig:LB20E20K2}
 \end{subfigure}
 \caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=2$ (length estimation = $20$ pixels)}
@@ -389,21 +382,21 @@ As explained in subsection \ref{subsec:Cep}, computing the length of the psf req
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
-\vspace{-30pt}
+
 \caption{Pics for artificial blur of $19$ pixels}
 \label{fig:PicsLucy19}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
-\vspace{-30pt}
+
 \caption{Pics for artificial blur of $20$ pixels)}
 \label{fig:PicsLucy20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
-\vspace{-30pt}
+
 \caption{Pics for artificial blur of $21$ pixels}
 \label{fig:PicsLucy21}
 \end{subfigure}
@@ -424,28 +417,28 @@ Below are the results obtained with the algorithm Lucy-Ridchrdson (with compress
 \centering
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
-\vspace{-30pt}
+
 \caption{Artificial blur - RGB image}
 \label{fig:B80A50}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
-\vspace{-30pt}
+
 \caption{Lucy with the RGB image}
 \label{fig:LucyC}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50NB.png}
-\vspace{-30pt}
+
 \caption{Artificial blur - gray-scaled image}
 \label{fig:B80A50NB}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/LucyNB.png}
-\vspace{-30pt}
+
 \caption{Lucy with the gray-scaled image}
 \label{fig:LNBn}
 \end{subfigure}
@@ -460,28 +453,28 @@ Below are the results obtained with the algorithm Lucy-Ridchrdson (with compress
 \centering
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/Original.jpg}
-\vspace{-30pt}
+
 \caption{Original image (natural blur)}
 \label{fig:footOriginal}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/L.png}
-\vspace{-30pt}
+
 \caption{Lucy}
 \label{fig:footLucy}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/W.png}
-\vspace{-30pt}
+
 \caption{Wiener}
 \label{fig:footWiener}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/Reg.png}
-\vspace{-30pt}
+
 \caption{Regularization}
 \label{fig:footReg}
 \end{subfigure}
@@ -492,28 +485,28 @@ Below are the results obtained with the algorithm Lucy-Ridchrdson (with compress
 \centering
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/Original.jpg}
-\vspace{-30pt}
+
 \caption{Original image (natural blur)}
 \label{fig:murOriginal}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/L.png}
-\vspace{-30pt}
+
 \caption{Lucy}
 \label{fig:murLucy}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/W.png}
-\vspace{-30pt}
+
 \caption{Wiener}
 \label{fig:murWiener}
 \end{subfigure}
 ~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/R.png}
-\vspace{-30pt}
+
 \caption{Reguralization}
 \label{fig:murReg}
 \end{subfigure}
@@ -531,14 +524,14 @@ The three methods each have their advantages and disadvantages. Reguralization m
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/fleur/Original.jpg}
-\vspace{-30pt}
+
 \caption{Original image}
 \label{fig:fleurO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/fleur/B40.png}
-\vspace{-30pt}
+
 \caption{Artificial blur: $40$ pixels and $0$ degrees}
 \label{fig:fleurBlur}
 \end{subfigure}
@@ -549,21 +542,21 @@ The three methods each have their advantages and disadvantages. Reguralization m
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/fleur/L.png}
-\vspace{-30pt}
+
 \caption{Lucy}
 \label{fig:fleurL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/fleur/W.png}
-\vspace{-30pt}
+
 \caption{Wiener}
 \label{fig:fleurW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/fleur/R.png}
-\vspace{-30pt}
+
 \caption{Reguralization}
 \label{fig:fleurR}
 \end{subfigure}
@@ -574,14 +567,14 @@ The three methods each have their advantages and disadvantages. Reguralization m
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Nime/Original.jpg}
-\vspace{-30pt}
+
 \caption{Original image}
 \label{fig:NimeO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Nime/B35.png}
-\vspace{-30pt}
+
 \caption{Artificial blur: $35$ pixels and $0$ degrees}
 \label{fig:NimeBlur}
 \end{subfigure}
@@ -592,21 +585,20 @@ The three methods each have their advantages and disadvantages. Reguralization m
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Nime/L.png}
-\vspace{-30pt}
+
 \caption{Lucy}
 \label{fig:NimeL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Nime/W.png}
-\vspace{-30pt}
+
 \caption{Wiener}
 \label{fig:NimeW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Nime/R.png}
-\vspace{-30pt}
 \caption{Reguralization}
 \label{fig:NimeR}
 \end{subfigure}
