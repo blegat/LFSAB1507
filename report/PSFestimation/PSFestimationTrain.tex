@@ -272,17 +272,110 @@ This algorithm is implemented by our matlab function $angle_estimator_Gabor(f,th
 
 %TODO Resultats en images
 
+\todo[inline]{Cite \cite{Dash20141634}}
+
 \subsection{Length with Cepstrum}
 \label{subsec:Cep}
-We can verify that in
-\[ \log(\F(|\log(|g|)|)), \]
-along the angle of blur,
-there is a peek at the center and a second peek
+\cite{biemond1990iterative} shows that in
+\[ \F^{-1}\log(|\F(g)|), \]
+there is negative at a distance $L$ from the origin.
+The $\log$ transforms the convolution $h*f$ in the sum
+$\F^{-1}\log(|\F(h)|) + \F^{-1}\log(|\F(f)|)$
+(if we do not take account for the noise.
+The peeks detected are the peeks of the inverse fourier
+transform of the $\log$ of a $\sinc$.
+\cite{krahmer2006blind} even proposes to use the inverse
+tangeant of the slope from the origin to this peek to
+estimate the length but disadvice to do so,
+arguing that Radon is much better at this job.
+\cite{krahmer2006blind} however advises to use the Cepstrum
+for length estimation.
+
+\cite{Deshpande2014606} argues that this Cespstrum does
+not work properly for small blur length of for high
+frequency components in the original image which
+are wrongly indentified as the location of peeks.
+He says that as second $\log$ would enhance $\sinc$ in comparison
+with the image frequencies.
+
+It's strategy is to search for peeks
+along the angle of blur in
+the following modified Cepstrum
+\[ \log(\F(|\log(|\F(g)|)|)). \]
+There should be a peek at the center and a second peek
 at a distance of $L$ in units of the discretization.
 
-A peek detection algorithm can then be applied
+A peek detection algorithm can therefore be applied
 to find $L$.
 
-The problem is that it depends on the angle
-and is sensible to errors in the angle
-estimation.
+The problem is that we have to search for the peeks along
+the angle of blur so this methods will have
+bad results is the angle is badly estimated.
+
+\cite{Deshpande2014606} proposes to rotate the image
+with $-\alpha$ in spatial domain so he only have to
+search along the horizontal line in it's modified Ceptrum.
+That makes its method work for square images.
+However, we can just estimate the length of the squared image.
+If we do so, we can rotate the modified cepstrum which is less
+likely to cause problems since we rotate \emph{after}
+computing the Cepstrum.
+
+To be robust to angle error we could have taken the mean of
+several lines besides the horizontal line.
+But that would also make use less precise if we have exactly
+the good angle.
+We have not implemented this technique but it would
+be easy to add.
+
+\cite{Deshpande2014606} claims to have a peek detection
+algorithm that does not require manual intervention.
+Ours only need one parameter $k$.
+The right value of $k$ depends on the image but is
+usually 3 for small image and/or small blur,
+5 for normal images and 8 for big images or big blur.
+Our algorithm is the following
+\begin{enumerate}
+  \item We wait before we are not in the influence of the peek
+    at the origin anymore, which is implemented by
+    ``while $i \neq \argmax(i-k\text{ to }i)$'' so
+    while we are not the max of the $k$ pixels before us
+    (including us).
+  \item When we are no more in its influence, we take the
+    $\argmax$ of the rest of the modified Cepstrum.
+\end{enumerate}
+
+The secondary peek should be on both side of the peek at the
+origin.
+We take the one at the right.
+
+To remove the need of choosing $k$, we could,
+for each $k$, find the peeks on the left and the right and
+find their distance with the origin.
+We would take the distance for the $k$ for which
+the difference between left and right is minimum.
+This is a suggestion of amelioration,
+we have not implemented or tested it.
+
+Let's illustrate this with the \figref{cameraman_cepstrum}.
+For a angle of \ang{0}, we clearly see the two peeks
+in the \figref{cameraman-plot-60_0}.
+In the \figref{cameraman-contourf-60_0},
+we see that those peeks are on the horizontal line.
+For \ang{30}, we see in \figref{cameraman-contourf-60_30}
+that the line is not horizontal anymore but it is at \ang{30}.
+That's why we rotate our modified cepstrum by \ang{30}.
+
+The peek is now clearly visible (see \figref{cameraman-plot-60_30}) but
+there is a small sequence of 5 points for which the max is at a distance
+14 and is still in the influence of the central peek.
+We therefore need to take $k = 8$ to get the right length.
+
+\begin{myfig}{cameraman_cepstrum}
+  {Analysis of the modified Ceptstrum on the cameraman with a blur of $(60,\ang{0})$ and $(60,\ang{30})$.}
+  \mysubfig{cameraman-plot-60_0}{Plot of the horizontal line for \ang{0}}{0.45}
+  \mysubfig{cameraman-contourf-60_0}{Modified Cepstrum for \ang{0}}{0.45}
+  \mysubfig{cameraman-surf-60_0}{Modified Cepstrm for \ang{0}}{0.45}
+  \mysubfig{cameraman-plot-60_30}{Plot of the horizontal line for \ang{30}}{0.45}
+  \mysubfig{cameraman-contourf-60_30}{Modified Cepstrum for \ang{30}}{0.45}
+\end{myfig}
