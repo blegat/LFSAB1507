@@ -1,55 +1,38 @@
-% TODO : ANGLE + mettre fonction matlab en latex
-
-
 \chapter{General strategy}
 
-The goal of this section is to explain the main steps of our strategy of deblurring.
+The goal of this chapter is to explain the main steps of our strategy of deblurring. As we mentioned in the previous chapter, there are two main steps:\\
+1. Estimation of the Point Spread Function (PSF) \\
+2. Deconvolution with the estimated PSF
 
-As previously announced, we try to process images that are blurred. The blur in question can be either natural (motion blur, consider linear in one direction in our case), or artificial (with the function blur.m in Matlab).
+We also give a brief description about our specific situations (train and camera) and about the extra thing we need to do for the security camera - situation as we only need to deblur a part of the image in that case. Then we give some explanation about our supplementary item: fast computing.
 
-We know that the blurred image $g$ is the sum of a signal $f$ (the initial image) which is convoluted by an impulse response $h$, the PSF (for Point Spread Function)and some noise $e$. So we seek to perform a deconvolution (which reverses the effects of convolution). For that, we need to know the PSF but it's generally not the case and so we have to estimate it ! 
+To estimate the PSF, we need more specifically to estimate the blur angle (in degrees) and the blur length (in number of pixels). We have two methods to estimate the angle, one that works, the other not at all. For the length estimation we only implemented one algorithm. On the opposite, the deconvolution part can be done by three different methods. 
+
+Obviously, our methods work better for images that we blurred artificially, that means that we blurred them ourselves with our matlab function \texttt{blur.m}. We could easily verify our results as we knew which parameters of blur (angle and length) we set. But we also applied our algorithms on natural burred images. The results are less convincing but some are still good.
   
 \section{Estimation of PSF}
 
-let us consider the case of a linear motion blur of the entire image with unknown angle and length of blurring. In this step we search a estimation of these two parameters that will allow us to calculate the PSF.
+The estimation of PSF works very well with artificially blurred images because they naturally meet the assumptions we made about how the image was blurred.
  
-\subsection{Angle} \todo{BENOIT}
-First of all we estimate the angle of blurring ... (GABOR ou RADON ??)
+\subsection{Angle}
+The method that works pretty well for the angle estimation is based on the Radon transform. The matlab function that implements this method is \texttt{robust_angle_estimator.m}. We tried to implement another method to estimate the blur angle but we didn't have the time to debug it. This method uses the Gabor filter and is implemented by our matlab function \texttt{angle_estimator_Gabor.m}. 
 
 \subsection{Length}
-When we have a good estimation of the angle, we estimate the length parameter with the Matlab function \verb|length_estimator.m|. This function requires processing on the signal cepstrum. 
-\todo{Limitations}
+After the angle has been estimated, we try to find the blur length. Our method method uses the concept of signal's cepstrum. The Matlab function implementing this method is \verb|length_estimator.m|. 
 
 \section{Deconvolution}
+The three algorithms are:
 
-When the PSF is known, we can debluring the input image. We chose to code three differents methods of deconvolution.
+1. Richardson–Lucy. matlab function : \texttt{deconvlucy.m}
 
-The first one is Richardson–Lucy algorithm that is an iterative procedure. For that we use the Matlab function deconvlucy.m. The final result depends largely on the number of iterations.
+2. Wiener. matlab function : \texttt{deconvwnr.m}
 
-We can also use the Wiener method. This deconvolution is a mathematical operation in the spectral domain and is applied thanks to deconvwnr.m .
+3. Reguralization. matlab function :\texttt{deconvreg.m}
 
-Finally, we have the algorithm of Reguralization with the function deconvreg.m.
+\section{Specific situations}
 
-\section{Situations}
-
-What is explained above is the general strategy. However, in the two cases selected through this work, we adapt this strategy. 
-Indeed, while the case of the train just requires deblurring of an image, the surveillance camera requires the treatment of a background and a foreground blurred.
-
-\subsection{Train}
- 
-The strategy of deblurring developed can be applied without modification to the case of taking an image of a train. Indeed, we have a mixting of pixels that is along the direction of the train and linearly (we assume the speed of the train constant). 
-
-This case is similar in theory to the artificial blurring with blur.m but in practice, a real image taken from a train will be much more complicated to deblurring (many external pertubations). 
-
-\subsection{Security camera}
-
-This case is more complicated. We just have to deblur the foreground of image taken by the security camera(that is for instance a man running through the camera range). So we applied the strategy above with the foreground only.
-
-First we seek to have the background (whithout foreground). For that two possibilities : the background is given or we have to estimate it with a serie of images taken by the video camera. This is possible thanks to a statistical analysis of each pixels of the images in the serie.
-
-After that , the main difficulty is to isolate the foreground of the background and we use statistical methods for it in the function deblurcam.m which take the backgroung in argument and deblur the foreground.
-
-As the backgroung can change with time (new item, different brightness,...), we change it in a dynamic way.
+These steps are directly applied for pictures taken in a train by our matlab function \texttt{deblur.m}. We cannot do that for a picture taken by the security camera as we only want to deblur the foreground of it. So for this situation we first need to create a background image based on the sample of statistical images. As the background can change with time (new item, different brightness,...), we change it in a dynamic way. Then we detect the foreground thanks to this background image and we apply what we just described ont that part of the image. Deblurring an image of the security camera is done by our matlab function \texttt{deblur_cam.m}.
 
 \section{Fast computing}
-\todo{A faire}
+
+We fix as objective to have a deblurring time for one picture of about 1 second. To reach it we first need to optimize our implementation by reducing the number of loops and stuff like that. But we also crop an image when all the information of that image is not needed. This allow us to have an execution time that is about $20$ times faster than if we didn't do that. The matlab function that implements that cropping is \texttt{compression.m}.

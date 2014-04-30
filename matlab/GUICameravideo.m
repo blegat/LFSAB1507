@@ -97,14 +97,14 @@ for n = 1:numel(list)
      title(axe1,'Background'); 
      algo = 1;
      comp = 1;
-     DeblurCam = cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
+     DeblurCam = Out{1};%cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
      save_imageCam (DeblurCam, 'CamDeblurred', 1,directoryname, n);
      imshow(DeblurCam/255,'parent',axe3);
      title(axe3,'Deblurred image'); 
      if get(GorRGB,'value') == 1
-       %Out = UpdateBackgroundColor(Out, img);
+       Out = UpdateBackgroundColor(Out, img);
      elseif get(GorRGB,'value') == 2     
-       %Out = UpdateBackground(Out, img);
+       Out = UpdateBackground(Out, img);
      end
      pause(0.01)
 end
