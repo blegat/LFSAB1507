@@ -313,7 +313,7 @@ is the purpose.
 G(k,l) = H(k,l)F(k,l) + N(k,l),
 \label{eq:FeHF}
 \end{equation} 
- where $N$ is the DF transform of a noise $n$ with mean $0$. We want to estimate $\hat{F}$ based on the image observed $F$ and a filter $L$ which still need to be defined, i.e. 
+ where $N$ is the DF transform of a noise $n$ with mean $0$. As explained in \cite{gonzalez2002digital}, we want to estimate $\hat{F}$ based on the image observed $F$ and a filter $L$ which still need to be defined, i.e. 
  \begin{equation}
 \hat{F}(k,l) = L(k,l)F(k,l).
  \label{eq:feLF}
@@ -352,7 +352,7 @@ and
  \hat{F}(k,l) = \frac{H^*(k,l)}{|H(k,l)|^2 + NSR} G(k,l).
 \end{equation}
 So the filter $L$ gives the minimum mean-square error estimate of $F$.
-However, this filter needs an estimation of the noise and image variances, which are difficult to estimate. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
+However, this filter needs an estimation of the noise and image variances, which are difficult to estimate\cite{mathWorksWiener}. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
 
 \subsection{Regularisation}
 \label{subsec:Reg}
@@ -369,9 +369,9 @@ And using the Fourier transform, we get
 \label{eq:FTreg}
 \end{equation}
 
-The term $L(k,l)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution. Indeed the noise is a high frequency in the frequency domain as it is a big change between two pixels. 
+The term $L(k,l)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution~\cite{mathWorksReg}. Indeed the noise is a high frequency in the frequency domain as it is a big change between two pixels. 
 
-The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be\cite{mathWorksWiener}. Indeed if $\alpha$ is big, it amplifies more the high frequencies from $LF$ and because we want to minimise the expression \eqref{eq:FTreg} the low frequencies will be preferred.
+The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be\cite{mathWorksReg}. Indeed if $\alpha$ is big, it amplifies more the high frequencies from $LF$ and because we want to minimise the expression \eqref{eq:FTreg} the low frequencies will be preferred.
 
 With the derivative we obtain
 \begin{equation}
