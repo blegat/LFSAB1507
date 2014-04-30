@@ -3,7 +3,7 @@ function [ ratio Fchanged ] = compression( I, type, sizeFormat )
 
 
 if nargin < 3
-    sizeFormat = 750;
+    sizeFormat = 500;
 end
 
 d = size(I);

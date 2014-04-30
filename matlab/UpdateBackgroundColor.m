@@ -16,7 +16,7 @@ for i = 1:Dim(1)
         NewVariance = NewMoment2 - NewMoy^2;
         VariablesStat{1}(i,j,k) = NewMoy;
         VariablesStat{2}(i,j,k) = NewMoment2;
-        VariablesStat{3}(i,j,k) = NewVariance;
+        VariablesStat{3}(i,j,k) = 100-NewVariance;
         end
     end
 end

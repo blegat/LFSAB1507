@@ -10,12 +10,12 @@ VariablesStat{3} = zeros(Dim(1),Dim(2));
 
 for i = 1:Dim(1)
     for j = 1:Dim(2)
-        NewMoy = Initial{1}(i,j)*0.99 + New(i,j)*0.01;
-        NewMoment2 = Initial{2}(i,j)*0.99 + (New(i,j)^2)*0.01;
+        NewMoy = Initial{1}(i,j)*0.999 + New(i,j)*0.001;
+        NewMoment2 = Initial{2}(i,j)*0.999 + (New(i,j)^2)*0.001;
         NewVariance = NewMoment2 - NewMoy^2;
         VariablesStat{1}(i,j) = NewMoy;
         VariablesStat{2}(i,j) = NewMoment2;
-        VariablesStat{3}(i,j) = NewVariance;
+        VariablesStat{3}(i,j) = 100-NewVariance;
     end
 end
 

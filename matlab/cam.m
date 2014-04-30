@@ -6,7 +6,7 @@ end
 dif = abs(fg(:,:,1) - bg(:,:,1)) ./ sqrt(var);
 
 B = dif;
-save_image(B * sqrt(var), 'diff', 2);
+%save_image(B .* sqrt(var), 'diff', 2);
 
 %save_image(B, 'test', 2)
 %var = graythresh(dif)
@@ -15,8 +15,8 @@ threshold = 1;%mean(mean(B));
 B(B < threshold) = 0;
 B(B > threshold) = 255;
 %save_image(dif, 'dif', 2);
-save_image(B, 'thresh', 2);
-threshold = 128;
+%save_image(B, 'thresh', 2);
+threshold = 100;
 n = 5;
 while threshold > 4
     B = shapeit(B, threshold, n);
@@ -25,7 +25,7 @@ while threshold > 4
 end
 
 %B = biggest_square(I(:,:,1), dif, debug);
-save_image(B, 'shaped', 2); % Si trop blanc changer tresholg (augmenter)
+%save_image(B, 'shaped', 2); % Si trop blanc changer tresholg (augmenter)
 
 % angle  = robust_angle_estimator(I, 0, dif)
 % len = length_estimator(B, angle, 2, 5, 0)
