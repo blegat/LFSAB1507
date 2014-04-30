@@ -25,8 +25,8 @@ if type ==1
         FchangedCorner = I(1:min(size(FchangedCorner)),1:256);
     end
     
-    to check which is the most representative, ex : computerGray.jpg
-    We could add other areas
+    %to check which is the most representative, ex : computerGray.jpg
+    %We could add other areas
     if(d(1) >256 && d(2) >256)
         if(var(FchangedCenter(:))>var(FchangedCorner(:)))
             Fchanged = FchangedCenter;

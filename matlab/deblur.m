@@ -1,4 +1,4 @@
-function [time, F] = deblur (f, algo, comp, ParaLength, iter, sizeFormat)
+function [F] = deblur (f, algo, comp, ParaLength, iter, sizeFormat)
 % Deblur the picture given in argument by evaluation of the psf and then 
 % deconvolution using lucy, wiener or regularisation
 %
@@ -64,7 +64,6 @@ if algo == 1
     % tic
     for i=1:iterColorOrGray
         f(:,:,i) = edgetaper(f(:,:,i),psf);
-       
         F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
     end
    % time =  toc
