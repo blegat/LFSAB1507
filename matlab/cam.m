@@ -1,12 +1,12 @@
 function [F] = cam(fg, bg, algo, iter, comp, var)
 if nargin < 6
-    var = 5;
+    var = 42;
 end
 
 dif = abs(fg(:,:,1) - bg(:,:,1)) ./ sqrt(var);
 
 B = dif;
-save_image(B, 'Bd', 2);
+save_image(B * sqrt(var), 'diff', 2);
 
 %save_image(B, 'test', 2)
 %var = graythresh(dif)
@@ -15,17 +15,17 @@ threshold = 1;%mean(mean(B));
 B(B < threshold) = 0;
 B(B > threshold) = 255;
 %save_image(dif, 'dif', 2);
-save_image(B, 'Bt', 2);
-var = 128;
+save_image(B, 'thresh', 2);
+threshold = 128;
 n = 5;
-while var > 4
-    B = shapeit(B, var, n);
+while threshold > 4
+    B = shapeit(B, threshold, n);
     %save_image(dif, 'dif', 2);
-    var = var / 2;
+    threshold = threshold / 2;
 end
 
 %B = biggest_square(I(:,:,1), dif, debug);
-save_image(B, 'blurred', 2);
+save_image(B, 'shaped', 2);
 
 % angle  = robust_angle_estimator(I, 0, dif)
 % len = length_estimator(B, angle, 2, 5, 0)

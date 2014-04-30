@@ -94,5 +94,5 @@ deblurred = deblur(I,algo,0,k_len,iter);
 
 
 %%%Show the deblurred image
-    save_image(deblurred, 'bricksLanczos', 1);
+    save_image(deblurred, 'bricksLanczos', 2);
 end
