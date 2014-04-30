@@ -60,7 +60,7 @@ that the Lucy-Richardson algorithm gives the MLE of $f$ of this
 model.
 
 They suggest that $G \sim \pois(h * f)$ ($G$ is capitilize sinced it is a random function).
-\todo{Show what we add to the proof and make it a theo}
+%\todo{Show what we add to the proof and make it a theo}
 Therefore,
 \begin{align*}
   L(f) & = P(g|f)\\
@@ -170,7 +170,7 @@ Let's analyse an iteration.
     And $r(x,y)$ will influences a pixel in $f_k$ with the same
     weight that it influences $g(x,y)$.
     That's why we convolve $r$ with $h(-x,-y)$.
-  \item Since each pixel has a sum of weight of 1, \todo{pas compréhensible}
+  \item Since each pixel has a sum of weight of 1,% \todo{pas compréhensible}
     it will be influenced by a weight of 1 of elements of $r$.
     The ratio in $r(x,y) * h(-x, -y)$ is then multiplied by
     $f_k(x,y)$ to get $f_{k+1}(x,y)$:
@@ -203,7 +203,7 @@ Let's take an example with a 1-D blur to the right of
     That way, $f(n)$ is influenced by $g(n)$ the same
     way it influence $g(n)$ which seems mandatory and
     the effet of $g(n+1)$ is the same as if
-    $g(n+1) = (h*f)(n+1)$. \todo{comprend paaaas}
+    $g(n+1) = (h*f)(n+1)$.% \todo{comprend paaaas}
   \item For $h * f$,
     let's assume that we have a 1-D blur to the right of 2 pixels
     (index starting at 1).

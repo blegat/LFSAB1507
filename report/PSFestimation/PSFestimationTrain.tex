@@ -269,7 +269,8 @@ This algorithm is implemented by our matlab function \texttt{angle\_estimator\_G
 
 \subsection{Length with Cepstrum}
 \label{subsec:Cep}
-\cite{biemond1990iterative} shows that in \todo{clarifier la première phrase, benoît?}
+Let $L$ be the length of the blur.
+\cite{biemond1990iterative} shows that in% \todo{clarifier la première phrase, benoît?}
 \[ \F^{-1}\log(|\F(g)|), \]
 there is negative at a distance $L$ from the origin.
 The $\log$ transforms the convolution $h*f$ in the sum
@@ -288,8 +289,9 @@ for length estimation.
 not work properly for small blur lengths or for high
 frequency components in the original image which
 are wrongly identified as the location of peeks.
-He says that a second $\log$ would enhance $\sinc$ in comparison
-with the image frequencies. \todo{pas compris la derniere phrase benoît}
+He says that applying second $\log$ would enhance the $\sinc$ peeks
+in comparison to the image frequencies.
+%\todo{pas compris la derniere phrase benoît}
 
 It's strategy is to search for peeks
 along the angle of blur in
@@ -329,11 +331,20 @@ usually 3 for small images and/or small blur,
 5 for normal images and 8 for big images or big blur.
 Our algorithm is the following \todo{point 1. pas du tout clair}
 \begin{enumerate}
-  \item We wait before we are not in the influence of the peek
-    at the origin anymore, which is implemented by
+  \item If we try to find the max just after the central peek,
+    we will just find the point just besides it because even
+    if it is not a peek, it is high because it is in the
+    influence of the central peek.
+    Once we are in the influence of the central peek,
+    the plot is going down.
+    Therefore, we wait before we are not in the influence of that peek
+    anymore, which is implemented by
     ``while $i \neq \argmax(i-k\text{ to }i)$'' so
-    while we are not the max of the $k$ pixels before us
+    while we are not the max of the $k$ points before us
     (including us).
+    If we are the max of those points,
+    that means that we are kind of increasing for $k$
+    points.
   \item When we are no more in its influence, we take the
     $\argmax$ of the rest of the modified Cepstrum.
 \end{enumerate}
@@ -366,9 +377,9 @@ We therefore need to take $k = 8$ to get the right length.
 
 \begin{myfig}{cameraman_cepstrum}
   {Analysis of the modified Ceptstrum on the cameraman with a blur of $(60,\ang{0})$ and $(60,\ang{30})$.}
-  \mysubfig{cameraman-plot-60_0}{Plot of the horizontal line for \ang{0}}{0.45}
+  \mysubfig{cameraman-plot-60_0}{Plot of the horizontal line for \ang{0}}{0.45}%
   \mysubfig{cameraman-contourf-60_0}{Modified Cepstrum for \ang{0}}{0.45}
-  \mysubfig{cameraman-surf-60_0}{Modified Cepstrm for \ang{0}}{0.45}
+  \mysubfig{cameraman-surf-60_0}{Modified Cepstrm for \ang{0}}{0.45}%
   \mysubfig{cameraman-plot-60_30}{Plot of the horizontal line for \ang{30}}{0.45}
   \mysubfig{cameraman-contourf-60_30}{Modified Cepstrum for \ang{30}}{0.45}
 \end{myfig}
