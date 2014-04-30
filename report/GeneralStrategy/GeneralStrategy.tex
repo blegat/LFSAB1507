@@ -52,26 +52,4 @@ After that , the main difficulty is to isolate the foreground of the background 
 As the backgroung can change with time (new item, different brightness,...), we change it in a dynamic way.
 
 \section{Fast computing}
-
-\todo[inline]{Merge from here...}
-\section{Train}
-Let's summarize the model.
-We know $g(x,y)$ and we know that there is a $h(x,y)$ such that
-\[ g(x,y) = h(x,y) * f(x,y) + e(x,y). \]
-We would like to find $f(x,y)$.
-To obtain it, we need to deconvolve $g(x,y)$ with a method
-robust to the noise $e(x,y)$.
-
-However, we don't know $h(x,y)$ so we first need to estimate it
-in a way that is also robust to the noise.
-It is easier to estimate $h(x,y)$ if we make some assumptions.
-For our problem, we have a motion blur which means that
-$h(x,y)$ only depends on an angle and a length which are
-respectively the angle at which the blur is and the number of
-pixel on which each pixel depends.
-
-Once we have an estimate of $h(x,y)$, we then deconvolve
-$g(x,y)$ to get an estimate $\hat{f}(x,y)$.
-For some deconvolution method, we need an estimate of
-some properties of the noise which is done only using $g(x,y)$.
-\todo[inline]{...to here somewhere :)}
+\todo{A faire}
