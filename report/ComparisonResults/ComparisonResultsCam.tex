@@ -181,7 +181,12 @@ The second series consists of images taken by a fixed camera with a terrace figu
 
 \begin{figure}[h]
 \centering
+<<<<<<< HEAD
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Terasse/BGDetect/BG.png}
+\label{fig:TerBG}
+=======
 \includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Terasse/BGDectect/BG.png}
+>>>>>>> ece933f470ac462373878be7235f47974b6baaf4
 \caption{Background estimation}
 \label{fig:TerBG}
 \end{figure} 
@@ -387,3 +392,147 @@ As explained in section~\ref{sec:fg}, we have to find the foreground in the pict
 \caption{Human walking detected and deblurred.}
 \label{fig:DetectHuman}
 \end{figure}
+
+\subsection{Deblurring}
+Let's start with simple rectangles with the \figref{dontpanic}.
+We can see with \figref{dontpanic-40-0_2_1-20} and \figref{dontpanic-40-0_2_1-20}
+that ``select-lucy'' has borders problems that get worse at
+each iteration.
+That shows that increasing the number of iteration
+is not always a good idea since it make the errors spread.
+This is the same scenerio for \figref{dontpanic_blue-40-0_2_1-20}
+and \figref{dontpanic_blue-40-0_2_1-60}.
+This problem was expected since the resolution at the border
+is an approximation that is a bit wrong so it creates errors.
+
+\begin{myfig}{dontpanic}{Square image on real background blurred with $(40,\ang{0})$}
+  \begin{myfigsub}{dontpanic-40-0_2_1-20}
+    {``select-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_1-20.jpg}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic-40-0_2_1-100}
+    {``select-lucy'' with 100 iterations}{0.49}
+    \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_1-100.jpg}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic-40-0_2_2-20}
+    {``exact-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_2-20.jpg}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic-40-0_2_2-100}
+    {``exact-lucy'' with 100 iterations}{0.49}
+    \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_2-100.jpg}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic-wiener-40_0}
+    {Wiener}{0.4}
+    \includegraphics[trim=7cm 6cm 7cm 5cm,clip,width=\textwidth]{dontpanic-wiener-40_0.png}
+  \end{myfigsub}
+\end{myfig}
+
+``exact-lucy'' has some problems to estimate the foreground
+for \figref{dontpanic-40-0_2_2-20} and
+\figref{dontpanic-40-0_2_2-60} since the background color
+is quite close, they are both red.
+For \figref{dontpanic_blue-40-0_2_2-20}
+and \figref{dontpanic_blue-40-0_2_2-60} however,
+the border has been very precisely estimated since the
+background and the foreground are very different.
+We have almost perfect border estimation for most of the
+lines and increasing the numbers of iteration does
+not cause problems since there is almost no error to
+spread.
+
+\begin{myfig}{dontpanic_blue}{Square image on real background blurred with $(40,\ang{0})$}
+  \begin{myfigsub}{dontpanic_blue-40-0_2_1-20}
+    {``select-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-40_0-2_1-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic_blue-40-0_2_1-100}
+    {``select-lucy'' with 100 iterations}{0.49}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-40_0-2_1-100.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic_blue-40-0_2_2-20}
+    {``exact-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-2_2-40_0-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic_blue-40-0_2_2-100}
+    {``exact-lucy'' with 100 iterations}{0.49}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-40_0-2_2-100.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic_blue-wiener-40_0}
+    {Wiener}{0.4}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-wiener-40_0.png}
+  \end{myfigsub}
+\end{myfig}
+
+Wiener is a bit less precise that lucy methods but it has no
+border artifacts.
+
+For the cars, the problem is that we only have one image
+for the background.
+We therefore have to estimate a var.
+We will take 32 for \figref{car1} and
+42 for \figref{car2}.
+With a $k$ of 8 for \figref{car1} (for the peek detection
+of the length estimation),
+we have a length of 35 which is estimated.
+The results are so good that we are tempted to say
+that $L = 35$ even if we don't know since it is a real
+image.
+
+For \figref{car2}, the results are not as good
+but we can expect that the length has been estimated wrongly
+when we compare those results to \figref{car1}.
+
+The black boxes for \figref{car2-1_2-20} and
+\figref{car2-1_2-60} are known problems.
+We rotate the image back and forth by the angle of blur
+to estimate the foreground (since our algorithm only works
+along lines).
+The result of these rotations gives a smaller image than
+the original.
+
+\begin{myfig}{car1}{Car deblurred, real blur by $(35,\ang{180})$}
+  \begin{myfigsub}{car1-5_1-20}
+    {``select-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_1-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car1-5_1-60}
+    {``select-lucy'' with 60 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_1-60.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car1-5_2-20}
+    {``exact-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_2-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car1-5_2-60}
+    {``exact-lucy'' with 60 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_2-60.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car1-5_3}
+    {Wiener}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_3.png}
+  \end{myfigsub}
+\end{myfig}
+
+\begin{myfig}{car2}{Car deblurred, real blur}
+  \begin{myfigsub}{car2-1_1-20}
+    {``select-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_1-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car2-1_1-60}
+    {``select-lucy'' with 60 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_1-60.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car2-1_2-20}
+    {``exact-lucy'' with 20 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_2-20.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car2-1_2-60}
+    {``exact-lucy'' with 60 iterations}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_2-60.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car2-1_3}
+    {Wiener}{0.49}
+    \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_3.png}
+  \end{myfigsub}
+\end{myfig}
