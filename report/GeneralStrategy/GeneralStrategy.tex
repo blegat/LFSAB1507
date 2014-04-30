@@ -15,7 +15,7 @@ Obviously, our methods work better for images that we blurred artificially, that
 The estimation of PSF works very well with artificially blurred images because they naturally meet the assumptions we made about how the image was blurred.
  
 \subsection{Angle}
-The method that works pretty well for the angle estimation is based on the Radon transform. The matlab function that implements this method is \texttt{robust_angle_estimator.m}. We tried to implement another method to estimate the blur angle but we didn't have the time to debug it. This method uses the Gabor filter and is implemented by our matlab function \texttt{angle_estimator_Gabor.m}. 
+The method that works pretty well for the angle estimation is based on the Radon transform. The matlab function that implements this method is \texttt{robust\_angle\_estimator.m}. We tried to implement another method to estimate the blur angle but we didn't have the time to debug it. This method uses the Gabor filter and is implemented by our matlab function \texttt{angle\_estimator\_Gabor.m}. 
 
 \subsection{Length}
 After the angle has been estimated, we try to find the blur length. Our method method uses the concept of signal's cepstrum. The Matlab function implementing this method is \verb|length_estimator.m|. 
@@ -31,7 +31,7 @@ The three algorithms are:
 
 \section{Specific situations}
 
-These steps are directly applied for pictures taken in a train by our matlab function \texttt{deblur.m}. We cannot do that for a picture taken by the security camera as we only want to deblur the foreground of it. So for this situation we first need to create a background image based on the sample of statistical images. As the background can change with time (new item, different brightness,...), we change it in a dynamic way. Then we detect the foreground thanks to this background image and we apply what we just described ont that part of the image. Deblurring an image of the security camera is done by our matlab function \texttt{deblur_cam.m}.
+These steps are directly applied for pictures taken in a train by our matlab function \texttt{deblur.m}. We cannot do that for a picture taken by the security camera as we only want to deblur the foreground of it. So for this situation we first need to create a background image based on the sample of statistical images. As the background can change with time (new item, different brightness,...), we change it in a dynamic way. Then we detect the foreground thanks to this background image and we apply what we just described ont that part of the image. Deblurring an image of the security camera is done by our matlab function \texttt{deblur\_cam.m}.
 
 \section{Fast computing}
 
