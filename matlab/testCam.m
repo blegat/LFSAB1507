@@ -14,13 +14,15 @@ if test == 1
     %Stivy
     bg = double(imread('stv_bg.jpg'));
     fg = double(imread('stv_blur2.jpg'));
-    test_name = 'car';
+    test_name = 'car2';
 elseif test == 2
     bg = double(imread('Back.bmp'));
 %A = double(imread('Sub.bmp'));
 %D = abs(A - bg);
     sub = double(imread('h2g2_blue.jpg'));
     test_name = 'dontpanic_blue';
+    %sub = double(imread('h2g2.jpg'));
+    %test_name = 'dontpanic';
     mix = 1;
 elseif test == 3
     bg = double(imread('Back.bmp'));
@@ -31,6 +33,10 @@ elseif test == 4
     sub = ones(51,51)*200;
     test_name = 'square';
     mix = 1;
+elseif test == 5
+    bg = double(rgb2gray(imread('stv_bg.jpg')));
+    fg = double(rgb2gray(imread('stv_blur1.jpg')));
+    test_name = 'car1'
 end
 if mix
     [N M k] = size(bg);
@@ -58,5 +64,5 @@ end
 %deblu = sprintf('%s-%d_%d-%d_%d-%d', name, len, blur_angle, test, algo, iter);
 save_image(fg, 'g', 2);
 F = cam(fg, bg, algo, iter, 0);
-save_image(F, 'f', 2);
+save_image(F, sprintf('%d_%d', test, algo), 2);
 end

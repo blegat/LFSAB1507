@@ -48,8 +48,8 @@ if dbg
     size(N)
     size(c)
     
-    figure
-    surf(N, M, real(c));
+    %figure
+    %surf(N, M, real(c));
     %figure % Too slooow
     %contourf(N, M, real(c));
 end
