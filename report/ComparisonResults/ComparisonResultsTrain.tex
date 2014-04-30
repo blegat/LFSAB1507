@@ -13,91 +13,87 @@ We are interested in deblurring a original image with noise (that is independent
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/desert/Normal/input.png}
 \vspace{-30pt}
-\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\caption{Original image whithout noise}
 \label{fig:NormalI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/input.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Original image whith Gaussian noise ($\mu = 0$, $\sigma = 0.01$)}
 \label{fig:GaussI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/input.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Original image whith Speckle noise}
 \label{fig:SpeckleI}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/L.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Lucy (no noise)}
 \label{fig:NormalL}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-\end{figure}
-
-\begin{figure}
-
+~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/L.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Lucy (Gaussian noise)}
 \label{fig:GaussL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/L.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Lucy (Speckle noise)}
 \label{fig:SpeckleL}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/W.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Wiener (no noise)}
 \label{fig:NormalW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/W.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Wiener (Gaussian noise)}
 \label{fig:GaussW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/W.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Wiener (Speckle noise)}
 \label{fig:SpeckleW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/R.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Reguralization (No noise)}
 \label{fig:NormalR}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/R.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Reguralization (Gaussian noise)}
 \label{fig:GaussR}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/R.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Image deblurred with Reguralization (Speckle noise)}
 \label{fig:SpeckleR}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
+\caption{Left: no noise, center: Gaussian noise, right: Speckle noise}
 \end{figure}
 
 
@@ -112,19 +108,20 @@ The image used here is the famous photo taken in 1972 of Lena, playmate of playb
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/lenaOriginal.png}
 \vspace{-30pt}
-\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\caption{Original image - Lena}
 \label{fig:LOriginal}
 \end{subfigure}
 ~
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/ArtificialBlurred.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Artificial blur: $30$ pixels and $0$ degrees}
 \label{fig:LenaBlurred}
 \end{subfigure}
+\caption{Original image (left) and with artificial blur (right)}
 \end{figure}
 
 \begin{figure}[h]
@@ -132,133 +129,125 @@ The image used here is the famous photo taken in 1972 of Lena, playmate of playb
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/L20.png}
 \vspace{-30pt}
-\caption{Picture deblurred using only a $256\times 256$ centered crop of the picture. }
+\caption{Lucy if length estimator = $20$ pixels}
 \label{fig:L20}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L30.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Lucy if length estimator = $30$ pixels (exact value)}
 \label{fig:L30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L40.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Lucy if length estimator = $40$ pixels}
 \label{fig:L40}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-\end{figure}
-
-\begin{figure}
+~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W20.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Wiener if length estimator = $20$ pixels}
 \label{fig:W20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W30.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Wiener if length estimator = $30$ pixels (exact value)}
 \label{fig:W30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W40.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Wiener if length estimator = $40$ pixels.}
 \label{fig:W40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R20.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization if length estimator = $20$ pixels}
 \label{fig:R20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R30.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization if length estimator = $30$ pixels (exact value)}
 \label{fig:R30}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-\end{figure}
-
-\begin{figure}
+~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R40.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization if length estimator = $40$ pixels}
 \label{fig:R40}
 \end{subfigure}
+\caption{Influence of the length estimator}
 \end{figure}
 
 It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. Indeed, artifacts occur when the estimated parameter departs from the true value. The following example shows it (artificially blurred license plate at 0 degrees and 40 pixels):
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/originalimage.jpg}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Original image}
 \label{fig:plaqueO}
 \end{subfigure}
 ~
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/ArtificialBlur.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Artificial blur: $40$ pixels and $0$ degrees}
 \label{fig:plaqueBlur}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
+\caption{Original image (left) and with artificial blur (right)}
 \end{figure}
 
-
-It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. Indeed, artifacts occur when the estimated parameter departs from the true value. The following example shows it (artificially blurred license plate at 0 degrees and 40 pixels):
-
-\begin{figure}
+\begin{figure}[h]
+\center
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL38.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization method with length estimator $= 38$}
 \label{fig:RegL38}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL39.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization method with length estimator $= 39$}
 \label{fig:RegL39}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL40.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization method with length estimator $= 40$ (exact value)}
 \label{fig:RegL40}
 \end{subfigure}
 ~
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL41.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization method with length estimator $= 41$}
 \label{fig:RegL41}
 \end{subfigure}
 ~
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL42.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Reguralization method with length estimator $= 42$}
 \label{fig:RegL42}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
+\caption{Method of reguralization: influence of the length estimator parameter}
 \end{figure}
 
 
@@ -267,25 +256,70 @@ It directly seems that the regularization method is much more sensitive to the p
 \subsection{Compression and computation time}
 
 
-Our bonus item relates to the time computation of deblurring. It's important to analyze whether the time saved is significant and if it's not compromising quality of deblurred images. For that, we will compare the execution time by compressing or not the original image for the three algorithms. The testing picture is the photo of Lena, artificially blurred to 50 degrees and with a length of 80 pixels.
+Our bonus item relates to the time computation of deblurring. It's important to analyze whether the time saved is significant and if it's not compromising quality of deblurred images. For that, we will compare the execution time by compressing for the three algorithms. The testing picture is the photo of Lena, artificially blurred to 50 degrees and with a length of 80 pixels.
 
 \begin{figure}[h]
 \centering
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/lena.jpg}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Original image - Lena}
 \label{fig:LenaO}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
 ~
-\begin{subfigure}{0.4\textwidth}
+\begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
 \vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
+\caption{Artificial blur: $80$ pixels and $50$ degrees}
 \label{fig:Blur80a50}
 \end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
+\caption{Original image (left) and with artificial blur (right)}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Lucy}
+\label{fig:Lulu}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Wiener}
+\label{fig:Wiwi}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Reguralization}
+\label{fig:Rere}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy-Comp.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Lucy (compressing process)}
+\label{fig:Lucycomp}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener-Comp.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Wiener (compressing process)}
+\label{fig:Wienercomp}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg-Comp.png}
+\vspace{-30pt}
+\caption{Picture deblurred with Reguralization (compressing process)}
+\label{fig:Regcom}
+\end{subfigure}
+\caption{Compression: comparison of results}
 \end{figure}
 
 The following table shows the different computation time:
@@ -300,58 +334,8 @@ The following table shows the different computation time:
   \hline
 \end{tabular}
 
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Lulu}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Wiwi}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Rere}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy-Comp.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Lucycomp}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener-Comp.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Wienercomp}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg-Comp.png}
-\vspace{-30pt}
-\caption{Picture deblurred using the whole image.}
-\label{fig:Regcom}
-\end{subfigure}
-\caption{Different matrix's size for the PSF estimation.}
-\end{figure}
 
-We see that in this case the compression significantly reduces the computation time with little visible differences between the deblurred image with compression or not (more artefacts with reguralisation). Deblurring with the Wiener is inconclusive here, this observation will be discussed in section of the color influence (????).
+We see that in this case the compression significantly reduces the computation time with little visible differences between the deblurred image with and without compression (more artefacts for reguralisation with the processing process). Deblurring with the Wiener is inconclusive here, this observation will be discussed in section of the color influence (????????).
 
 However, in some cases the length of blur can be estimated with less well with compression which may alter the results (particularly with the algorithm of Reguralisation that is realy sensitive to this parameter).
 
@@ -366,25 +350,265 @@ By analyzing the table of the previous point that summerize the execution time w
 
 As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires to search different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8, our estimated length is accurate, we obtain the exact numbers, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant. However if we change k to 5, we get 20 pixels estimated. If we check the graphs of the peaks XXX, it is clear that for 
 
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
+\vspace{-30pt}
+\caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=3$ (length estimation = $19$ pixels)}
+\label{fig:LB19E19K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
+\vspace{-30pt}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=3$ (length estimation = $36$ pixels)}
+\label{fig:LB20E36K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
+\vspace{-30pt}
+\caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=3$ (length estimation = $21$ pixels)}
+\label{fig:LB21E21K3}
+\end{subfigure}
+\caption{Compression: Deblurring (Lucy) for different length of artificial blur for $k = 3$}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
+\vspace{-30pt}
+\label{fig:LB20E20K2}
+\end{subfigure}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=2$ (length estimation = $20$ pixels)}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
+\vspace{-30pt}
+\caption{Pics for artificial blur of $19$ pixels}
+\label{fig:PicsLucy19}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
+\vspace{-30pt}
+\caption{Pics for artificial blur of $20$ pixels)}
+\label{fig:PicsLucy20}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
+\vspace{-30pt}
+\caption{Pics for artificial blur of $21$ pixels}
+\label{fig:PicsLucy21}
+\end{subfigure}
+\caption{PicsLucy A COMPLETER}
+\end{figure}
+
+
 %TODO Arnaud comme on avait parlé hier et l'influence du paramètre (disons P) qui vaut 3, 5 ou 8. Moi je comprend pas trop donc ca serait pas mal si on arrive à expliquer ça avec le graphique des pics et tout. ..\Images\Results\plaque\55 y a une la plaque floutée artificiellement à 55 pixels (et angle 0) et quand on prend que P = 3 ou 5 (1 ou 2 dans le GUI), ça estime la longueur à 23 (à la place de 55), du coup ça donne Lucy_P1 Wiener_P1 et Reg_P1 (de la merde...). Tandis que P = 8 (3 dans le GUI) estime la longueur à 54, et ça donne les beaux résultats Lucy_P3 Wiener_P3 et Reg_P3. Tu sais en tirer quelque chose ? 
 
 \subsection{Colors influence}
 
 First of all, there is an influence on the run time. Indeed, as already seen ([MATH section]), color images are stored in 3-dimensions matrix $M$ x $N$ x $3$. So they take longer to be processed that the same gray-scaled image, stored in a matrix $M$ x $N$.
-Below are the results obtained with the algorithm Lucy-Ridchrdson (with compression) for the photo of Lena and they gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
+Below are the results obtained with the algorithm Lucy-Ridchrdson (with compression) for the photo of Lena and the gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
 
 % EN fait la longueur de floutage à été fixée à la bonne valeur pour la NB parce qu'ou sinon ca estime super mal, il faudrait voir pourquoi... Mais on est pas obligés de le dire dans le rapport :p 
 
-%TODO mettre en images [Blur80a50 Lucy; Blur80a50NB LucyNB] temps d'execution color : 6,98[s], NB : 2,41[s]
- 
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
+\vspace{-30pt}
+\caption{Artificial blur - RGB image}
+\label{fig:B80A50}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
+\vspace{-30pt}
+\caption{Lucy with the RGB image}
+\label{fig:LucyC}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50NB.png}
+\vspace{-30pt}
+\caption{Artificial blur - gray-scaled image}
+\label{fig:B80A50NB}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/LucyNB.png}
+\vspace{-30pt}
+\caption{Lucy with the gray-scaled image}
+\label{fig:LNBn}
+\end{subfigure}
+\caption{Computation time for the RGB image: $6,98$[s]; for gray-scaled one: $2,41$[s]}
+\end{figure}
+
 %TODO voir pourquoi Wiener beug parfois selon les couleurs
 
 \subsection{reals images}
 
-%TODO mettre les images ..\Images\Results\reel\foot [Original L; W Reg]. et aussi ..\Images\Results\reel\mur [Original L; W R]
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/Original.jpg}
+\vspace{-30pt}
+\caption{Original image (natural blur)}
+\label{fig:footOriginal}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/L.png}
+\vspace{-30pt}
+\caption{Lucy}
+\label{fig:footLucy}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/W.png}
+\vspace{-30pt}
+\caption{Wiener}
+\label{fig:footWiener}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/Reg.png}
+\vspace{-30pt}
+\caption{Regularization}
+\label{fig:footReg}
+\end{subfigure}
+\caption{Deblurring of a poster (natural blur)}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/Original.jpg}
+\vspace{-30pt}
+\caption{Original image (natural blur)}
+\label{fig:murOriginal}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/L.png}
+\vspace{-30pt}
+\caption{Lucy}
+\label{fig:murLucy}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/W.png}
+\vspace{-30pt}
+\caption{Wiener}
+\label{fig:murWiener}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/Mur/R.png}
+\vspace{-30pt}
+\caption{Reguralization}
+\label{fig:murReg}
+\end{subfigure}
+\caption{Deblurring of a wall (real noise)}
+\end{figure}
+
  
 The results are pretty conclusive so far as the original blurred follows a minimum the assumptions which is not always given. Generally, Reguralisation is not valid for real images, this is explained by the fact that this method is very sensitive to the length parameter estimation and noise. However, in an image with a real blur, it's more difficult to properly estimate the length (blur not linear, "speed" of blurring non-constant) and the noise is very present (including photos taken above by a amateur camera). Lucy and Wiener are stronger, making it more interesting algorithm. However, Lucy is better than Wiener, but in return the execution time is more important.
 
 \subsection{conclusion}
 
 The three methods each have their advantages and disadvantages. Reguralization method is fast but too sensitive to noise and estimation of length, it's so not very robust but still interesting from a theoretical perspective. By contrast, The other two methods are robust. Wiener has the advantage of being faster than Lucy but the results are generally worse than those of Lucy.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/fleur/Original.jpg}
+\vspace{-30pt}
+\caption{Original image}
+\label{fig:fleurO}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/fleur/B40.png}
+\vspace{-30pt}
+\caption{Artificial blur: $40$ pixels and $0$ degrees}
+\label{fig:fleurBlur}
+\end{subfigure}
+\caption{Original image (left) and with artificial blur (right)}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/fleur/L.png}
+\vspace{-30pt}
+\caption{Lucy}
+\label{fig:fleurL}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/fleur/W.png}
+\vspace{-30pt}
+\caption{Wiener}
+\label{fig:fleurW}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/fleur/R.png}
+\vspace{-30pt}
+\caption{Reguralization}
+\label{fig:fleurR}
+\end{subfigure}
+\caption{Deblurring of flowers}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/Original.jpg}
+\vspace{-30pt}
+\caption{Original image}
+\label{fig:NimeO}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/B35.png}
+\vspace{-30pt}
+\caption{Artificial blur: $35$ pixels and $0$ degrees}
+\label{fig:NimeBlur}
+\end{subfigure}
+\caption{Original image (left) and with artificial blur (right)}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/L.png}
+\vspace{-30pt}
+\caption{Lucy}
+\label{fig:NimeL}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/W.png}
+\vspace{-30pt}
+\caption{Wiener}
+\label{fig:NimeW}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/R.png}
+\vspace{-30pt}
+\caption{Reguralization}
+\label{fig:NimeR}
+\end{subfigure}
+\caption{Deblurring}
+\end{figure}

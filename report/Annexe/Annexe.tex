@@ -10,16 +10,44 @@ The graphical user interface is open by calling the function GUI.m. Firstly the 
 
 \section{Train}
 
-The user can choose an image. Two cases are possibles: either he wants to artificially blur it or deblurring it. 
+The user can choose an image. Two cases are possibles: either he wants to artificially blur it or deblurring it.
 
-If he chooses to artificially blur the image(useful for validation tests), a new window is opened and the user can enter an angle and a length of blur. The resulting blurred image (after pressing "GO !") can then be deblurred, which brings us to the second possibility. It's also possible for the user to save the blurred image.
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/GUI/train.png}
+\label{fig:GUItrain}
+\caption{principal screen for the case of train}
+\end{figure} 
+
+If he chooses to blur artificially the image(useful for validation tests), a new window is opened and the user can enter an angle and a length of blur. The resulting blurred image (after pressing "GO !") can then be deblurred, which brings us to the second possibility. It's also possible for the user to save the blurred image.
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/GUI/trainBlur.png}
+\label{fig:GUItrainBlur}
+\caption{Artificial blur with the GUI}
+\end{figure} 
 
 In case the user chooses to deblur the original image (or the artificially blurred one), a new window is opened. In this one, it's possible to choose or not to compress the photo to deblur (in order to accelerate the deconvolution,  as mentioned in our supplementary item) and deblurring method  (which will allow subsequently compare different results depending on the method used). The button "GO !" launches deblurring. The deblurred image can finally be save in a file.
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/GUI/trainDeblur.png}
+\label{fig:GUItrainDeblur}
+\caption{Deblur with the GUI}
+\end{figure} 
 
 \section{Camera video}
 
 The user is prompted to select the folder containing the serie of images that we want to make the background (only one image in the folder if the background is known). The calculated background can then be optionally recorded.
 Then, the user selects the folder of all images to deblur (with blurred foreground) and for each of them, the deblurred image is displayed next to the original one. Simultaneously, the background is updated taking into account any changes (new item, change brightness, ...).
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/GUI/camera.png}
+\label{fig:GUIcam}
+\caption{Case of the camera video with the GUI}
+\end{figure} 
 
 \chapter{Specifications}
 
