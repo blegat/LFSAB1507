@@ -267,7 +267,7 @@ As explained in subsection \ref{subsec:Cep}, computing the length of the psf req
 \end{figure}
 
 
-If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels independent of the principal peak is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
+If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explains that to find a peak with more than 8 pixels independent of the principal peak is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
 
 \begin{figure}[h]
 \centering
@@ -298,7 +298,7 @@ If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:Pl
 After examining the influence of the length, we are interested in the influence of the angle 
 estimated with the method of Radon (section~\ref{subsec:Radon}). This parameter is also used in the calculation of the PSF. Moreover, the estimate of the length is possible only after a correct value for the angle. It is therefore all the more important to determine the sensitivity of the methods in this setting because the sensitivity depends on the estimated length.
     
-To isolate the parameter, we fix the estimated length as the rigth value for the example used (which is an artificially blurred picture). The test image is a photo artificially blurred whith an angle of 10 degrees and a length of 30 pixels, it represents "la maison caree", in Nîme. The original image and its blurred version is shown in the figure~=\ref{fig:nimeOriginal}. To show its influence, we'll fix the angle parameter to $8$ degrees, $10$ degrees (exact value) and $12$ degrees. The results of deblurring are shown in figure~\ref{fig:NimeGeneral}.
+To isolate the parameter, we fix the estimated length as the correct value for the example used (which is an artificially blurred picture). The test image is a photo artificially blurred whith an angle of 10 degrees and a length of 30 pixels, it represents "la maison caree", in Nîme. The original image and its blurred version is shown in the figure~\ref{fig:nimeOriginal}. To show its influence, we'll fix the angle parameter to $8$ degrees, $10$ degrees (exact value) and $12$ degrees. The results of deblurring are shown in figure~\ref{fig:NimeGeneral}.
 
 \begin{figure}[h!]
 \centering
@@ -465,7 +465,7 @@ However, in some cases the angle and length estimations can be less accurate (ar
 
 As the time spent for the psf estimation and the resizing is the same for all the algorithms (around 0.8 seconds), we can conclude that the Lucy-Richardson algorithm is the slowest, around $6 $ seconds for a $750 \times 750 \times 3$ color picture and 16 iterations. The wiener algorithm is the fastest with less than $0.5$ second in average. Finally the regularisation takes about $1.5$ seconds to compute. For a gray scale picture it means only $750 \times 750$, we get $1.4$ seconds for Lucy and 16 iterations, $0.04$ for Wiener and $0.3$ for the regularisation. 
 
-Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. 
+Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 200 for Lucy and by around 100 for the two other algorithms. So the relation is almost linear between the number of pixels added and the time needed. The fact that it is not totally linear might be due to optimisations that Matlab while processing big matrix. 
 
 
 \begin{figure}[h!]
@@ -475,19 +475,17 @@ Let's estimate the complexity of the deconvolution algorithms. To do so, we use 
 \label{fig:Complexity}
 \end{figure}
 
-\todo{tirer des conclusions}
 
-Let's now have a look at the complexity of our \texttt{robust\_ angle\_ estimator} and \texttt{length \_ estimator} methods. Proceeding in the same way as for the deconvolution algorithms, we 
+
+Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. The result are more surprising. Indeed, until a certain number of pixels, the relation between time and number of pixels seems linear. However, at around 100 times more pixels than with the starting picture, the time required starts to decline and then levels off at around 11 seconds. Either we computed something wrong, or matlab does some things strange. In all cases, there is here possibility for investigation.
 
 
 \begin{figure}[h!]
 \centering
 \includegraphics[scale=0.7]{../Images/ComplexityRadon.png}
-\caption{Complexity of our }
+\caption{Complexity of our \texttt{robust\_angle\_estimator} method}
 \label{fig:ComplexityRadon}
 \end{figure}
-
-\todo{tirer des conclusions}
 
 %\subsection{Colors influence}
 %
@@ -530,7 +528,7 @@ Let's now have a look at the complexity of our \texttt{robust\_ angle\_ estimato
 
 
 
-\subsection{reals images}
+\subsection{Real images}
 
 \begin{figure}[h]
 \centering
@@ -602,88 +600,3 @@ The results are pretty conclusive so far as the original blurred follows a minim
 \subsection{conclusion}
 
 The three methods each have their advantages and disadvantages. Reguralization method is fast but too sensitive to noise and estimation of length, it's so not very robust but still interesting from a theoretical perspective. By contrast, The other two methods are robust. Wiener has the advantage of being faster than Lucy but the results are generally worse than those of Lucy.
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/fleur/Original.jpg}
-
-\caption{Original image}
-\label{fig:fleurO}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/fleur/B40.png}
-
-\caption{Artificial blur: $40$ pixels and $0$ degrees}
-\label{fig:fleurBlur}
-\end{subfigure}
-\caption{Original image (left) and with artificial blur (right)}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/fleur/L.png}
-
-\caption{Lucy}
-\label{fig:fleurL}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/fleur/W.png}
-
-\caption{Wiener}
-\label{fig:fleurW}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/fleur/R.png}
-
-\caption{Reguralization}
-\label{fig:fleurR}
-\end{subfigure}
-\caption{Deblurring of flowers}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Nime/Original.jpg}
-
-\caption{Original image}
-\label{fig:NimeO}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Nime/B35.png}
-
-\caption{Artificial blur: $35$ pixels and $0$ degrees}
-\label{fig:NimeBlur}
-\end{subfigure}
-\caption{Original image (left) and with artificial blur (right)}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Nime/L.png}
-
-\caption{Lucy}
-\label{fig:NimeL}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Nime/W.png}
-
-\caption{Wiener}
-\label{fig:NimeW}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Nime/R.png}
-\caption{Reguralization}
-\label{fig:NimeR}
-\end{subfigure}
-\caption{Deblurring}
-\end{figure}
