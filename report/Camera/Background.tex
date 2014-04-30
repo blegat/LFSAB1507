@@ -1,5 +1,5 @@
 \section{Background estimation}
-
+\label{sec:Bg}
 \subsection{Before deblurring}
 
 In the case where the background of the surveillance camera is not supplied, it is necessary to estimate it. Indeed, it will be essential to the detection of a foreground and therefore the resolution of the problem.
@@ -24,5 +24,5 @@ This is done by the Matlab function UpdateBackground.m (or UpdateBackgroundColor
 
 $$NewB(m,n) = a B(m,n) + (1-a) I(m,n)$$
 
-Where $a$ is the parameter to give the importance that we want to give to the new image (typically $a = 0.99$).
+Where $a$ is the parameter for the importance that we want to give to the new image (typically $a = 0.99$). The influence of this parameter is discuss in section~\ref{subsec:UdpadeBg}.
 $NewVar$ is calculated using the same weighting.
