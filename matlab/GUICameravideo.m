@@ -75,7 +75,8 @@ save('Bg','Out');
 
 
 function UploadCamera(hObject, eventdata, handles)  
-global axe1 axe2 axe3 Out Saisie1 GorRGB
+global axe1 axe2 axe3 Saisie1 GorRGB
+load Bg
 directoryname = uigetdir;
 ext = '*.jpg';
 chemin = fullfile(directoryname,ext);
@@ -87,21 +88,24 @@ for n = 1:numel(list)
      
      if get(GorRGB,'value') == 1
      [ratio img] = compression(imread(fullfile(directoryname, list(n).name)),2);
-     Out = UpdateBackgroundColor(Out, img);
      elseif get(GorRGB,'value') == 2     
      [ratio img] = compression(rgb2gray(imread(fullfile(directoryname, list(n).name))),2);
-     Out = UpdateBackground(Out, img);
      end
      imshow(img,'parent',axe2);
      title(axe2,'Blurred image'); 
      imshow(Out{1}/255,'parent',axe1);
      title(axe1,'Background'); 
-     algo = 3;
+     algo = 1;
      comp = 1;
-     DeblurCam = cam(double(img), Out{1}, iter, algo, comp, 2);%Out{3});
+     DeblurCam = cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
      save_imageCam (DeblurCam, 'CamDeblurred', 1,directoryname, n);
      imshow(DeblurCam/255,'parent',axe3);
      title(axe3,'Deblurred image'); 
+     if get(GorRGB,'value') == 1
+       %Out = UpdateBackgroundColor(Out, img);
+     elseif get(GorRGB,'value') == 2     
+       %Out = UpdateBackground(Out, img);
+     end
      pause(0.01)
 end
 

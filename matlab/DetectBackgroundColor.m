@@ -5,8 +5,8 @@ if length(Serie) == 1
     Dim = size(Serie{1});
     VariablesStat = cell(1,3);
     VariablesStat{1} = double(Serie{1});
-    VariablesStat{2} = zeros(Dim(1),Dim(2),3);
-    VariablesStat{3} = zeros(Dim(1),Dim(2),3);
+    VariablesStat{2} = VariablesStat{1}.^2;
+    VariablesStat{3} = 25*ones(Dim(1),Dim(2),3);
 else
     size(Serie{1})
     Dim = size(Serie{1});

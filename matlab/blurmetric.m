@@ -1,12 +1,12 @@
-function [F] = bordSobel(I,meth,tresh,direction)
-%
+
+function [F] = blurmetric(I,meth,tresh,direction)
 if nargin == 1
     meth=1;
     tresh=0.0215;
     direction='vertical';
 end
 if meth==1
-    BW=edge(I,'sobel');%,tresh,direction);
+    BW=edge(I,'sobel'); %,tresh,direction);
 end
 if meth==2
     BW=edge(I,'prewitt');%, tresh, direction);
@@ -20,8 +20,8 @@ t=0;
 for i=1:m
     for j=1:n
         if BW(i,j)==1
-            [max,locs_max]=findpeaks(I(i,:));
-            [min,locs_min]=findpeaks(-1.*I(i,:));
+            [~,locs_max]=findpeaks(I(i,:));
+            [~,locs_min]=findpeaks(-1.*I(i,:));
             indice_max_local=proxy(locs_max,j);
             indice_min_local=proxy(locs_min,j);
             local_blur=abs(indice_max_local-indice_min_local);
