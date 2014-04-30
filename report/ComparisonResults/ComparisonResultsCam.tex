@@ -1,160 +1,66 @@
 \section{Comparison of results for the camera}
 
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[width= \textwidth]{../Images/CameraResult/Terassebg/P1030014.jpg}
-\caption{}
-\label{fig:Ter1}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030015.jpg}
-\caption{}
-\label{fig:Ter2}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030016.jpg}
-\caption{}
-\label{fig:Ter3}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030017.jpg}
-\caption{}
-\label{fig:Ter4}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030018.jpg}
-\caption{}
-\label{fig:Ter5}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030019.jpg}
-\caption{}
-\label{fig:Ter6}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030020.jpg}
-\caption{}
-\label{fig:Ter7}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030021.jpg}
-\caption{}
-\label{fig:Ter8}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030022.jpg}
-\caption{}
-\label{fig:Ter9}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030023.jpg}
-\caption{}
-\label{Ter10}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030024.jpg}
-\caption{}
-\label{fig:Ter11}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030025.jpg}
-\caption{}
-\label{fig:Ter12}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030026.jpg}
-\caption{}
-\label{fig:Ter13}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030027.jpg}
-\caption{}
-\label{fig:Ter14}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030028.jpg}
-\caption{}
-\label{fig:Ter15}
-\end{subfigure}
-~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/CameraResult/Terassebg/P1030029.jpg}
-\caption{}
-\label{fig:Ter16}
-\end{subfigure}
-\caption{Images taken by camera video}
-\label{fig:AllTer}
-\end{figure}
+\subsection{Background estimation}
+
+We will test here to what extent the estimated background is valid. For this, several series of images (taken with a video camera fixed on a support) will be used as examples.
+
+The two steps of estimates will be analyzed: the step preceding the deblurring of determining the background from a series of images and the step that takes place each time a new image is deblurred and adapts the background dynamically.
+
+It should also be noted that the computation time of the first step is quite high. This is due to the fact that the processing of the input (serie of images) requires the calculation of quartiles (with matlab  function quantile.m) to each element of the image matrix, which takes lots of time(sorting elements of a statistical series). It's possible, however, in the case of RGB image to significantly reduce this time by converting the images from the series in gray-scaled pictures (possible via the Graphical Users Interface).
+However, we believe that this don't comprommet our bonus item. Indeed, this estimate of the background can be achieved before deblurring and is not to be recognized in the computation time(unlike the second step that updates the background during the deblurring).
+
+\subsubsection{Before deblurring}
+
+For each series of images, the background is estimated by applying the method of section~\ref{sec:Bg}. The goal here is to see the influence of the images provided on the final result.
+
+The images of the first series figure~\ref{fig:AllBib} being tested were taken from a fixed support. The result is quite successful, indeed, the estimated background well matches the observed background.
 
 \begin{figure}[h]
 \centering
-\includegraphics[{width=0.4 \textwidth}]{../Images/CameraResult/Terassebg/BG.png}
-\label{fig:TerBG}
-\caption{Background estimation}
-\end{figure} 
-
-
-\begin{figure}[h!]
-\centering
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[width= \textwidth]{../Images/Camera/Human_walking/IMG_3988.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Human_walking/fg/IMG_3988.jpg}
 \caption{}
 \label{fig:Bib1}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3989.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3989.jpg}
 \caption{}
 \label{fig:Bib2}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3990.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3990.jpg}
 \caption{}
 \label{fig:Bib3}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3991.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3991.jpg}
 \caption{}
 \label{fig:Bib4}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3992.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3992.jpg}
 \caption{}
 \label{fig:Bib5}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3993.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3993.jpg}
 \caption{}
 \label{fig:Bib6}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3994.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3994.jpg}
 \caption{}
 \label{fig:Bib7}
 \end{subfigure}
 ~
-\begin{subfigure}{0.19\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/IMG_3995.jpg}
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/IMG_3995.jpg}
 \caption{}
 \label{fig:Bib8}
 \end{subfigure}
@@ -164,7 +70,275 @@
 
 \begin{figure}[h]
 \centering
-\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Human_walking/BGFinal.png}
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Human_walking/BGDetect/BGFinal.png}
+\caption{Background estimation}
 \label{fig:BibBG}
+\end{figure} 
+
+The second series consists of images taken by a fixed camera with a terrace figure~\ref{fig:AllTer}. The calculated background is shown on figure~\ref{fig:TerBG}. The background here is badly estimated, the center of the image is indeed altered. This result is explained by the fact that in 13 images in the series (which includes 16 photos), the foreground (the child) remains at the center of the image. So, it was integrated into the background in the calculated mean.
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Terasse/fg/P1030014.jpg}
+\caption{}
+\label{fig:Ter1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030015.jpg}
+\caption{}
+\label{fig:Ter2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030016.jpg}
+\caption{}
+\label{fig:Ter3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030017.jpg}
+\caption{}
+\label{fig:Ter4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030018.jpg}
+\caption{}
+\label{fig:Ter5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030019.jpg}
+\caption{}
+\label{fig:Ter6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030020.jpg}
+\caption{}
+\label{fig:Ter7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030021.jpg}
+\caption{}
+\label{fig:Ter8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030022.jpg}
+\caption{}
+\label{fig:Ter9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030023.jpg}
+\caption{}
+\label{Ter10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030024.jpg}
+\caption{}
+\label{fig:Ter11}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030025.jpg}
+\caption{}
+\label{fig:Ter12}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030026.jpg}
+\caption{}
+\label{fig:Ter13}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030027.jpg}
+\caption{}
+\label{fig:Ter14}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030028.jpg}
+\caption{}
+\label{fig:Ter15}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Terasse/fg/P1030029.jpg}
+\caption{}
+\label{fig:Ter16}
+\end{subfigure}
+\caption{Images taken by camera video}
+\label{fig:AllTer}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Terasse/BGDectect/BG.png}
+\label{fig:TerBG}
 \caption{Background estimation}
 \end{figure} 
+
+\subsubsection{Udpade Background}
+\label{subsec:UdpadeBg}
+
+For each new image, the foreground will be deblurred thanks to the background. It is therefore essential that it be changed dynamically when pictures are received (we assume that the pictures follow in chronological order). This requires giving some weight to the new image in the calculation of the new background. Indeed, the background should not be updated in the same way if two pictures follow of $1$ [s] or of $10$ [min], it will assign a larger weight to the new image in the second case. This weight depends on the parameter $a$ explained above (see ~\ref{sec:Bg}). Figures \ref{fig:AllAut}, \ref{fig:AutBG} and \ref{} clearly show the influence of this parameter on the different Background. A Serie of images of a motorway is used to estimate the background (figure~\ref{fig:AllAut}) and the result is shown in figure~\ref{fig:AutBG}. After, the initial serie is used to udpade the background estimation. We do it with $a=0.5$ as shown in \ref{fig:Udpade}.
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Autoroute/fg/06.jpg}
+\caption{}
+\label{fig:Aut1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/07.jpg}
+\caption{}
+\label{fig:Aut2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/08.jpg}
+\caption{}
+\label{fig:Aut3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/09.jpg}
+\caption{}
+\label{fig:Aut4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/10.jpg}
+\caption{}
+\label{fig:Aut5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/11.jpg}
+\caption{}
+\label{fig:Aut6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/12.jpg}
+\caption{}
+\label{fig:Aut7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/13.jpg}
+\caption{}
+\label{fig:Aut8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/14.jpg}
+\caption{}
+\label{fig:Aut9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/15.jpg}
+\caption{}
+\label{Aut10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/16.jpg}
+\caption{}
+\label{fig:Aut11}
+\end{subfigure}
+\caption{Images taken by camera video}
+\label{fig:AllAut}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Autoroute/BGDetect/BGDetect.png}
+\label{fig:AutBG}
+\caption{Background estimation}
+\end{figure} 
+
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Autoroute/a50/CamDeblurred-1.png}
+\caption{}
+\label{fig:UAut1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-2.png}
+\caption{}
+\label{fig:UAut2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-3.png}
+\caption{}
+\label{fig:UAut3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-4.png}
+\caption{}
+\label{fig:UAut4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-5.png}
+\caption{}
+\label{fig:UAut5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-6.png}
+\caption{}
+\label{fig:UAut6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-7.png}
+\caption{}
+\label{fig:UAut7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-8.png}
+\caption{}
+\label{fig:UAut8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-9.png}
+\caption{}
+\label{fig:UAut9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-10.png}
+\caption{}
+\label{fig:UAut10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/a50/CamDeblurred-11.png}
+\caption{}
+\label{fig:UAut11}
+\end{subfigure}
+\caption{Udpade of the Background with $a=0.5$}
+\label{fig:Udpade}
+\end{figure}
+
+It's not very realistic to update the background but the example is interesting to see the influence of the parameter. Taking $a = 0.99$ (value taken by default), changes in the background are very low and not percpectibles to the naked eye. However, for a sufficiently large sample (hundreds of pictures for a real camera surveillance), the background will change even with $a=0.99$. 
