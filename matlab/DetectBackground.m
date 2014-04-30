@@ -38,8 +38,8 @@ end
 function A = F1(vec, Interquart, Med)
 % calcule la nouvelle moyenne de vec sans tenir compte des valeurs de vac
 % qui sont en dehors de [Med - 1.5 Interquart; Med + 1.5 Interquart]
-binf = Med - 1.5*Interquart;
-bsup = Med + 1.5*Interquart;
+binf = Med - 1*Interquart;
+bsup = Med + 1*Interquart;
 Tmp = length(vec);
 for i = 1:length(vec)
     if (vec(i) < binf) || (vec(i) > bsup)
