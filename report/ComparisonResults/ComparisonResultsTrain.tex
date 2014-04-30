@@ -364,6 +364,8 @@ By analyzing the table of the previous point that summerize the execution time w
 
 \subsection{parameter of the length estimator}
 
+As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires to search different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8, our estimated length is accurate, we obtain the exact numbers, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant. However if we change k to 5, we get 20 pixels estimated. If we check the graphs of the peaks XXX, it is clear that for 
+
 %TODO Arnaud comme on avait parlé hier et l'influence du paramètre (disons P) qui vaut 3, 5 ou 8. Moi je comprend pas trop donc ca serait pas mal si on arrive à expliquer ça avec le graphique des pics et tout. ..\Images\Results\plaque\55 y a une la plaque floutée artificiellement à 55 pixels (et angle 0) et quand on prend que P = 3 ou 5 (1 ou 2 dans le GUI), ça estime la longueur à 23 (à la place de 55), du coup ça donne Lucy_P1 Wiener_P1 et Reg_P1 (de la merde...). Tandis que P = 8 (3 dans le GUI) estime la longueur à 54, et ça donne les beaux résultats Lucy_P3 Wiener_P3 et Reg_P3. Tu sais en tirer quelque chose ? 
 
 \subsection{Colors influence}
