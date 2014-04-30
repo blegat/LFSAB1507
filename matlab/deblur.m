@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-function [F] = deblur (f, algo, comp, ParaLength)
-% Deblur the picture given in argument by evaluation of the psf and then
-=======
 function [F] = deblur (f, algo, comp, ParaLength, iter)
 % Deblur the picture given in argument by evaluation of the psf and then 
->>>>>>> a94995541b65f40d536f851710dd87c7b08576f1
 % deconvolution using lucy, wiener or regularisation
 %
 % IN :  -f the function which need to be deblurred
@@ -64,7 +59,7 @@ if algo == 1
     tic
     for i=1:iterColorOrGray
         f(:,:,i) = edgetaper(f(:,:,i),psf);
-        F(:,:,i) = deconvlucy(f(:,:,i), psf, 15);
+        F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
         %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
         %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
     end
@@ -83,11 +78,11 @@ if algo == 2
 %    save_image(f, 'f', 2);
 %    psfEdge = fspecial('gaussian', 50, 10);
 % f = edgetaper(f,psfEdge);
-%     f = edgetaper(f,psf);
+  f = edgetaper(f,psf);
 % save_image(f, 'sagarNoEdgeTaper', 1);
   %   figure()
   %     plot(fftshift(f))
- %   F = deconvwnr(f,psf,nsr);
+    F = deconvwnr(f,psf,nsr);
     
 %%% Plot the psf 
     %    psf_abs = abs(psf);
@@ -102,7 +97,7 @@ if algo == 2
     % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);
-     F = f;
+    % F = f;
     
 end
 if algo == 3

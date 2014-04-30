@@ -184,7 +184,7 @@ global Saisie1 Saisie2 DeblurButton2 Enregistrer1Button
 angle = str2double(get(Saisie1,'String'));
 length = str2double(get(Saisie2,'String'));
 load LALA;
-L = blur(I, length, angle);
+L = blur(I, length, angle, 3);
 save('BlurredImage','L')
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 imshow(L)

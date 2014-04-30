@@ -113,12 +113,16 @@ with $I_N$ the identity matrix of dimension $N$. By equation $(\ref{eqvec})$, we
 
 \section{What is deblurring?}
 
-Deblurring is the inverse operation of blurring. So it consists in getting the image $F$ from the blurred image $G$. Let's take the model without noise:
+Deblurring is the inverse operation of blurring. So it consists in getting an approximation of the image $\emph{f}$ from the blurred image $\emph{g}$ by solving equation $(\ref{eqvec})$. Due to the noise, this problem is not well-posed so we try to solve the following optimization problem \footnote{In equation $(\ref{eqmin})$ we omitted the tilde to ease the notation}
 \begin{equation}
-\emph{g}=H\emph{f}.
+min_f ||H\emph{f}-(\emph{g}-\emph{e})||^2.
+\label{eqmin}
 \end{equation}
-If the blurring matrix $H$ is known, deblurring is just solving a linear system and there a lot of different algorithms to do that. But in a real situation, we only have the blurred image $G$ and we don't know $H$. That's why we approximate $H$, knowing some information about how the image has been blurred. Finding this approximation is the subject of the following section. If we take the noise into account, the problem becomes ill-posed. We then apply the regularisation of Tikhonov:
-%TODO Tikhonov
+But if $H$ is ill-conditioned or singular, we need to add regularization terms. We use here the Tikhonov regularization:
+\begin{equation}
+min_f ||H\emph{f}-(\emph{g}-\emph{e})||^2+||\Gamma \emph{f}||^2,
+\end{equation}
+for some suitable chosen Tikhonov matrix $\Gamma$. Until now we always assumed $H$ was known but in a real situation we only know $\emph{g}$ and nothing about $H$. That's why we approximate $H$ by knowing some information about how the image has been blurred. Finding this approximation is the subject of the following section.
 
 \section{Specific situations}
 
