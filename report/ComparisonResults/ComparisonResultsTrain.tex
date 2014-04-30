@@ -4,7 +4,7 @@ The purpose of this section is to interpret and compare results on different pic
 
 \subsection{Noise influence}
 
-We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise\footnote{noise added by $J = I + n*I$, where $n$ is uniformly distributed random noise with mean 0 and variance 0.04\cite{mathWorksNoise}}. The original image has been artificially blurred and pictures are resized during treatment (see section ref{sec:RealTime}). The noise is inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}. 
+We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise\footnote{noise added by $J = I + n*I$, where $n$ is uniformly distributed random noise with mean 0 and variance 0.04\cite{mathWorksNoise}}. The original image has been artificially blurred and pictures are resized during treatment (see section \ref{sec:RealTime}). The noise is inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}. 
 
 \begin{figure}[h!]
 \centering
@@ -232,6 +232,66 @@ Let's focus now on a small variation of the length for regularisation. The follo
 \label{fig:PlateReg}
 \end{figure}
 
+\subsection{Influence of the peaks on the length estimation}
+
+As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires searching different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8 (cf. subsection \ref{subsec:Cep} for its meaning), we obtain the exact number, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant as shown in figure \ref{fig:PlateLen8}. However if we change k to 5, we get 20 pixels estimated and the deblurred image is clearer, figure \ref{fig:PlateLen5}. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=8$ (length estimation = $19$ pixels)}
+\label{fig:LB19E19K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=8$ (length estimation = $36$ pixels)}
+\label{fig:LB20E36K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=8$ (length estimation = $21$ pixels)}
+\label{fig:LB21E21K3}
+\end{subfigure}
+\caption{Compression: Deblurring (Lucy) for different length of artificial blur for $k = 3$}
+\label{fig:PlateLen8}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width= 0.4\textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=5$ (length estimated = $20$ pixels)}
+\label{fig:PlateLen5}
+\end{figure}
+
+
+If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels independent of the principal peak is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
+\caption{peaks for artificial blur of $19$ pixels}
+\label{fig:peaksLucy19}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
+\caption{peaks for artificial blur of $20$ pixels)}
+\label{fig:peaksLucy20}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
+\caption{Peaks for artificial blur of $21$ pixels}
+\label{fig:peaksLucy21}
+\end{subfigure}
+\caption{peaksLucy}
+\label{fig:PlatePeaks}
+\end{figure}
+
 \subsection{Angle estimation}
 \label{subsec:AngleEs}
 
@@ -321,65 +381,6 @@ The other two methods, Lucy and Wiener are robust enough once again. Although ob
 
 Conclude by noting that poor estimation of the angle leads to an even worse estimate of the length (which is based on the estimation of the angle). Regularization is even more sensitive to the value of the angle.
 
-\subsection{Influence of the peaks on the length estimation}
-
-As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires searching different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8 (cf. subsection \ref{subsec:Cep} for its meaning), we obtain the exact number, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant as shown in figure \ref{fig:PlateLen8}. However if we change k to 5, we get 20 pixels estimated and the deblurred image is clearer, figure \ref{fig:PlateLen5}. 
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
-\caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=8$ (length estimation = $19$ pixels)}
-\label{fig:LB19E19K3}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
-\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=8$ (length estimation = $36$ pixels)}
-\label{fig:LB20E36K3}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
-\caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=8$ (length estimation = $21$ pixels)}
-\label{fig:LB21E21K3}
-\end{subfigure}
-\caption{Compression: Deblurring (Lucy) for different length of artificial blur for $k = 3$}
-\label{fig:PlateLen8}
-\end{figure}
-
-\begin{figure}[h]
-\centering
-\includegraphics[{width= 0.4\textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
-\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=5$ (length estimated = $20$ pixels)}
-\label{fig:PlateLen5}
-\end{figure}
-
-
-If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels independent of the principal peak is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
-\caption{peaks for artificial blur of $19$ pixels}
-\label{fig:peaksLucy19}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
-\caption{peaks for artificial blur of $20$ pixels)}
-\label{fig:peaksLucy20}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
-\caption{Peaks for artificial blur of $21$ pixels}
-\label{fig:peaksLucy21}
-\end{subfigure}
-\caption{peaksLucy}
-\label{fig:PlatePeaks}
-\end{figure}
 
 \subsection{Compression and computation time}
 
