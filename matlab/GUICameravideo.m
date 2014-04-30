@@ -32,6 +32,7 @@ UploadCameraButton = uicontrol( MainWindow , 'style' , 'pushbutton' ,'string' , 
 set(UploadCameraButton,'Callback',@UploadCamera);
 set(UploadCameraButton,'Enable','off')
 uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.05,0.2,0.2,0.05],'string','Select folder with the camera video images');
+uicontrol(MainWindow,'style',' text','units', 'Normalized','position',[0.05,0.03,0.3,0.07],'string','Images deblurred are saved in the same directory');
 
 axe3 = axes('units', 'Normalized', 'position', [0.65,0.11, 0.3, 0.3], 'tag','axes1');
 axis off

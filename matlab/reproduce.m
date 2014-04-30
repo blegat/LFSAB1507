@@ -1,3 +1,8 @@
+% Scripts to reproduce the figures of the report
+% This work in progress has sadly not been finished in time
+% it has forced us to write a parametrable, reproducible code
+% instead of changing it for each test
+
 % Length
 testBlurDeblur(1, 0, 60,  0, 3)
 % Lucy

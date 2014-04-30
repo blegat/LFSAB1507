@@ -1,4 +1,7 @@
 function [F,center] = biggest_square(f, B, debug)
+% Calculates the biggest square that has only 1's in B
+% Returns the center of the square in center
+% and the part of f in this square in F
 dp = zeros(size(B));
 [n, m] = size(B);
 if B(1, 1) >= 254
@@ -27,7 +30,10 @@ end
 
 [origx origy] = max_coord_mat(dp);
 orig = [origx, origy];
-big = dp(origx, origy);
+% We remove 3 from each side because
+% `B' *contains* the foreground but has usually more than
+% the foreground on its borders
+big = dp(origx, origy)-6;
 orig = orig - big + 1; % Move orig from bot/right to top/left
 
 if debug
