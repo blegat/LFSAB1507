@@ -1,17 +1,17 @@
 \section{Deconvolution}
 \subsection{Inverse filter}
-The first and most obvious type of deconvolution is using an inverse filter. We have a blurred image $g$, we found an estimation of the psf ($h$) in the previous section. So we are theoretically ready to find the original image. We had
+The first and most obvious type of deconvolution is inverse filter. With the blurred image $g$ and the estimation of the psf $\hat{h}$, we are theoretically ready to find the original image. The problem is
 \begin{equation}
  g =  h*f,
 \end{equation}
-in frequency domain
+and in frequency domain
 \begin{equation}
 G = HF. 
 \end{equation}
 
-Using $H$, the estimated psf in frequency domain, we can get $\hat{F}$ an so $\hat{f}$ by 
+Using $\hat{H}$, the estimated psf in frequency domain, we can get $\hat{F}$ (and so $\hat{f}$) by 
 \begin{equation}
-\hat{F} = H^{-1} G
+\hat{F} = \hat{H}^{-1} G.
 \end{equation} 
 
 However it's clear that if we add some noise this model doesn't work anymore. Indeed as shown on figure \ref{fig:psfFFT}, $H_e$ has some value near zero, especially at high frequencies because a blur typically reduces these frequencies. So when we divide $G$ by $H_e$, the noise is strongly amplified by the value near zero. This problem explains the results obtained on figure \ref{fig:inverseFilter}.   
@@ -38,7 +38,7 @@ However it's clear that if we add some noise this model doesn't work anymore. In
 \subsubsection{Theory behind the method}
 The method was introduced in~\cite{richardson1972bayesian} and
 then in~\cite{lucy1974iterative} by Richarson and Lucy respectively.
-I these articles, $f$ and $g$ are considered as probability function.
+In these articles, $f$ and $g$ are considered as probability function.
 \cite{richardson1972bayesian} says (translated in our notations)
 ``Units of enery (which may be considered as unique events)
 originating at a point in $f$ are distributed at points in $g$
@@ -48,13 +48,13 @@ $P(f(x)) = \frac{f(x)}{\sum_x f(x)}$ which does not seem
 very appropriate for our purpose.
 
 When \cite{richardson1972bayesian} talks about energy,
-that refers to the light which is quantized with photons.
+it refers to the light which is quantized with photons.
 That quantization gives us a reason to model the noise with
 poisson distribution.
 This modelization of the noise is called the shot noise and
 is developped in~\cite{blanter2000shot}.
 This model of the noise is used by~\cite{hebert1989generalized}.
-\cite{temerinac2010tile} base on~\cite{hebert1989generalized}
+\cite{temerinac2010tile} bases on~\cite{hebert1989generalized}
 and this model of the noise to show (even in 3D)
 that the Lucy-Richardson algorithm gives the MLE of $f$ of this
 model.
@@ -98,7 +98,7 @@ which can be solved iteratively using the fixed point method which gives us
 If we converge to $f$, we know that $\nabla l(f) = 0$
 so $f$ is a critical point of $l(f)$.
 However, we can't say that it maximize $l$ even
-if we proof that the hessian is negatively definite since
+if we proof that the hessian is negatively defined since
 the solution of the equation~\eqref{eq:lucy-cond}
 is not unique.
 
@@ -167,13 +167,13 @@ Let's analyse an iteration.
     $f(x,y)$ but also by neighbouring values of $f$.
   \item The idea is therefore to spread $r$ on the values
     that have influenced $g(x,y)$.
-    And $r(x,y)$ will influence a pixel in $f_k$ with the same
-    weight that it influence $g(x,y)$.
+    And $r(x,y)$ will influences a pixel in $f_k$ with the same
+    weight that it influences $g(x,y)$.
     That's why we convolve $r$ with $h(-x,-y)$.
-  \item Since each pixel has a sum of weight of 1,
+  \item Since each pixel has a sum of weight of 1, \todo{pas compréhensible}
     it will be influenced by a weight of 1 of elements of $r$.
-    The ratio in $r(x,y) * h(-x, -y)$ is then multiplied to
-    $f_k(x,y)$ to get $f_{k+1}(x,y)$.
+    The ratio in $r(x,y) * h(-x, -y)$ is then multiplied by
+    $f_k(x,y)$ to get $f_{k+1}(x,y)$:
 \end{enumerate}
 \[ f_{k+1}(x,y) = f_k(x,y)\left(\frac{g(x,y)}{(h*f_k)(x,y)} * h(-x,-y)\right). \]
 
@@ -184,14 +184,14 @@ To compute $h * f$ on the border of $f$ we do not have enough
 information. The same problem appears when we need to
 convolve with $h(-x,-y)$.
 
-Let's take an example with a 1-D blur to the right
+Let's take an example with a 1-D blur to the right of
 2 pixels long. The first index is 1 and the last is $n$.
 \begin{itemize}
   \item For the convolution with $h(-x,-y)$,
     we have a problem with $f(n)$ because it influences
-    $g(n)$ and $g(n+1)$ and since $g(n+1)$ is unknown.
+    $g(n)$ and $g(n+1)$ but $g(n+1)$ is unknown.
     A solution would be to only listen to the feedback given
-    by $g(n)$ but the sum of the weight of the feedbacks
+    by $g(n)$ but the sum of the weights of the feedbacks
     will not be 1.
     Consequently, we need to modify the method.
     We will not spread $r$ but $r-1$ and then do $+1$
@@ -203,7 +203,7 @@ Let's take an example with a 1-D blur to the right
     That way, $f(n)$ is influenced by $g(n)$ the same
     way it influence $g(n)$ which seems mandatory and
     the effet of $g(n+1)$ is the same as if
-    $g(n+1) = (h*f)(n+1)$.
+    $g(n+1) = (h*f)(n+1)$. \todo{comprend paaaas}
   \item For $h * f$,
     let's assume that we have a 1-D blur to the right of 2 pixels
     (index starting at 1).
@@ -211,38 +211,38 @@ Let's take an example with a 1-D blur to the right
     \begin{enumerate}
       \item An first idea would be to make $f$ starts at 2.
         We would approximate $\hat{f}(1)$ with $g(1)$.
-        $g(2)$ will be influence by $f(2)$ which is being estimated
+        $g(2)$ will be influenced by $f(2)$ which is being estimated
         and $\hat{f}(1)$ which is considered to be known.
         The only difference will be that we do not update $\hat{f}(1)$
-        each iteration.
-        To get an better estimate for $\hat{f}(1)$, we can take
+        at each iteration.
+        To get a better estimate for $\hat{f}(1)$, we can take
         $g(1+L/2)$ where $L$ is the length of the blur since
         that is the mean of the $L/2$ neighbours on the right and left
         of $g(1)$.
         Let's call this method ``crop-lucy'' since it crops the image.
         We have implemented the first idea, which is to approximate
-        $\hat{f}(1)$ with $g(1)$ since it was easier to implements
+        $\hat{f}(1)$ with $g(1)$ since it was easier to implement
         and our faith was more in ``magic-lucy''.
       \item A second idea would be to estimate $f$ from 0
         which would only be influenced by $g(1)$.
         We would therefore use equation~\eqref{eq:lucy_iter_modif}
         for the iteration for the reasons explained earlier.
-        For the general case, we add pior values of $f$ to the
+        For the general case, we add prior values of $f$ to the
         estimation process until $2-L$.
         With this method, we will estimate an image larger than
         the original image.
-        We cannot hope to achieve it perfectly since the degrees since
+        We cannot hope to achieve it perfectly since
         we have more unknowns than constraints but allowing
         lucy to search for values beyond the borders actually helps
-        remove artifacts due to borders.
-        Since estimating more pixels that we have on the blurred image
-        is considered impossible and we are trying to do it,
+        remove artifacts due to the borders.
+        Since estimating more pixels than we have on the blurred image
+        is considered impossible and we are actually trying to do it,
         let's call this method ``magic-lucy''.
     \end{enumerate}
 \end{itemize}
 
 For $f_0$ we usually start with a gray image (unicolor) which gives acceptable results.
-That way,
+So we have
 \begin{align*}
   f_1(x,y) & = f_0(x,y)\left(\frac{g(x,y)}{(h*f_0)(x,y)} * h(-x,-y)\right)\\
                & = F_0\left(\frac{g(x,y)}{F_0} * h(-x,-y)\right)\\
@@ -275,16 +275,16 @@ We have blurred it with a black extrapolation beyond the borders
 (see \figref{cameraman-g-60_30-circ}).
 
 We can see that ``lucy'' has a lot of troubles with the black
-extrapolation but not with the circular interpolation.
+extrapolation but not with the circular one.
 ``lucy'' is done by the \lstinline|deconvlucy| function of MATLAB.
-We can guess that at each iteration of lucy,
+We guess that at each iteration of lucy,
 \lstinline|deconvlucy| do convolutions with ``replicate''
 extrapolation beyond the borders (set it to the pixel at the border).
-That's why it has trouble with the black extrapolation since this is
+That's why it has some difficulties with the black extrapolation since this is
 very different from the pixel at the border.
 On the other hand, with the circular interpolation,
-the extrapolation is quite similar to the pixel at the border due
-to the borders of the cameraman being quite symmetrical.
+the extrapolation is quite similar to the pixel at the border because
+the borders of the cameraman are quite symmetrical.
 
 ``crop-lucy'' doesn't work well due to the approximation of the pixels
 cropped which is not terrific.
@@ -292,13 +292,13 @@ It makes this error propagate to all the images through the iterations.
 
 With those 2 examples, we can see the problems of many iterations.
 If we have errors (like the borders here), the more iterations
-we make, the more the error is propagated.
+we make, the bigger the final error will be.
 
 On the other hand, ``magic-lucy'' thrives.
-We can see in~\figref{cameraman-fullmagic-60_30-black}
+We observe on~\figref{cameraman-fullmagic-60_30-black}
 that the extrapolation used has been correctly estimated.
 For \figref{cameraman-fullmagic-60_30-circ},
-on the left, it is extraordinarily accurate we even have the white
+on the left, it is extraordinarily accurate: we even have the white
 spot at the limite between the ground and the sky present at the right of the image.
 Since the blur is circular, it appears there, which was expected.
 On the bottom, it has more trouble since the sky is quite different to the
@@ -313,13 +313,15 @@ is the purpose.
 G(k,l) = H(k,l)F(k,l) + N(k,l),
 \label{eq:FeHF}
 \end{equation} 
- where $N$ is the DF transform of a noise $n$ with mean $0$. As explained in \cite{gonzalez2002digital}, we want to estimate $\hat{F}$ based on the image observed $F$ and a filter $L$ which still need to be defined, i.e. 
+
+ where $N$ is the DF transform of a noise $n$ with mean $0$. As explained in \cite{gonzalez2002digital}, wee want to estimate $\hat{F}$ based on the observed image $G$ and a filter $L$ which still need to be defined, i.e. 
+
  \begin{equation}
-\hat{F}(k,l) = L(k,l)F(k,l).
+\hat{F}(k,l) = L(k,l)G(k,l).
  \label{eq:feLF}
  \end{equation}
 
-We want a filter $L$ such as it minimizes 
+We want a filter $L$ such that it minimizes 
 \begin{equation}
 \min \mathbb{E}\{|F(k,l) - \hat{F}(k,l)|^2\},
 \label{eq:FFe}
@@ -327,13 +329,13 @@ We want a filter $L$ such as it minimizes
 and so, using equations \eqref{eq:FeHF} and \eqref{eq:feLF} we can transform equation \eqref{eq:FFe} (we don't write $(k,l)$) in 
 \begin{align*}
 \mathbb{E}\{|F - \hat{F}|^2\} &= \mathbb{E}\{|F - L(HF+N)|^2\}\\
-	&= \mathbb{E}\{|(1-LH)F - LN|^2\}
+	&= \mathbb{E}\{|(1-LH)F - LN|^2\}.
 \end{align*}
 
 Then, let's introduce some notations concerning the power spectrum :
 \begin{itemize}
 \item $S_f(k,l) = \mathbb{E}\{|F(k,l)|^2\}$ is the signal power spectrum
-\item $S_n(k,l) = \mathbb{E}\{|N(k,l)|^2\}$ is noise power spectrum 
+\item $S_n(k,l) = \mathbb{E}\{|N(k,l)|^2\}$ is the noise power spectrum 
 \end{itemize}
 
 After some computation and taking the derivative, we get
@@ -352,11 +354,13 @@ and
  \hat{F}(k,l) = \frac{H^*(k,l)}{|H(k,l)|^2 + NSR} G(k,l).
 \end{equation}
 So the filter $L$ gives the minimum mean-square error estimate of $F$.
-However, this filter needs an estimation of the noise and image variances, which are difficult to estimate\cite{mathWorksWiener}. For further details on this estimation, please refer to the section \ref{sec:NSREstimation}.
+
+However, this filter needs an estimation of the noise and image variances, which are difficult to estimate~\cite{mathWorksWiener}. For further details on this estimation, please refer to section \ref{sec:NSREstimation}.
+
 
 \subsection{Regularisation}
 \label{subsec:Reg}
-The last deconvolution method is the deconvolution using regularized filter. 
+The last deconvolution method is the deconvolution using a regularized filter. 
 Instead of a simple inverse filter, we want to minimize the sum of two terms. The first one is the square of the error between the blurred image received and the blurred one using the psf and the original image we are looking for. The second term is used to smooth the image to a certain extent. 
 
 \begin{equation}
@@ -369,7 +373,7 @@ And using the Fourier transform, we get
 \label{eq:FTreg}
 \end{equation}
 
-The term $L(k,l)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution~\cite{mathWorksReg}. Indeed the noise is a high frequency in the frequency domain as it is a big change between two pixels. 
+The term $L(k,l)$ is chosen as a high pass filter in order to minimize the high-frequencies, i.e. the roughness in the solution~\cite{mathWorksReg}. Indeed noise has big components in the high frequencies as it is a big change between two pixels. 
 
 The parameter $\alpha$ controls the degree of roughness penalty. The higher the coefficient is, the smoother the image will be\cite{mathWorksReg}. Indeed if $\alpha$ is big, it amplifies more the high frequencies from $LF$ and because we want to minimise the expression \eqref{eq:FTreg} the low frequencies will be preferred.
 
