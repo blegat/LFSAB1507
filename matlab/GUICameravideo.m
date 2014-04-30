@@ -108,7 +108,7 @@ end
 
 function SaveFunction(hObject, eventdata, handles)  
 load Bg;
-[filename,pathname] = uiputfile('*.png','Save Workspace as'); %Dans quel format le mettre ? 
+[filename,pathname] = uiputfile({'*.png';'*.jpg';'*.tiff';'*.bmp'},'Save Workspace as'); %Dans quel format le mettre ? 
 chemin=[pathname filename]; 
 if isequal(filename,0)
     %annulation ou fermeture de la fenetre 'browser'

@@ -11,8 +11,8 @@ if graph == 1 || graph == 2
     full_name = build_full_name(name);
     title(full_name);
     set(gcf,'name',full_name,'numbertitle','off');
-    imshow(f/255);
-    %imshow(double(f)/255);
+    %imshow(f/255);
+    imshow(double(f)/255);
     axis off;
     if graph == 1
         %saveas(gcf, name, 'png');

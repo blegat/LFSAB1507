@@ -126,7 +126,7 @@ for some suitable chosen Tikhonov matrix $\Gamma$. Until now we always assumed $
 
 \section{Specific situations}
 
-Like we said in the previous section, to approximate the blurring operator, we need some information on the reason why the image has been blurred. We have chosen two typical situations in which blur effect occur. The first one is a a picture that has been taken from a moving train wtih known or unknown speed. The second one is a picture depicted by a security camera. The goal is to deblur the part of the image where a subject is moving. We also dispose of several statistical images without the subject.
+Like we said in the previous section, to approximate the blurring operator, we need some information on the reason why the image has been blurred. We have chosen two typical situations in which blur effect occur. The first one is a picture that has been taken from a moving train wtih known or unknown speed. The second one is a picture depicted by a security camera. The goal is to deblur the part of the image where a subject is moving. We also dispose of several statistical images without the subject.
 
 \subsection{Train}
 
@@ -138,11 +138,11 @@ H=\sum\limits_{i=0}^{k} c_i D^{i}.
 \label{eqHtrain}
 \end{equation}
 
-Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. Intuitively, we expect $k$ to be increasing when the speed or the opening time also do. On the opposite, $k$ should decrease when the average distance goes up. We already mentioned that before. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure (??). The width $W$ of the scene is then obtained by: 
+Now we still have to determine $k$ and the factors $c_i \in \mathbb{R}$ based on the assumptions we made. Let's begin by $k$. If the speed is unknown, we cannot find an analytical representation for $k$. This case will be treated in later chapters. So for now, we suppose the speed of the train known and denote it by $v$. Intuitively, we expect $k$ to be increasing when the speed or the opening time also does. On the opposite, $k$ should decrease when the average distance goes up. We already mentioned that before. If $\phi$ is the opening angle of the camera and $\eta$ is the average distance from the camera to the scene, we can represent the situation by figure \ref{situation}. The width $W$ of the scene is then obtained by: 
 \begin{equation}
 W = 2 \eta \tan\left(\frac{\phi}{2}\right).
 \end{equation}
-A row of the matrix associated to the image ($F$) represents then a real line of the image of length $W$. If $F$ has $N$ columns, the width of one pixel $W_e$ is
+A row of the matrix associated to the image $F$ represents then a real line of length $W$. If $F$ has $N$ columns, the width of one pixel $W_e$ is
 \begin{eqnarray}
 W_e &=& \frac{W}{N} \\
 &=& \frac{2 \eta }{N}\tan\left(\frac{\phi}{2}\right).
@@ -155,10 +155,10 @@ We now want to know the time it takes to a real segment of length $W_e$ to be re
 Finally, we compute $k$ knowing that it is the number of times $\Delta t_e$ can be put in the opening time $\Delta t$ of the camera:
 \begin{eqnarray}
 k &=& \frac{\Delta t}{\Delta t _e} \\
-&=& \dfrac{Nv\Delta t}{2 \ eta \tan\left(\frac{\phi}{2}\right)}.
+&=& \dfrac{Nv\Delta t}{2 \eta \tan\left(\frac{\phi}{2}\right)}.
 \end{eqnarray}
 
-From this equation, we can verify our expectations: $k$ is proportional to $v$ and $\Delta t$, and inversely proportional to $eta$.
+From this equation, we can verify our expectations: $k$ is proportional to $v$ and $\Delta t$, and inversely proportional to $\eta$.
 
 \begin{figure}
 \begin{center}
@@ -199,7 +199,7 @@ f & g & h \\
 0 & f & g \\
 \end{pmatrix}.
 $$
-Suppose we model the blurring of this $3 \times 3$ matrix $F$ with $k=1$ (we neglect the noise effect). We then have $G(i,3) = \frac{1}{2} F(i,2) + \frac{1}{2} F(i,3)~i=1,2,3$, just like we expected. It also works for the second column. But for the first column, we get: $G(i,1) = \frac{1}{2} F(i,1)~i=1,2,3$ so it only makes the left border of the original image darker (as 0 is black and 255 is white). If we took a bigger $k$, we would observe this for all the columns for which $n \leq k$ as they need some information out of the image. Actually, with this matrix $D$, we considered that everything that is beyond the scope of the image is black, and that is of course a bad approximation. So to get a better information about what is beyond the left edge of the image, we could approximate it by extrapolation. A simple example is the polynomial extrapolation of order 0. This consists in putting the first column $k$ times on the left of the image. Using the same example, we get:
+Suppose we model the blurring of this $3 \times 3$ matrix $F$ with $k=1$ (we neglect the noise effect). We then have $G(i,3) = \frac{1}{2} F(i,2) + \frac{1}{2} F(i,3)$ for $i={1,2,3}$, just like we expected. It also works for the second column. But for the first column, we get: $G(i,1) = \frac{1}{2} F(i,1$ for $i={1,2,3}$, so it only makes the left border of the original image darker (as 0 is black and 255 is white). If we took a bigger $k$, we would observe this for all the columns for which $n \leq k$ as they need some information out of the image. Actually, with this matrix $D$, we considered that everything that is beyond the scope of the image is black, and that is of course a bad approximation. So to get a better information about what is beyond the left edge of the image, we could approximate it by extrapolation. A simple example is the polynomial extrapolation of order 0. This consists in putting the first column $k$ times on the left of the image. Using the same example, we get:
 $$
 \begin{pmatrix}
 a & b & c \\
@@ -218,7 +218,7 @@ c & c & d \\
 f & f & g \\
 \end{pmatrix}.
 $$
-Now we have : $G(i,1) = F(i,1)~i=1,2,3$, which is a bit better than the previous model. If we take a higher order of extrapolation, we get a better approximation of the real blurring effect.
+Now we have : $G(i,1) = F(i,1)$ for $i={1,2,3}$, which is a little bit better than the previous model. If we take a higher order of extrapolation, we get a better approximation of the real blurring effect.
 
 %TODO pas compris le truc avec le C_1-j pour l'extrapolation d'ordre 1
 

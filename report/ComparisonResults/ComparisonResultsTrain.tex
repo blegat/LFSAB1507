@@ -92,10 +92,6 @@ For example the $\alpha$ could not penalize enough the high frequencies.
 \hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
 \label{eq:FReg}
 \end{equation*}
-\subsection{Angle estimation}
-\label{subsec:AngleEs}
-
-
 
 \subsection{Length estimation}
 \label{subsec:LengthEs}
@@ -182,7 +178,7 @@ The image used here is the famous photo taken in 1972 of Lena, playmate of playb
 
 It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. 
 
-Let's focus now on a small variation of the length for regularisation. The following example (figure \ref{fig:PlateReg}) shows that, for an artificially blurred license plate at 0 degrees and 40 pixels, the results are already no more relevant with a gap of two pixels. This sensibility to length approximation added to the sensibility to noise make the regularisation algorithm less efficient than the two others. 
+Let's focus now on a small variation of the length for regularisation. The following example (figure \ref{fig:PlateReg}) shows that, for an artificially blurred license plate at 0 degree and 40 pixels, the results are already no more relevant with a gap of two pixels. This sensitivity to a small length approximation added to the sensitivity to noise make the regularisation algorithm less efficient than the two others. 
 
 \begin{figure}[h!]
 \centering
@@ -236,10 +232,98 @@ Let's focus now on a small variation of the length for regularisation. The follo
 \label{fig:PlateReg}
 \end{figure}
 
+\subsection{Angle estimation}
+\label{subsec:AngleEs}
 
-\subsection{parameter of the length estimator}
+After examining the influence of the length, we are interested in the influence of the angle 
+estimated with the method of Radon (section~\ref{subsec:Radon}). This parameter is also used in the calculation of the PSF. Moreover, the estimate of the length is possible only after a correct value for the angle. It is therefore all the more important to determine the sensitivity of the methods in this setting because the sensitivity depends on the estimated length.
+    
+To isolate the parameter, we fix the estimated length as the rigth value for the example used (which is an artificially blurred picture). The test image is a photo artificially blurred whith an angle of 10 degrees and a length of 30 pixels, it represents "la maison caree", in Nîme. The original image and its blurred version is shown in the figure~=\ref{fig:nimeOriginal}. To show its influence, we'll fix the angle parameter to $8$ degrees, $10$ degrees (exact value) and $12$ degrees. The results of deblurring are shown in figure~\ref{fig:NimeGeneral}.
 
-As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires to search different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8 (cf. subsection \ref{subsec:Cep} for its meaning) , our estimated length is accurate, we obtain the exact numbers, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant as shown in figure \ref{fig:PlateLen8}. However if we change k to 5, we get 20 pixels estimated and the deblurred image is clearer, figure \ref{fig:PlateLen5}. 
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/Original.jpg}
+\caption{Original image}
+\label{fig:NimeO}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/Blurlength30angle10.png}
+\caption{Artificial blur: $30$ pixels and $10$ degrees}
+\label{fig:Blurlength30angle10}
+\end{subfigure}
+\caption{Original image (left) and with artificial blur (right)}
+\label{fig:nimeOriginal}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/NimeAngle/LucyAngle8.png}
+\caption{Lucy if angle estimator = $8$ degrees}
+\label{fig:L8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle8.png}
+\caption{Wiener if angle estimator = $8$ degrees}
+\label{fig:W8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle8.png}
+\caption{Reguralization if angle estimator = $8$ degrees}
+\label{fig:R8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/LucyAngle10.png}
+\caption{Lucy if angle estimator = $10$ degrees}
+\label{fig:L10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle10.png}
+\caption{Wiener if angle estimator = $10$ degrees}
+\label{fig:W10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle10.png}
+\caption{Reguralization if angle estimator = $10$ degrees}
+\label{fig:R10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/LucyAngle12.png}
+\caption{Lucy if angle estimator = $12$ degrees}
+\label{fig:L12}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle12.png}
+\caption{Wiener if angle estimator = $12$ degrees}
+\label{fig:W12}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle12.png}
+\caption{Reguralization if angle estimator = $12$ degrees}
+\label{fig:R12}
+\end{subfigure}
+\caption{Influence of the length estimator}
+\label{fig:NimeGeneral}
+\end{figure}
+
+It follows immediately that, in the same way that the estimated length, the regularization method is particularly sensitive to the angle parameter. Indeed, there is much more artefacs when the estimated distance from the exact valeure is important. 
+The other two methods, Lucy and Wiener are robust enough once again. Although obviously the deblurring will be better when the estimated value is close to the exact value. 
+
+Conclude by noting that poor estimation of the angle leads to an even worse estimate of the length (which is based on the estimation of the angle). Regularization is even more sensitive to the value of the angle.
+
+\subsection{Influence of the peaks on the length estimation}
+
+As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires searching different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8 (cf. subsection \ref{subsec:Cep} for its meaning), we obtain the exact number, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant as shown in figure \ref{fig:PlateLen8}. However if we change k to 5, we get 20 pixels estimated and the deblurred image is clearer, figure \ref{fig:PlateLen5}. 
 
 \begin{figure}[h]
 \centering
@@ -266,13 +350,13 @@ As explained in subsection \ref{subsec:Cep}, computing the length of the psf req
 
 \begin{figure}[h]
 \centering
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
+\includegraphics[{width= 0.4\textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
 \caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=5$ (length estimated = $20$ pixels)}
 \label{fig:PlateLen5}
 \end{figure}
 
 
-If we check the graphs of the peaks, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels \todo{explain pixels} is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
+If we check the graphs of the peaks of the modified cepstrum, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels independent of the principal peak is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
 
 \begin{figure}[h]
 \centering
@@ -299,7 +383,7 @@ If we check the graphs of the peaks, figure \ref{fig:PlatePeaks}, it is clear th
 
 \subsection{Compression and computation time}
 
-Our bonus item relates to the computation time of deblurring. It's important to analyze whether the time saved is significant and if it's not compromising quality of deblurred images. So we will compare the computing time  for the three algorithms with and without the psf estimation on a smaller part of the picture and resizing . The testing picture is the photo of Lena, artificially blurred with an angle of 50 degrees and with a length of 80 pixels. We estimate the psf on a square of $256 \times 256$ pixels and we resize the picture from $1400 \times 1400 \times 3$ to $750 \times 750 \times 3$ pixels.
+Our bonus item relates to the computation time of deblurring. It's important to analyse whether the time saved is significant and if it's not compromising quality of deblurred images. So we will compare the computing time  for the three algorithms with and without the psf estimation on a smaller part of the picture and resizing . The testing picture is the photo of Lena, artificially blurred with an angle of 50 degrees and with a length of 80 pixels. We estimate the psf on a square of $256 \times 256$ pixels and we resize the picture from $1400 \times 1400 \times 3$ to $750 \times 750 \times 3$ pixels.
 
 The following table shows the different computation time:
 
@@ -320,14 +404,12 @@ The following table shows the different computation time:
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/lena.jpg}
-
 \caption{Original image - Lena}
 \label{fig:LenaO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
-
 \caption{Artificial blur: $80$ pixels and $50$ degrees}
 \label{fig:Blur80a50}
 \end{subfigure}
@@ -338,42 +420,36 @@ The following table shows the different computation time:
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
-
 \caption{Picture deblurred with Lucy (16 iterations)}
 \label{fig:Lulu}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener.png}
-
 \caption{Picture deblurred with Wiener}
 \label{fig:Wiwi}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg.png}
-
 \caption{Picture deblurred with Reguralization}
 \label{fig:Rere}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy-Comp.png}
-
 \caption{Picture deblurred with Lucy (compressing process)}
 \label{fig:Lucycomp}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Wiener-Comp.png}
-
 \caption{Picture deblurred with Wiener (compressing process)}
 \label{fig:Wienercomp}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Reg-Comp.png}
-
 \caption{Picture deblurred with Reguralization (compressing process)}
 \label{fig:Regcom}
 \end{subfigure}
@@ -381,14 +457,14 @@ The following table shows the different computation time:
 \end{figure}
 
 
-We see that in this case the compression significantly reduces the computation time with only small visible differences between the deblurred image with and without compression (more artifacts for reguralisation with the  process). 
+We see that in this case the compression significantly reduces the computation time with only small visible differences between the deblurred image with and without \texttt{compression.m} (more artifacts for reguralisation with the  process). 
 However, in some cases the angle and length estimations can be less accurate (around $\pm$ 1 degree and $\pm$ 3 pixels). As shown in subsections \ref{subsec:LengthEs} and \ref{subsec:AngleEs} it's mainly problematic for the regularisation algorithm.
 
 \subsection{Complexity of our different results}
 
 As the time spent for the psf estimation and the resizing is the same for all the algorithms (around 0.8 seconds), we can conclude that the Lucy-Richardson algorithm is the slowest, around $6 $ seconds for a $750 \times 750 \times 3$ color picture and 16 iterations. The wiener algorithm is the fastest with less than $0.5$ second in average. Finally the regularisation takes about $1.5$ seconds to compute. For a gray scale picture it means only $750 \times 750$, we get $1.4$ seconds for Lucy and 16 iterations, $0.04$ for Wiener and $0.3$ for the regularisation. 
 
-Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``size of the picture / size of the smallest picture''. 
+Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. 
 
 
 \begin{figure}[h!]
@@ -412,44 +488,44 @@ Let's now have a look at the complexity of our \texttt{robust\_ angle\_ estimato
 
 \todo{tirer des conclusions}
 
-\subsection{Colors influence}
-
-First of all, there is an influence on the run time. Indeed, as already seen ([MATH section]), color images are stored in 3-dimensions matrix $M$ x $N$ x $3$. So they take longer to be processed that the same gray-scaled image, stored in a matrix $M$ x $N$.
-Below are the results obtained with the algorithm Lucy-Richardson (with compression) for the photo of Lena and the gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
-
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.4\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
-
-\caption{Artificial blur - RGB image}
-\label{fig:B80A50}
-\end{subfigure}
-~
-\begin{subfigure}{0.4\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
-
-\caption{Lucy with the RGB image}
-\label{fig:LucyC}
-\end{subfigure}
-~
-\begin{subfigure}{0.4\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50NB.png}
-
-\caption{Artificial blur - gray-scaled image}
-\label{fig:B80A50NB}
-\end{subfigure}
-~
-\begin{subfigure}{0.4\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/LucyNB.png}
-
-\caption{Lucy with the gray-scaled image}
-\label{fig:LNBn}
-\end{subfigure}
-\caption{Computation time for the RGB image: $6,98$[s]; for gray-scaled one: $2,41$[s]}
-\end{figure}
-
-%TODO voir pourquoi Wiener beug parfois selon les couleurs
+%\subsection{Colors influence}
+%
+%First of all, there is an influence on the run time. Indeed, as already seen ([MATH section]), color images are stored in 3-dimensions matrix $M$ x $N$ x $3$. So they take longer to be processed that the same gray-scaled image, stored in a matrix $M$ x $N$.
+%Below are the results obtained with the algorithm Lucy-Richardson (with compression) for the photo of Lena and the gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
+%
+%\begin{figure}[h]
+%\centering
+%\begin{subfigure}{0.4\textwidth}
+%\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50.png}
+%
+%\caption{Artificial blur - RGB image}
+%\label{fig:B80A50}
+%\end{subfigure}
+%~
+%\begin{subfigure}{0.4\textwidth}
+%\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
+%
+%\caption{Lucy with the RGB image}
+%\label{fig:LucyC}
+%\end{subfigure}
+%~
+%\begin{subfigure}{0.4\textwidth}
+%\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Blur80a50NB.png}
+%
+%\caption{Artificial blur - gray-scaled image}
+%\label{fig:B80A50NB}
+%\end{subfigure}
+%~
+%\begin{subfigure}{0.4\textwidth}
+%\includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/LucyNB.png}
+%
+%\caption{Lucy with the gray-scaled image}
+%\label{fig:LNBn}
+%\end{subfigure}
+%\caption{Computation time for the RGB image: $6,98$[s]; for gray-scaled one: $2,41$[s]}
+%\end{figure}
+%
+%%TODO voir pourquoi Wiener beug parfois selon les couleurs
 
 
 

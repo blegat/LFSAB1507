@@ -4,10 +4,10 @@
 
 We will test here to what extent the estimated background is valid. For this, several series of images (taken with a video camera fixed on a support) will be used as examples.
 
-The two steps of estimates will be analyzed: the step preceding the deblurring of determining the background from a series of images and the step that takes place each time a new image is deblurred and adapts the background dynamically.
+The two steps of estimates will be analysed: the step preceding the deblurring of determining the background from a series of images and the step that takes place each time a new image is deblurred and adapts the background dynamically.
 
 It should also be noted that the computation time of the first step is quite high. This is due to the fact that the processing of the input (serie of images) requires the calculation of quartiles (with matlab  function quantile.m) to each element of the image matrix, which takes lots of time(sorting elements of a statistical series). It's possible, however, in the case of RGB image to significantly reduce this time by converting the images from the series in gray-scaled pictures (possible via the Graphical Users Interface).
-However, we believe that this don't comprommet our bonus item. Indeed, this estimate of the background can be achieved before deblurring and is not to be recognized in the computation time(unlike the second step that updates the background during the deblurring).
+However, we believe that this don't compromise our bonus item. Indeed, this estimate of the background can be achieved before deblurring and is not to be recognized in the computation time(unlike the second step that updates the background during the deblurring).
 
 \subsubsection{Before deblurring}
 
@@ -181,9 +181,14 @@ The second series consists of images taken by a fixed camera with a terrace figu
 
 \begin{figure}[h]
 \centering
+<<<<<<< HEAD
 \includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Terasse/BGDetect/BG.png}
 \label{fig:TerBG}
+=======
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Terasse/BGDectect/BG.png}
+>>>>>>> ece933f470ac462373878be7235f47974b6baaf4
 \caption{Background estimation}
+\label{fig:TerBG}
 \end{figure} 
 
 \subsubsection{Udpade Background}
@@ -265,8 +270,8 @@ For each new image, the foreground will be deblurred thanks to the background. I
 \begin{figure}[h]
 \centering
 \includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Autoroute/BGDetect/BGDetect.png}
-\label{fig:AutBG}
 \caption{Background estimation}
+\label{fig:AutBG} 
 \end{figure} 
 
 
@@ -342,6 +347,51 @@ For each new image, the foreground will be deblurred thanks to the background. I
 \end{figure}
 
 It's not very realistic to update the background but the example is interesting to see the influence of the parameter. Taking $a = 0.99$ (value taken by default), changes in the background are very low and not percpectibles to the naked eye. However, for a sufficiently large sample (hundreds of pictures for a real camera surveillance), the background will change even with $a=0.99$. 
+
+\subsubsection{Foreground detection}
+
+As explained in section~\ref{sec:fg}, we have to find the foreground in the picture. Most of the time, we succeed in detecting it, even if it's quite sensible to small changes. Indeed, whereas the user has the impression it's the same background as before, some elements could have changed. For example, in figure \ref{fig:DetectHuman}, it is what we get for the human walking in front of the camera. We can see that the first foreground detection is not really accurate whereas it seems to be the same background. It's due to the fact that as seen in figure \ref{fig:HumanDeblurred1}, the human is staying in front of the window, so all the brightness is in fact different. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/background-cam-human-walking-1.png}
+\caption{Some troubles with the background because the human is in front of the window.}
+\label{fig:DetectHuman1}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/sagar-CamDeblurred-80_50-black-1.png}
+\caption{Human deblurred using modified Lucy.}
+\label{fig:HumanDeblurred1}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/background-cam-human-walking-2.png}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/sagar-CamDeblurred-80_50-black-2.png}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/background-cam-human-walking-3.png}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/sagar-CamDeblurred-80_50-black-3.png}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/background-cam-human-walking-4.png}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Human_walking/fg/sagar-CamDeblurred-80_50-black-4.png}
+\end{subfigure}
+\caption{Human walking detected and deblurred.}
+\label{fig:DetectHuman}
+\end{figure}
 
 \subsection{Deblurring}
 Let's start with simple rectangles with the \figref{dontpanic}.

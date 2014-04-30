@@ -3,12 +3,8 @@ In the spatial domain, we have
 \[ g = h * f \]
 so in the fourier domain
 \[ G = H \cdot F. \]
-Since $h$ is a window, which is like
-$\frac{1}{L}
-\begin{pmatrix}
-  1 & 1 & \cdots & 1
-\end{pmatrix}$ rotate at the angle of blur.
-It's fourier transform $H$ is therefore
+Since $h$ is a window,
+its fourier transform $H$ is
 a 2-D $\sinc$ at the angle of blur
 which can be detected in various ways.
 
@@ -21,13 +17,13 @@ for angle estimation when the length of the blur
 is small.
 However, \cite{oliveira2007blind} says that
 \cite{krahmer2006blind} is wrong and by adapting
-the way Radon is computed like he has done
+the way Radon is computed like it is done
 in~\cite{oliveira2006implementation},
-it can also be used with success for small length and
-he doesn't need normalization
+it can also be used with success for small lengths and
+it doesn't need normalization
 (we'll see in section~\ref{sec:rt} what
 normalization is,
-understand it now is not necessary).
+understanding it now is not necessary).
 We have however not found its source code of
 ``exact Radon transform''.
 
@@ -40,7 +36,7 @@ after making the image 0-mean,
 it's value at the center are so huge that the others
 are negligeable.
 We therefore compute its $\log$ or rather the $\log$
-of its absolute value to avoid undefined value.
+of its absolute value to avoid undefined values.
 There is still problems with very small values which
 have a $\log$ that can be very far in the negative axis
 so we compute $S = \log(1 + |G|)$.
@@ -52,40 +48,40 @@ so we compute $S = \log(1 + |G|)$.
   \mysubfig{cameraman_F_circular_40-30}{$S$ for the cameraman with a blur of $(40, 30)$ with ``circular''.}{0.32}
 \end{myfig}
 
-In the figure~\ref{fig:cameraman_F_circular_40-30},
-we can see the effet of the blur on $S$.
-$S$ for the original image is in the
+In figure~\ref{fig:cameraman_F_circular_40-30},
+we see the effet of the blur on $S$.
+$S$ for the original image is in
 figure~\ref{fig:cameraman_F}.
 However, as mentioned in \cite{krahmer2006blind},
 there is a problem at angles 0 and $\frac{\pi}{2}$ which
-can be seen in the figure~\ref{fig:cameraman_F_replicate_40-30}.
+can be seen in figure~\ref{fig:cameraman_F_replicate_40-30}.
 The reason is that when we do a fft,
 the signal is supposed to be periodic.
 However, since we blur and then take a rectangular image,
 the pixels at each sides of the borders are influenced
 by pixels out of the image.
-If those pixels are not the same of the pixels at the other side
+If those pixels are not the same as the pixels at the other side
 (as if the image were periodic),
 $g$ will be like a blurred image at $(L,\alpha)$ plus
 some problems at the borders of a rectangle.
-Since those problems appears along $x$ and $y$ axis,
+Since those problems appear along $x$ and $y$ axis,
 that creates artifacts at $0$ and $\frac{\pi}{2}$ in $G$.
 
-The figure~\ref{fig:cameraman_F_circular_40-30}
+Figure~\ref{fig:cameraman_F_circular_40-30}
 and~\ref{fig:cameraman_F_replicate_40-30} are excellent
 examples.
 When we blur an image artificially, we need to extrapolates
-the pixels beyond the borders.
+the pixels beyond the borders. Two ways:
 \begin{enumerate}
-  \item[circular] We consider an infinite image make of
+  \item[circular:] We consider an infinite image made of
     the same image repetitively.
-  \item[replicate] The pixel beyond the border is the
+  \item[replicate:] The pixel beyond the border is the
     same as the pixel at the border.
 \end{enumerate}
-We can see that ther is no problem with
-the figure~\ref{fig:cameraman_F_circular_40-30}
+We can see that there is no problem with
+ figure~\ref{fig:cameraman_F_circular_40-30}
 since a circular image is what the fft is expecting.
-fft therefore recognize exactly the periodic image
+Therefore, fft recognizes exactly the periodic image
 blurred by the PSF and there is no artifacts
 at 0 and $\frac{\pi}{2}$.
 
@@ -97,7 +93,7 @@ periodic is very small.
 which is multiplying our image by a hann window before
 applying the fourier transform like done
 in the figure~\ref{fig:sagar-hann}.
-This methods works very well but unfortunately,
+This methods work very well but unfortunately,
 we haven't seen it immediately so we have taken a lot
 of time trying to find other solutions.
 
@@ -107,23 +103,23 @@ the listing~\ref{lst:robust_angle_estimator} contains
 our solution which calls it with the image at different
 angles.
 It does the following for the different angles
-(by default, it is 0 and $\frac{\pi}{4}$)
+(by default, it is 0 and $\frac{\pi}{4}$):
 \begin{enumerate}
-  \item Rotate the image at this angle.
-  \item Take a square in the image.
-  \item Call the listing~\ref{lst:angle_estimator} which
+  \item Rotates the image at this angle.
+  \item Takes a square in the image.
+  \item Calls the listing~\ref{lst:angle_estimator} which
     returns the $\var$ for each angle between 0 and $\pi$.
   \item Sets borders to $\{0\}$, $\{\frac{\pi}{2}\}$
     and $\{\pi\}$.
   \item While the distance between the $\argmax$ and the
-    closest border is less that a $\epsilon > 0$ chosen
+    closest border is less than a $\epsilon > 0$ chosen
     beforehand, we increase the border to this angle.
   \item If there is no border left, no angle is chosen.
 \end{enumerate}
-That way, we ignores the peeks at $0$, $\frac{\pi}{2}$
-and $\pi$ along with their influence with the angles
-closes to them.
-We are sure to take an angle whre there is a peek
+In that way, we ignore the peeks at $0$, $\frac{\pi}{2}$
+and $\pi$ along with their influence on the angles
+close to them.
+We are sure to take an angle where there is a peek
 which is not one of the 3 peeks at 0, $\frac{\pi}{2}$, $\pi$.
 
 Once we have done that for all the angles,
@@ -133,19 +129,19 @@ Since we rotate the image in spatial domain and then crop
 a square, the artifacts at 0, $\frac{\pi}{2}$ and $\pi$ are
 not rotated with the $\sinc$.
 
-Sadly, the rotating removes the clarity of the blur since
-we need to do interpolation to get back square pixels.
-The hann window is therefore a prefered solution.
+Sadly, the rotation removes the clarity of the blur since
+we need to interpolate to get back square pixels.
+The hann window is therefore a preferred solution.
 
 Lastly, \cite{krahmer2006blind} warns us that the angle
 detected by radon will not be the same than the angle
 we are looking for if the image is not squared.
 Indeed, if it is not squared, the sampling frequency
 will still be the same for both dimensions since
-the pixel are squares but the period of periodicity
+the pixels are squares but the period
 in the spatial domain will not be the same.
-The samply frequency on the frequency domain will therefore
-be different wich mean that ``pixels'' in the frequency
+The sample frequency on the frequency domain will therefore
+be different, which means that ``pixels'' in the frequency
 domain will not be squares.
 They give a formula to make the translation.
 Our approach was rather simpler.
@@ -154,15 +150,15 @@ longest dimension.
 
 \subsubsection{The Radon transform (RT)}
 \label{sec:rt}
-The idea of Radon is, for a certain angle $\theta$,
-integrate over the perpendicular lines of the line at
+The Radon transform, for a certain angle $\theta$,
+is an integration over the perpendicular lines of the line at
 angle $\theta$ passing by $(0,0)$.
 The value of each integral is a function of the
 point at which the perpendicular line intersects the
 line.
 
-More precisely, de define a new frame $(x',y')$
-which is $(x,y)$ rotated by $\theta$ counterclockwise.
+More precisely, we define a new frame $(x',y')$
+which is $(x,y)$ rotated by $\theta$ in counterclockwise.
 We then define
 \[ R_\theta(x') = \int_{y_0'(x')}^{y_1'(x')} f'(x',y') \dif y' \]
 where $f'$ is the image in the new frame,
@@ -210,27 +206,26 @@ of its $\max$ or $\var$ which will be greater than the
 others.
 \cite{oliveira2007blind} suggests to use the $\var$
 but we have found images where the $\max$ was more
-accurate.
-Mostly while we had not found the hann method.
+accurate, mostly while we had not found the hann method.
 With hann, the $\var$ performs almost always
 better than the $\max$.
 
 If we compute the $\var$, we must crop $(x',R_\theta(x'))$ when
 this $x'$ is out of the image for some other angle.
 We can see in the figure~\ref{fig:sagar-RadNorm} that
-there is a lot more values at \ang{45} that for other angles.
+there is a lot more values at \ang{45} than for other angles.
 It is therefore cropped to figure~\ref{fig:sagar-RadFocus}.
 
-As we can see with Sagar, if we had not normalized,
-the $\var$ would have gave use \ang{135}
+As we can see with the picture Sagar, if we had not normalized,
+the $\var$ would have given us \ang{135}
 (see figure~\ref{fig:sagar-Var}) while the $\max$
 would still be correct
 (see figure~\ref{fig:sagar-max}) but almost.
 With a smaller blur (for Sagar, we have $L = 25$) we would
-have found \ang{135} also or \ang{45}.
+have found \ang{135} too or \ang{45}.
 
 With the normalization, \figref{sagar-VarN} and
-\figref{sagar-maxN} agrees with \ang{171} which is the right
+\figref{sagar-maxN} give both \ang{171}, which is the right
 answer.
 
 \begin{myfig}{sagar}
@@ -257,47 +252,44 @@ The Gabor filter is a gaussian filter modulated by a sinusoidal wave. The functi
 B(x,y)=\dfrac{1}{2\pi \sigma_x \sigma_y} exp\left[-\frac{1}{2}\left(\frac{x^2}{\sigma_x^2}+ \frac{y^2}{\sigma_y^2} \right) -j\omega(xcos\phi + ycos\phi)\right],
 \label{filtreGabor}
 \end{equation}
-where $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ directions. The parameters $\phi$ and $\omega$ are the direction and the frequency of the filter respectively. Only $\phi$ will vary while the other parameters stay fixed. According to the article (?? ref dash20.. ??), experimentation has shown that good values for $\sigma$ and $\omega$ are $3$ and $1.75$ respectively. The method consists in applying the Gabor filter to the power spectrum of the blurred image and then detecting the blur angle $\theta_{blur}$ by searching for the $\phi$ that gives the highest response value. This value can be calculated using $L_2$ norm. The $\phi$ obtained by this method is the blur angle. Here are the steps of the algorithm:
+where $\sigma_x$ and $\sigma_y$ are the standard deviations in the $x$ and $y$ directions. The parameters $\phi$ and $\omega$ are the direction and the frequency of the filter respectively. Only $\phi$ will vary while the other parameters stay fixed. According to the article \cite{Dash20141634}, experimentation has shown that good values for $\sigma$ and $\omega$ are $3$ and $1.75$ respectively. The method consists in applying the Gabor filter to the power spectrum of the blurred image and then detecting the blur angle $\theta_{blur}$ by searching for the $\phi$ that gives the highest response value. This value can be calculated using $L_2$ norm. The $\phi$ obtained by this method is the blur angle. Here are the steps of the algorithm:
 \begin{enumerate}
 \item computation of the spectrum of the blurred image by a two dimensional Fourier transform
 \item taking the logarithm of it
 \item convolving this with the Gabor function given by equation $(\ref{filtreGabor})$ for different $\phi$, the result is $R(\phi)$
 \item for every $\phi$, taking the $L_2$ norm: $||R(\phi)||$
-\item the blur angle is the parameter $phi$ that gives the biggest norm:
+\item the blur angle is the parameter $\phi$ that gives the biggest norm:
 \begin{equation}
-\theta_{blur} = \arg \left\lbrace \max_{\phi}R(\phi)\right\rbrace.
+\alpha_{blur} = \arg \left\lbrace \max_{\phi}R(\phi)\right\rbrace.
 \end{equation}
 \end{enumerate}
 
 This algorithm is implemented by our matlab function \texttt{angle\_estimator\_Gabor(f,thetamin, thetamax)}, where the input $f$ is the blurred image. The parameter $\phi$ will vary from $thetamin$ to $thetamax$. If those inputs are not specified, we set them to $0$ for $thetamin$ and $180$ for $thetamax$.
 
-%TODO Resultats en images
-
-\todo[inline]{Cite \cite{Dash20141634}}
 
 \subsection{Length with Cepstrum}
 \label{subsec:Cep}
-\cite{biemond1990iterative} shows that in
+\cite{biemond1990iterative} shows that in \todo{clarifier la première phrase, benoît?}
 \[ \F^{-1}\log(|\F(g)|), \]
 there is negative at a distance $L$ from the origin.
 The $\log$ transforms the convolution $h*f$ in the sum
 $\F^{-1}\log(|\F(h)|) + \F^{-1}\log(|\F(f)|)$
-(if we do not take account for the noise.
+(if we do not take the noise into account).
 The peeks detected are the peeks of the inverse fourier
 transform of the $\log$ of a $\sinc$.
 \cite{krahmer2006blind} even proposes to use the inverse
-tangeant of the slope from the origin to this peek to
+tangent of the slope from the origin to this peek to
 estimate the length but disadvice to do so,
 arguing that Radon is much better at this job.
 \cite{krahmer2006blind} however advises to use the Cepstrum
 for length estimation.
 
 \cite{Deshpande2014606} argues that this Cespstrum does
-not work properly for small blur length of for high
+not work properly for small blur lengths or for high
 frequency components in the original image which
-are wrongly indentified as the location of peeks.
-He says that as second $\log$ would enhance $\sinc$ in comparison
-with the image frequencies.
+are wrongly identified as the location of peeks.
+He says that a second $\log$ would enhance $\sinc$ in comparison
+with the image frequencies. \todo{pas compris la derniere phrase benoît}
 
 It's strategy is to search for peeks
 along the angle of blur in
@@ -310,21 +302,21 @@ A peek detection algorithm can therefore be applied
 to find $L$.
 
 The problem is that we have to search for the peeks along
-the angle of blur so this methods will have
-bad results is the angle is badly estimated.
+the blur angle so this method will have
+bad results if the angle is badly estimated.
 
 \cite{Deshpande2014606} proposes to rotate the image
-with $-\alpha$ in spatial domain so he only have to
-search along the horizontal line in it's modified Ceptrum.
-That makes its method work for square images.
+with $-\alpha$ in spatial domain so we only have to
+search along the horizontal line in the modified Ceptrum.
+That makes the method work for square images.
 However, we can just estimate the length of the squared image.
 If we do so, we can rotate the modified cepstrum which is less
 likely to cause problems since we rotate \emph{after}
 computing the Cepstrum.
 
-To be robust to angle error we could have taken the mean of
+To be robust to angle errors we could have taken the mean of
 several lines besides the horizontal line.
-But that would also make use less precise if we have exactly
+But that would also make it less precise if we have exactly
 the good angle.
 We have not implemented this technique but it would
 be easy to add.
@@ -333,9 +325,9 @@ be easy to add.
 algorithm that does not require manual intervention.
 Ours only need one parameter $k$.
 The right value of $k$ depends on the image but is
-usually 3 for small image and/or small blur,
+usually 3 for small images and/or small blur,
 5 for normal images and 8 for big images or big blur.
-Our algorithm is the following
+Our algorithm is the following \todo{point 1. pas du tout clair}
 \begin{enumerate}
   \item We wait before we are not in the influence of the peek
     at the origin anymore, which is implemented by
@@ -353,7 +345,7 @@ We take the one at the right.
 To remove the need of choosing $k$, we could,
 for each $k$, find the peeks on the left and the right and
 find their distance with the origin.
-We would take the distance for the $k$ for which
+We then take a $k$ such that the distance
 the difference between left and right is minimum.
 This is a suggestion of amelioration,
 we have not implemented or tested it.

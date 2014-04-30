@@ -193,7 +193,7 @@ set(DeblurButton2,'Enable','on');
 
 function Defloute1(hObject, eventdata, handles)  
 global Enregistrer2Button Method choix1 ParaLength IterL1
-load Lala;
+load LALA;
 axe1 = axes('units', 'pixels', 'position', [200,80, 300, 225], 'tag','axes1');
 title('Deblurring image');
 axis off; 
