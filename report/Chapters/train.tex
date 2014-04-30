@@ -12,12 +12,12 @@ in a way that is also robust to the noise.
 It is easier to estimate $h(x,y)$ if we make some assumptions.
 For our problem, we have a motion blur which means that
 $h(x,y)$ only depends on an angle and a length which are
-respectively the angle at which the blur is and the number of
+respectively the blur angle and the number of
 pixel on which each pixel depends.
 
-Once we have an estimate of $h(x,y)$, we then deconvolve
+Once we have an estimate of $h(x,y)$, we deconvolve
 $g(x,y)$ to get an estimate $\hat{f}(x,y)$.
-For some deconvolution method, we need an estimate of
+For some deconvolution methods, we need an estimate of
 some properties of the noise which is done only using $g(x,y)$.
 
 \input{PSFestimation/PSFestimationTrain}
