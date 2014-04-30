@@ -1,7 +1,7 @@
 function [F] = deblur_cam(f, algo, iter, B, dif, bg, comp, debug)
 [ratio partfForPSF] = compression(f,comp);
 [ratio partBForPSF] = compression(B,comp);
-angle = 0%robust_angle_estimator(partfForPSF, 0, partBForPSF)
+angle = robust_angle_estimator(partfForPSF, 0, partBForPSF)
 
 [fs center] = biggest_square(f(:,:,1), B, debug);
 % w_hann1 = hann(size(fs,1));
