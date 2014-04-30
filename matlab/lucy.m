@@ -127,6 +127,8 @@ function latent_est = lucy(observed, psf, len, angle, iterations, debug, meth, m
         L = len+1;
         K = len;
         %mask(150,1:m) = 1:m;
+        %figure
+        %plot(1:m, mask(floor(n/2),:));
         for k = 1:n
             % slope = SXY / SXX
             % SXX = m_2x - m_1x**2
