@@ -1,10 +1,10 @@
 \section{Comparison and interpretation of results for the train}
 
-The purpose of this section is to interpret and compare results on different pictures deblurred by the three methods of deconvolution used: Lucy-Richardson, Wiener and regularization. We will test essentially ideal images artificially blurred in order to isolate the influence of certain parameters. Although most of the images used are not taken inside a train as it indicated, the assumption of a linear motion blur is well respected and we are therefore in the first case treated (the train).
+The purpose of this section is to interpret and compare results on different pictures deblurred by the three methods of deconvolution : Lucy-Richardson, Wiener and regularization. We will test essentially ideal images artificially blurred in order to isolate the influence of certain parameters. Although most of the images used are not taken inside a train as it indicated, the assumption of a linear motion blur is well respected and we are therefore in the first case treated (the train).
 
 \subsection{Noise influence}
 
-We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section ref{sec:RealTime}). The noise was inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}. 
+We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise\footnote{noise added by $J = I + n*I$, where $n$ is uniformly distributed random noise with mean 0 and variance 0.04\cite{mathWorksNoise}}. The original image has been artificially blurred and pictures are resized during treatment (see section ref{sec:RealTime}). The noise is inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}. 
 
 \begin{figure}[h!]
 \centering
@@ -59,21 +59,18 @@ We are interested in deblurring a original image with noise (that is independent
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Speckle/W.png}
-
 \caption{Image deblurred with Wiener (Speckle noise)}
 \label{fig:SpeckleW}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Normal/R.png}
-
 \caption{Image deblurred with Reguralization (No noise)}
 \label{fig:NormalR}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/desert/Gauss/R.png}
-
 \caption{Image deblurred with Reguralization (Gaussian noise)}
 \label{fig:GaussR}
 \end{subfigure}
@@ -95,13 +92,16 @@ For example the $\alpha$ could not penalize enough the high frequencies.
 \hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
 \label{eq:FReg}
 \end{equation*}
+\subsection{Angle estimation}
+\label{subsec:AngleEs}
 
 
-\subsection{Length estimator parameter}
+
+\subsection{Length estimation}
 \label{subsec:LengthEs}
 To estimate the PSF, it is necessary to estimate the length of the psf  as explained in subsection \ref{subsec:Cep}. It's interesting to study the impact of the accuracy of this factor on the output and establish the sensitivity of the three methods used.
 
-The image used here is the famous photo taken in 1972 of Lena, playmate of playboy magazine, and is often used as test algorithms for image processing \cite{wikiLenna}. It has been artificially blurred here with an angle of 20 degrees and a length of 30 pixels, see figure~\ref{fig:LenaBl}. The principle is to fix the estimated length for the deblurring in order to see the influence of this value to the final result (it should be noted that the angle estimated by this algorithm is 20 degrees which is right and so the length parameter is the only variable here). For each method, three cases were treated: the estimated length (that is fixed) is 20 pixels, 30 pixels (exact value) and 40 pixels.  The results are shown in figure \ref{fig:LenaGeneral}.
+The image used here is the famous photo taken in 1972 of Lena, playmate of playboy magazine, and is often used to test algorithms for image processing \cite{wikiLenna}. It has been artificially blurred here with an angle of 20 degrees and a length of 30 pixels, see figure~\ref{fig:LenaBl}. The principle is to fix the estimated length for the deconvolution in order to see the impact on the final result (it should be noted that the angle estimated by this algorithm is 20 degrees which is right and so the length parameter is the only variable here). For each method, three cases were treated: the estimated length (that is fixed) is 20 pixels, 30 pixels (exact value) and 40 pixels.  The results are shown in figure \ref{fig:LenaGeneral}.
 
 \begin{figure}[h!]
 \centering
