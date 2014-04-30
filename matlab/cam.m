@@ -25,7 +25,7 @@ while threshold > 4
 end
 
 %B = biggest_square(I(:,:,1), dif, debug);
-save_image(B, 'shaped', 2);
+save_image(B, 'shaped', 2); % Si trop blanc changer tresholg (augmenter)
 
 % angle  = robust_angle_estimator(I, 0, dif)
 % len = length_estimator(B, angle, 2, 5, 0)

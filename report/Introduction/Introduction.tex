@@ -1,0 +1,13 @@
+\chapter{Introduction)
+
+Nowadays, more and more people deal with pictures, especially when they want to immortalize a special moment with their smartphone. But the pictures are often blurred because of a motion of the camera, the motion of a subject or a misfocus of the camera or for any other reason. That's why processing images, and especially deblurring, has become an important aspect in people's daily lives.
+
+This report contains a study about the blur effect on an image and proposes some algorithms to remove that effect as much as possible. Blur can occur for many reasons. It is impossible to have a general method that solves all types of blur effects. That is why we only focus on two typical situations. In the first one, the picture has been taken from a moving train travelling with a known or unknown speed. In the second chosen situation, a security camera takes a picture with a moving subject. We dispose of several statistical images without any moving subject and we deblur the part of the image where we detected the moving subject.
+
+The report begins with a clear and precise definition of what actually an image is and it gives a mathematical formulation for the blur problem. A good mathematical model of the blur effect is a key step in the understanding of this phenomena. Then extracting some information of the specified situation helps to get a more accurate model.
+
+The mathematical modelisation is followed by the general strategy that we will follow to solve a deblurring problem. In this chapter, you will encounter our special item that we wanted to focus on: fast computing. Even if the main goal of this report is to achieve good results of deblurring, we also treated the case where the quickiness is more important than the quality. This especially applies on the situation with the security camera. For example, a security man observes the images of a camera in a room on his screen. He only needs an idea of what is going on in the room but right now, on this moment and not 1 hour ago.
+
+Subsequently, we go in a deeper analysis of what is described in the general strategy. We explain the methods we use to deblur and compare them for different images and different types of blur.
+
+Finally, we end with the strengths and the weaknesses of this project and some suggested improvements. A conclusion resumes the main point of this report. All the algorithms have been implemented with \texttt{Matlab} and the codes have been included in the appendices.

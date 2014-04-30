@@ -1,4 +1,4 @@
-function [] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter)
+function [time] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter, sizeFormat)
 %Test function, 
 % -choose a picture to deblur
 % -blur it artificially if  not already blurred
@@ -42,6 +42,9 @@ elseif test == 7
 elseif test == 9
     I = double(imread('../Images/bricks.jpg'));
     test_name = 'bricks';
+elseif test == 11
+    I = double(imread('../Images/Results/Lena/Lena2/lena.jpg'));
+    test_name = 'lena';
 end
 
 %%% Blur the picture
@@ -77,7 +80,7 @@ elseif test == 6
     %I = double(imread('Sea.png'));
 elseif test == 8
     % Taken by us
-    %I = double(imread('IMG_3993.JPG'));
+    I = double(imread('IMG_3907.JPG'));
     %I = double(imread('computerGray.jpg'));
     %I = double(imread('OfficeGray1HD.jpg'));
     %I = double(imread('CarGray2HDCrop.png'));
@@ -85,12 +88,12 @@ end
 
 
 %%%Show the blurred image
-save_image(I, 'g', 2);
+%save_image(I, 'g', 2);
 
 %%% Deblur the image
 
 
-deblurred = deblur(I,algo,0,k_len,iter);
+[time, deblurred] = deblur(I,algo,1,k_len,iter, sizeFormat);
 
 
 %%%Show the deblurred image
