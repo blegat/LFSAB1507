@@ -1,17 +1,28 @@
 \section{Background estimation}
 
+\subsection{Before deblurring}
+
 In the case where the background of the surveillance camera is not supplied, it is necessary to estimate it. Indeed, it will be essential to the detection of a foreground and therefore the resolution of the problem.
-\\
+
 However, we can assume that we have a set of $k$ images (which are the same size $M$x$N$ and a sufficient number of them) taken by the camera. Attention for the sake of convenience we limit ourselves to the case of a two-dimensional signal (gray-scaled picture); color images are similar considering one more dimension to the signal!
-\\
+
 We will realize statistical processing for each pixel located at position ($m$, $n$) (with $m =1, \cdots, M$ and $n=1, \cdots, N$) of the $k$ pictures in the serie.
-\\
-\\
+
 Let $I_i$ ($i=1,\cdots,k$) the $i$-th image in the series. For all $m$, $n$, we calculate the first quartile ($Q_1 (m, n)$), the median ($Q_2 (m, n) $) and the third quartile ($Q_3(m, n)$) of the statistical series $I_1(m, n), I_2(m, n), \cdots, I_k(m, n)$.
-\\
+
 The principle is now to calculate the mean $M(m, n)$ of the series regardless of the values ​​that deviate too far from the median (ie the pixels belonging to the foreground). For that we take into account in the calculation of the average only image pixels belonging to the interval $[Q_2 (m, m) - Inter (m, n); Q_2 (m, m) + Inter (m, n) ]$ where $Inter (m, n)$ is the interquartile range and is equal to $Q_3 (m, m) - Q_1 (m, m)$.
-\\
-The final matrix M of means (dimension $M$x$N$) thus formed  is a valid estimate of the background!
-\\
-\\
+
+The final matrix M of means (dimension $M$x$N$) thus formed  is a valid estimate of the background
+
 The Matlab function performing this treatment is DetectBackgroundColor.m which takes as input a cell of $ k$ color images (3-dimentionnal matrix) and returns a cell of 3 matrix 3-dimentionnal: the background M (matrix of means), the matrix of the second moment and the variance of pixels for each data series.
+
+\subsection{During deblurring}
+
+During the deblurring of images from the camera, it's necessary to udpader the background calculated previously. Indeed, it may change over the images continuously (changing brightness) or  suddenly (adding a new element to the background). 
+
+This is done by the Matlab function UpdateBackground.m (or UpdateBackgroundColor.m for RGB images) that takes as input the new image received $I$ and a cell containing the background $B$ and its variance $V$ and returns a cell containing the new background $NewB$ and the new variance $NewVar$. For any point ($m$, $n$) of plane, the pixel value $NewB(m,n)$ is given by
+
+$$NewB(m,n) = a B(m,n) + (1-a) I(m,n)$$
+
+Where $a$ is the parameter to give the importance that we want to give to the new image (typically $a = 0.99$).
+$NewVar$ is calculated using the same weighting.

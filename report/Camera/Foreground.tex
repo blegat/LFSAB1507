@@ -6,10 +6,18 @@ By the mean value theorem, we know that we can
 verify whether $s(x,y)$ belongs to the background or not
 by looking at $\frac{|b(x,y) - s(x,y)|}{\sqrt{v(x,y)}}$.
 
+We will illustrate our method with the \figref{car-fgdetect}.
+We have only one image to estimate the background so the
+variance cannot be determined.
+It has been set to 42 arbitrarily.
+
 When comparing it to a threshold, setting $d_0(x,y)$ to 0
 when it is below it and else to 1, we
 get an estimate of the foreground when $d_0(x,y) = 1$ would mean
 that the pixel at $(x,y)$ belongs to the foreground.
+A threshold of 1 seems appropriate.
+With a normal noise, it only gives \SI{5}{\%} of noise detected as foreground.
+We see with \figref{car-thresh} that our variance has been chosen too small.
 
 However, there is still some noise if the threshold is low
 and the foreground has many holes in it if the threshold is high.
@@ -25,22 +33,43 @@ To solve this problem, use an iterative algorithm that starts with $d_0$.
     \]
     where $\epsilon$ is arbitrary such that $\epsilon > 0$.
 \end{enumerate}
-The problem of the mean is that a change $N$ makes a big differencewhile it is only arbitrary.
+The problem of the mean is that a change $N$ makes a big difference while it is only arbitrary.
 A gaussian blur is therefore used instead which is much better since it gives more weight to the pixels close to $(x,y)$, so the weight of the borders is very small and therefore $N$ has less influence.
 There is however still a variance to give as a parameter to the gaussian blur which is arbitrary.
 The gaussian blur however is still better due to its smoother borders.
 \todo{Show it !}
-A disadvrantage is that it needs $\bigoh(nmN^2)$ to be computed while the mean can be computed in $\bigoh(nm)$ if we precomputes the sum from $(0,0)$ to $(i,j)$ for all $(i,j)$.
+A disadvantage is that it needs $\bigoh(nmN^2)$ to be computed while the mean can be computed in $\bigoh(nm)$ if we precomputes the sum from $(0,0)$ to $(i,j)$ for all $(i,j)$.
 
 To avoid the noise, we make $\epsilon$ 2 times smaller at each iteration and we stop at a small value of $\epsilon$.
 After a few iterations, we get a solid shape.
+For our example, we obtain the \figref{car-shaped}.
 
 An $\bigoh(nm)$ algorithm (with the same kind of computation than the mean) can then be applied to get the biggest square of foreground inside the image.
+The square obtained is showed by the \figref{car-biggestsquare}.
 From the square, a flood-fill algorithm is applied to get the whole connected shape containing the square.
 This is the shape that we will deblur.
 For speed, we take a subimage around this shape and we apply the rest only to this subimage
+The \figref{car-connected} shows this connected shape.
 
 After debluring this shape, we could remove it and find the biggest square again to detect another shape to deblur and so on.
 This idea can therefore be applied to deblur several shapes on a scene.
 However, we only deblur one shape in our algorithms for simplicity
 since we've just seen that it is trivial to adapt it to several shapes.
+\figref{car-focusdiff} and \figref{car-focusdiffconnected} shows the
+difference between the background and foreground divided by $\sigma$
+in the subimage and in the connected shape respectively.
+There is a small line of difference at the top between
+\figref{car-focusdiff} and \figref{car-focusdiffconnected}.
+
+\begin{myfig}{car-fgdetect}
+  {Detection of the foreground for the car.
+    There is only one image for the background so the $\var$ has been set arbitrarily.
+  We can see that the var is too low since there is too many pixels in \figref{car-thresh}}
+  \mysubfig{car-diff}{Difference between the background and the foreground.}{0.32}
+  \mysubfig{car-thresh}{Pixels for which the difference divided by the square root of the var is higher than the threshold 1.}{0.32}
+  \mysubfig{car-shaped}{The foreground shaped by our method with the gaussian filter.}{0.32}
+  \mysubfig{car-biggestsquare}{The biggest squared in the shaped foreground of \figref{car-shaped}.}{0.32}
+  \mysubfig{car-connected}{The connected foreground around the biggest square. The image is cropped around it.}{0.32}
+  \mysubfig{car-focusdiff}{The cropped difference divided by the square root of the var.}{0.32}
+  \mysubfig{car-focusdiffconnected}{Same than \figref{car-focusdiff} but only on the connected shape.}{0.32}
+\end{myfig}

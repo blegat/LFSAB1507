@@ -18,7 +18,7 @@ MSE=\frac{1}{MN} \sum\limits_{m=1}^{n=1}\left(F(m,n)-\hat{F}(m,n)\right)^2.
 
 The problem of this method is that it highly depends on the scale of intensity of the image. That's why we prefer the Peak Signal-to-Noise Ratio (PSNR) that avoid this problem:
 \begin{equation}
-PSNR = -10 log \frac{MSE}{S^2},
+PSNR = -10 \log \frac{MSE}{S^2},
 \end{equation}
 where $S$ is the maximum value that a pixel can reach (255 for 8bits coding). Here the bigger the PSNR is, the better the quality of the image.
 
