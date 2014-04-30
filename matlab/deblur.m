@@ -29,9 +29,9 @@ squared = squareborder(partfForPSF, 0);
 if ParaLength == 1
     len = length_estimator(squared, angle, 2, 3, 0)
 elseif ParaLength == 2
-    len = length_estimator(squared, angle, 2, 3, 0)
+    len = length_estimator(squared, angle, 2, 5, 0)
 elseif ParaLength == 3
-    len = length_estimator(squared, angle, 2, 3, 0)
+    len = length_estimator(squared, angle, 2, 8, 0)
 end
 
 % Reduce the number of pixels to a defined size if the picture
@@ -66,9 +66,6 @@ if algo == 1
         f(:,:,i) = edgetaper(f(:,:,i),psf);
        
         F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
-       
-        %  F(:,:,i) = lucy(f(:,:,i), psf, len, angle, 25, 0, 3);
-        %  F(:,:,i) = wiener2(F(:,:,i), [5 5]);
     end
    % time =  toc
 end
@@ -81,13 +78,13 @@ if algo == 2
     
 %    save_image(f, 'f', 2);
 %    psfEdge = fspecial('gaussian', 50, 10);
-% f = edgetaper(f,psfEdge);
-% f = edgetaper(f,psf);
+%f = edgetaper(f,psfEdge);
+ f = edgetaper(f,psf);
 % save_image(f, 'sagarNoEdgeTaper', 1);
   %   figure()
  % tic
   %     plot(fftshift(f))
-  %  F = deconvwnr(f,psf,nsr);
+   F = deconvwnr(f,psf,nsr);
    % time =  toc
     
 %%% Plot the psf 
@@ -100,7 +97,7 @@ if algo == 2
     % save_image(F,'deb',2);
     %F = wiener2(F, [5 5]);
     %F = medfilt2(F);
-     F = f;
+    % F = f;
     
 end
 if algo == 3
