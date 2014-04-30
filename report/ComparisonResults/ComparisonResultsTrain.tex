@@ -92,10 +92,6 @@ For example the $\alpha$ could not penalize enough the high frequencies.
 \hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
 \label{eq:FReg}
 \end{equation*}
-\subsection{Angle estimation}
-\label{subsec:AngleEs}
-
-
 
 \subsection{Length estimation}
 \label{subsec:LengthEs}
@@ -236,6 +232,94 @@ Let's focus now on a small variation of the length for regularisation. The follo
 \label{fig:PlateReg}
 \end{figure}
 
+\subsection{Angle estimation}
+\label{subsec:AngleEs}
+
+After examining the influence of the length, we are interested in the influence of the angle 
+estimated with the method of Radon (section~\ref{subsec:Radon}). This parameter is also used in the calculation of the PSF. Moreover, the estimate of the length is possible only after a correct value for the angle. It is therefore all the more important to determine the sensitivity of the methods in this setting because the sensitivity depends on the estimated length.
+    
+To isolate the parameter, we fix the estimated length as the rigth value for the example used (which is an artificially blurred picture). The test image is a photo artificially blurred whith an angle of 10 degrees and a length of 30 pixels, it represents "la maison caree", in Nîme. The original image and its blurred version is shown in the figure~=\ref{fig:nimeOriginal}. To show its influence, we'll fix the angle parameter to $8$ degrees, $10$ degrees (exact value) and $12$ degrees. The results of deblurring are shown in figure~\ref{fig:NimeGeneral}.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/Nime/Original.jpg}
+\caption{Original image}
+\label{fig:NimeO}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/Blurlength30angle10.png}
+\caption{Artificial blur: $30$ pixels and $10$ degrees}
+\label{fig:Blurlength30angle10}
+\end{subfigure}
+\caption{Original image (left) and with artificial blur (right)}
+\label{fig:nimeOriginal}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/NimeAngle/LucyAngle8.png}
+\caption{Lucy if angle estimator = $8$ degrees}
+\label{fig:L8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle8.png}
+\caption{Wiener if angle estimator = $8$ degrees}
+\label{fig:W8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle8.png}
+\caption{Reguralization if angle estimator = $8$ degrees}
+\label{fig:R8}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/LucyAngle10.png}
+\caption{Lucy if angle estimator = $10$ degrees}
+\label{fig:L10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle10.png}
+\caption{Wiener if angle estimator = $10$ degrees}
+\label{fig:W10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle10.png}
+\caption{Reguralization if angle estimator = $10$ degrees}
+\label{fig:R10}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/LucyAngle12.png}
+\caption{Lucy if angle estimator = $12$ degrees}
+\label{fig:L12}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/WienerAngle12.png}
+\caption{Wiener if angle estimator = $12$ degrees}
+\label{fig:W12}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/NimeAngle/RegAngle12.png}
+\caption{Reguralization if angle estimator = $12$ degrees}
+\label{fig:R12}
+\end{subfigure}
+\caption{Influence of the length estimator}
+\label{fig:NimeGeneral}
+\end{figure}
+
+It follows immediately that, in the same way that the estimated length, the regularization method is particularly sensitive to the angle parameter. Indeed, there is much more artefacs when the estimated distance from the exact valeure is important. 
+The other two methods, Lucy and Wiener are robust enough once again. Although obviously the deblurring will be better when the estimated value is close to the exact value. 
+
+Conclude by noting that poor estimation of the angle leads to an even worse estimate of the length (which is based on the estimation of the angle). Regularization is even more sensitive to the value of the angle.
 
 \subsection{Influence of the peaks on the length estimation}
 

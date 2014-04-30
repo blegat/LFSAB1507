@@ -19,7 +19,7 @@ end
 
 %compute the estimation of the angle of PSF
 tic
-angle  = robust_angle_estimator(partfForPSF, 0)
+angle  = robust_angle_estimator(partfForPSF, 0);
 time = toc
 %angle = angle_estimator_Gabor(f)
 
