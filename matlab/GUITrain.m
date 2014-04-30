@@ -37,7 +37,6 @@ handles = guihandles(MainWindow);
 guidata(MainWindow,handles)
 
 function LoadFunction(hObject, eventdata, handles)  
-%% attention code trouve sur un forum http://www.commentcamarche.net/forum/affich-17005255-ouverture-d-un-dossier-d-image-via-gui-matlab
 global ArtificialBlurButton DeblurButton1  GorRGB
 a = 0;
 nomfichier=[]; 
