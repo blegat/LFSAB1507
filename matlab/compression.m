@@ -36,8 +36,9 @@ if type ==1
     else
         Fchanged = I;
     end
-%     
     
+    
+%%% To compute the complexity tests    
 %     if(d(1) >  sizeFormat)
 %         centerI = d(1)/2;
 %         FchangedCenter = I(centerI-floor(sizeFormat/2):centerI+floor(sizeFormat/2),1:d(2));

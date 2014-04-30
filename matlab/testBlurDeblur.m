@@ -1,4 +1,4 @@
-function [time] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter, sizeFormat)
+function [] = testBlurDeblur(test, algo, len, blur_angle, blur_meth, iter, sizeFormat)
 %Test function, 
 % -choose a picture to deblur
 % -blur it artificially if  not already blurred
@@ -92,8 +92,7 @@ end
 
 %%% Deblur the image
 
-
-[time, deblurred] = deblur(I,algo,1,k_len,iter, sizeFormat);
+deblurred = deblur(I,algo,1,k_len,iter, sizeFormat);
 
 
 %%%Show the deblurred image
