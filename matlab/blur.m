@@ -26,7 +26,10 @@ elseif meth == 2
     h = oneway_psf(len,angle);
     f = imfilter(I,h,'circular');
 %oneway_psf function to create the psf and imfilter to blur
-else
+elseif meth == 3
     h = oneway_psf(len, angle);
     f = imfilter(I, h);
+else 
+    h = fspecial('motion', len, angle);
+    f = imfilter(I, h);    
 end

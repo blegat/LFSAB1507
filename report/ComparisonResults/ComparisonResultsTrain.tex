@@ -1,14 +1,12 @@
-%TODO : expliquer quelque part le paramètre de length estimator (3, 5 ou 8)
-
 \section{Comparison and interpretation of results for the train}
 
 The purpose of this section is to interpret and compare results on different pictures deblurred by the three methods of deconvolution used: Lucy-Richardson, Wiener and regularization. We will test essentially ideal images artificially blurred in order to isolate the influence of certain parameters. Although most of the images used are not taken inside a train as it indicated, the assumption of a linear motion blur is well respected and we are therefore in the first case treated (the train).
 
 \subsection{Noise influence}
 
-We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section \ref{sec:Comp}). The noise was inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}.
+We are interested in deblurring a original image with noise (that is independent of signal). Three different cases are considered: the original image without noise, with Gaussian noise (mean equals $0$ and variance $0.01$) and with (very light) speckle noise. The original image has been artificially blurred and pictures were compressed during treatment (see section ref{sec:RealTime}). The noise was inserted by predefined functions of Matlab. The results are shown in figure \ref{fig:AllNoises}. 
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/desert/Normal/input.png}
@@ -90,166 +88,233 @@ We are interested in deblurring a original image with noise (that is independent
 \end{figure}
 
 
-We note that the regularisation algorithm is much more sensitive to both type of noise added in the original image. The other two methods are also affected but the deblurring is not compromised (provided that the initial noise is not too important).
+We note that the regularisation algorithm is much more sensitive to both type of noise added in the original image. The other two methods are also affected but the deblurring is not compromised (provided that the initial noise is not too important). This result may be due to wrong coefficients in the equation \eqref{eq:FReg}.
+For example the $\alpha$ could not penalize enough the high frequencies.
+ 
+\begin{equation*}
+\hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\label{eq:FReg}
+\end{equation*}
 
-%TODO : possible d'expliquer ça mathématiquement ? 
 
 \subsection{Length estimator parameter}
+\label{subsec:LengthEs}
+To estimate the PSF, it is necessary to estimate the length of the psf  as explained in subsection \ref{subsec:Cep}. It's interesting to study the impact of the accuracy of this factor on the output and establish the sensitivity of the three methods used.
 
-To estimate the PSF, it is necessary to estimate the length parameter of blurring (see section [ ??? ]). It's interesting to study the impact of this factor on the output and establish the sensitivity of the three methods used.
-The image used here is the famous photo taken in 1972 of Lena, playmate of playboy magazine, and is often used as test algorithms for image processing( REFERENCE TO WIKIPEDIA ). It has been artificially blurred here by an angle of 20 degrees and a length of 30 pixels. The principle is to fix the estimated length for the deblurring in order to see the influence of this value to the final result (it should be noted that the angle estimatated by this algorithm is 20 degrees what is right and so the length parameter is the only variable here). For each method, three cases were treated: the estimated length (that is fixed) is 20 pixels, 30 pixels (exact value) and 40 pixels.  The results are shown in figure ?????:
+The image used here is the famous photo taken in 1972 of Lena, playmate of playboy magazine, and is often used as test algorithms for image processing \cite{wikiLenna}. It has been artificially blurred here with an angle of 20 degrees and a length of 30 pixels, see figure~\ref{fig:LenaBl}. The principle is to fix the estimated length for the deblurring in order to see the influence of this value to the final result (it should be noted that the angle estimated by this algorithm is 20 degrees which is right and so the length parameter is the only variable here). For each method, three cases were treated: the estimated length (that is fixed) is 20 pixels, 30 pixels (exact value) and 40 pixels.  The results are shown in figure \ref{fig:LenaGeneral}.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/lenaOriginal.png}
-
 \caption{Original image - Lena}
-\label{fig:LOriginal}
+\label{fig:LenaO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/ArtificialBlurred.png}
-
 \caption{Artificial blur: $30$ pixels and $0$ degrees}
 \label{fig:LenaBlurred}
 \end{subfigure}
 \caption{Original image (left) and with artificial blur (right)}
+\label{fig:LenaBl}
 \end{figure}
 
-\begin{figure}[h]
+
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[width= \textwidth]{../Images/Results/Lena/Blur20deg30length/L20.png}
-
 \caption{Lucy if length estimator = $20$ pixels}
 \label{fig:L20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L30.png}
-
 \caption{Lucy if length estimator = $30$ pixels (exact value)}
 \label{fig:L30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/L40.png}
-
 \caption{Lucy if length estimator = $40$ pixels}
 \label{fig:L40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W20.png}
-
 \caption{Wiener if length estimator = $20$ pixels}
 \label{fig:W20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W30.png}
-
 \caption{Wiener if length estimator = $30$ pixels (exact value)}
 \label{fig:W30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/W40.png}
-
 \caption{Wiener if length estimator = $40$ pixels.}
 \label{fig:W40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R20.png}
-
 \caption{Reguralization if length estimator = $20$ pixels}
 \label{fig:R20}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R30.png}
-
 \caption{Reguralization if length estimator = $30$ pixels (exact value)}
 \label{fig:R30}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Blur20deg30length/R40.png}
-
 \caption{Reguralization if length estimator = $40$ pixels}
 \label{fig:R40}
 \end{subfigure}
 \caption{Influence of the length estimator}
+\label{fig:LenaGeneral}
 \end{figure}
 
-It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. Indeed, artifacts occur when the estimated parameter departs from the true value. The following example shows it (artificially blurred license plate at 0 degrees and 40 pixels):
+It directly seems that the regularization method is much more sensitive to the parameter studied than the two others methods. 
 
-\begin{figure}[h]
+Let's focus now on a small variation of the length for regularisation. The following example (figure \ref{fig:PlateReg}) shows that, for an artificially blurred license plate at 0 degrees and 40 pixels, the results are already no more relevant with a gap of two pixels. This sensibility to length approximation added to the sensibility to noise make the regularisation algorithm less efficient than the two others. 
+
+\begin{figure}[h!]
 \centering
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/originalimage.jpg}
-
 \caption{Original image}
 \label{fig:plaqueO}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/ArtificialBlur.png}
-
 \caption{Artificial blur: $40$ pixels and $0$ degrees}
 \label{fig:plaqueBlur}
 \end{subfigure}
 \caption{Original image (left) and with artificial blur (right)}
 \end{figure}
 
-\begin{figure}[h]
+
+\begin{figure}[h!]
 \center
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL38.png}
-
 \caption{Reguralization method with length estimator $= 38$}
 \label{fig:RegL38}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL39.png}
-
 \caption{Reguralization method with length estimator $= 39$}
 \label{fig:RegL39}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL40.png}
-
 \caption{Reguralization method with length estimator $= 40$ (exact value)}
 \label{fig:RegL40}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL41.png}
-
 \caption{Reguralization method with length estimator $= 41$}
 \label{fig:RegL41}
 \end{subfigure}
 ~
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/plaque/Blur0angle40length/RegL42.png}
-
 \caption{Reguralization method with length estimator $= 42$}
 \label{fig:RegL42}
 \end{subfigure}
 \caption{Method of reguralization: influence of the length estimator parameter}
+\label{fig:PlateReg}
 \end{figure}
 
 
-%TODO Y a moyen d'expliquer pourquoi reg est plus sensible mathématiquement vous pensez ? 
+\subsection{parameter of the length estimator}
+
+As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires to search different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8 (cf. subsection \ref{subsec:Cep} for its meaning) , our estimated length is accurate, we obtain the exact numbers, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant as shown in figure \ref{fig:PlateLen8}. However if we change k to 5, we get 20 pixels estimated and the deblurred image is clearer, figure \ref{fig:PlateLen5}. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=8$ (length estimation = $19$ pixels)}
+\label{fig:LB19E19K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=8$ (length estimation = $36$ pixels)}
+\label{fig:LB20E36K3}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
+\caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=8$ (length estimation = $21$ pixels)}
+\label{fig:LB21E21K3}
+\end{subfigure}
+\caption{Compression: Deblurring (Lucy) for different length of artificial blur for $k = 3$}
+\label{fig:PlateLen8}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
+\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=5$ (length estimated = $20$ pixels)}
+\label{fig:PlateLen5}
+\end{figure}
+
+
+If we check the graphs of the peaks, figure \ref{fig:PlatePeaks}, it is clear that the graphs \ref{fig:peaksLucy19} and \ref{fig:peaksLucy21} are sharper than the graph \ref{fig:peaksLucy20} which explain that to find a peak with more than 8 pixels \todo{explain pixels} is problematic. This problem is one of the inefficiencies we could try to manage in a future version of our algorithm. Indeed, for the moment, we just let the possibility for the user to adjust manually this parameter. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
+\caption{peaks for artificial blur of $19$ pixels}
+\label{fig:peaksLucy19}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
+\caption{peaks for artificial blur of $20$ pixels)}
+\label{fig:peaksLucy20}
+\end{subfigure}
+~
+\begin{subfigure}{0.32\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
+\caption{Peaks for artificial blur of $21$ pixels}
+\label{fig:peaksLucy21}
+\end{subfigure}
+\caption{peaksLucy}
+\label{fig:PlatePeaks}
+\end{figure}
 
 \subsection{Compression and computation time}
 
+Our bonus item relates to the computation time of deblurring. It's important to analyze whether the time saved is significant and if it's not compromising quality of deblurred images. So we will compare the computing time  for the three algorithms with and without the psf estimation on a smaller part of the picture and resizing . The testing picture is the photo of Lena, artificially blurred with an angle of 50 degrees and with a length of 80 pixels. We estimate the psf on a square of $256 \times 256$ pixels and we resize the picture from $1400 \times 1400 \times 3$ to $750 \times 750 \times 3$ pixels.
 
-Our bonus item relates to the time computation of deblurring. It's important to analyze whether the time saved is significant and if it's not compromising quality of deblurred images. For that, we will compare the execution time by compressing for the three algorithms. The testing picture is the photo of Lena, artificially blurred to 50 degrees and with a length of 80 pixels.
+The following table shows the different computation time:
+
+\begin{center}
+\begin{tabular}{|l|c|c|r|}
+  \hline
+  & Lucy &  Wiener & regularization \\
+  \hline
+  Time with compression [s] & 5.78 & 0.69 & 2.11 \\
+  \hline
+  Time without compression [s]  & 18.99 & 2.77 & 6.12 \\
+  \hline
+\end{tabular}
+\end{center}
+
 
 \begin{figure}[h]
 \centering
@@ -274,7 +339,7 @@ Our bonus item relates to the time computation of deblurring. It's important to 
 \begin{subfigure}{0.32\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/Results/Lena/Lena2/Lucy.png}
 
-\caption{Picture deblurred with Lucy}
+\caption{Picture deblurred with Lucy (16 iterations)}
 \label{fig:Lulu}
 \end{subfigure}
 ~
@@ -315,103 +380,42 @@ Our bonus item relates to the time computation of deblurring. It's important to 
 \caption{Compression: comparison of results}
 \end{figure}
 
-The following table shows the different computation time:
 
-\begin{tabular}{|l|c|c|r|}
-  \hline
-  & Lucy &  Wiener & regularization \\
-  \hline
-  Time with compression [s] & 7.4 & 1.15 & 3.3 \\
-  \hline
-  Time without compression [s]  & 24.2 & 3.36 & 10.13 \\
-  \hline
-\end{tabular}
+We see that in this case the compression significantly reduces the computation time with only small visible differences between the deblurred image with and without compression (more artifacts for reguralisation with the  process). 
+However, in some cases the angle and length estimations can be less accurate (around $\pm$ 1 degree and $\pm$ 3 pixels). As shown in subsections \ref{subsec:LengthEs} and \ref{subsec:AngleEs} it's mainly problematic for the regularisation algorithm.
+
+\subsection{Complexity of our different results}
+
+As the time spent for the psf estimation and the resizing is the same for all the algorithms (around 0.8 seconds), we can conclude that the Lucy-Richardson algorithm is the slowest, around $6 $ seconds for a $750 \times 750 \times 3$ color picture and 16 iterations. The wiener algorithm is the fastest with less than $0.5$ second in average. Finally the regularisation takes about $1.5$ seconds to compute. For a gray scale picture it means only $750 \times 750$, we get $1.4$ seconds for Lucy and 16 iterations, $0.04$ for Wiener and $0.3$ for the regularisation. 
+
+Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``size of the picture / size of the smallest picture''. 
 
 
-We see that in this case the compression significantly reduces the computation time with little visible differences between the deblurred image with and without compression (more artefacts for reguralisation with the processing process). Deblurring with the Wiener is inconclusive here, this observation will be discussed in section of the color influence (????????).
-
-However, in some cases the length of blur can be estimated with less well with compression which may alter the results (particularly with the algorithm of Reguralisation that is realy sensitive to this parameter).
-
-\subsection{Computation time of methods used}
-
-By analyzing the table of the previous point that summerize the execution time whith compression, we can clearly establish an order of speed. Wiener method is very fast (around a second for an image with compression), then comes Regularization (about 3 [s]) and finally Lucy Richardson takes much longer (around 7 [s]).
-
-%TODO Y a moyen de faire une petite anaylse de la complexité temporelle vous pensez ? 
-
-
-\subsection{parameter of the length estimator}
-
-As explained in subsection \ref{subsec:Cep}, computing the length of the psf requires to search different peaks. Even if in most of the cases, the estimated length is accurate, we get sometimes some problems. For example if we blur the license plate \ref{fig:plaqueO} with 19 or 21 pixels and k equals 8, our estimated length is accurate, we obtain the exact numbers, whereas when we blur with 20 pixels, the estimated length is 36 pixels and the deblurred image is less relevant. However if we change k to 5, we get 20 pixels estimated. If we check the graphs of the peaks XXX, it is clear that for 
-
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur19estimated19k3.png}
-
-\caption{Deblurring (Lucy) for artificial blur of $19$ pixels with $k=3$ (length estimation = $19$ pixels)}
-\label{fig:LB19E19K3}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur20estimation36k3.png}
-
-\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=3$ (length estimation = $36$ pixels)}
-\label{fig:LB20E36K3}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/Lucyblur21estimated21k3.png}
-
-\caption{Deblurring (Lucy) for artificial blur of $21$ pixels with $k=3$ (length estimation = $21$ pixels)}
-\label{fig:LB21E21K3}
-\end{subfigure}
-\caption{Compression: Deblurring (Lucy) for different length of artificial blur for $k = 3$}
+\includegraphics[scale=0.7]{../Images/Complexity.png}
+\caption{Complexity of our different algorithms. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}. the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' is the y axis and the x axis is the ratio ``number of pixels of the picture / number of pixels of the smallest picture''.}
+\label{fig:Complexity}
 \end{figure}
 
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/LucyBlur20estimation20k2.png}
+\todo{tirer des conclusions}
 
-\label{fig:LB20E20K2}
-\end{subfigure}
-\caption{Deblurring (Lucy) for artificial blur of $20$ pixels with $k=2$ (length estimation = $20$ pixels)}
+Let's now have a look at the complexity of our \texttt{robust\_ angle\_ estimator} and \texttt{length \_ estimator} methods. Proceeding in the same way as for the deconvolution algorithms, we 
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{../Images/ComplexityRadon.png}
+\caption{Complexity of our }
+\label{fig:ComplexityRadon}
 \end{figure}
 
-\begin{figure}[h]
-\centering
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy19.png}
-
-\caption{Pics for artificial blur of $19$ pixels}
-\label{fig:PicsLucy19}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy20.png}
-
-\caption{Pics for artificial blur of $20$ pixels)}
-\label{fig:PicsLucy20}
-\end{subfigure}
-~
-\begin{subfigure}{0.32\textwidth}
-\includegraphics[{width= \textwidth}]{../Images/Results/plaque/20/PicsLucy21.png}
-
-\caption{Pics for artificial blur of $21$ pixels}
-\label{fig:PicsLucy21}
-\end{subfigure}
-\caption{PicsLucy A COMPLETER}
-\end{figure}
-
-
-%TODO Arnaud comme on avait parlé hier et l'influence du paramètre (disons P) qui vaut 3, 5 ou 8. Moi je comprend pas trop donc ca serait pas mal si on arrive à expliquer ça avec le graphique des pics et tout. ..\Images\Results\plaque\55 y a une la plaque floutée artificiellement à 55 pixels (et angle 0) et quand on prend que P = 3 ou 5 (1 ou 2 dans le GUI), ça estime la longueur à 23 (à la place de 55), du coup ça donne Lucy_P1 Wiener_P1 et Reg_P1 (de la merde...). Tandis que P = 8 (3 dans le GUI) estime la longueur à 54, et ça donne les beaux résultats Lucy_P3 Wiener_P3 et Reg_P3. Tu sais en tirer quelque chose ? 
+\todo{tirer des conclusions}
 
 \subsection{Colors influence}
 
 First of all, there is an influence on the run time. Indeed, as already seen ([MATH section]), color images are stored in 3-dimensions matrix $M$ x $N$ x $3$. So they take longer to be processed that the same gray-scaled image, stored in a matrix $M$ x $N$.
-Below are the results obtained with the algorithm Lucy-Ridchrdson (with compression) for the photo of Lena and the gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
-
-% EN fait la longueur de floutage à été fixée à la bonne valeur pour la NB parce qu'ou sinon ca estime super mal, il faudrait voir pourquoi... Mais on est pas obligés de le dire dans le rapport :p 
+Below are the results obtained with the algorithm Lucy-Richardson (with compression) for the photo of Lena and the gray-scaled one corresponding, both artificially blurred with an angle of 50 degrees and a length of 80 pixels:
 
 \begin{figure}[h]
 \centering
@@ -446,6 +450,8 @@ Below are the results obtained with the algorithm Lucy-Ridchrdson (with compress
 \end{figure}
 
 %TODO voir pourquoi Wiener beug parfois selon les couleurs
+
+
 
 \subsection{reals images}
 
