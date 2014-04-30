@@ -11,7 +11,9 @@ function [time, F] = deblur (f, algo, comp, ParaLength, iter, sizeFormat)
 %		 better estimation of the length
 % OUT:  -F the deblurred image
 
-
+if nargin<6
+    sizeFormat = 750;
+end
 % select part of the picture for qucicker psf estimation
 [ratio partfForPSF] = compression(f,comp, sizeFormat);
 

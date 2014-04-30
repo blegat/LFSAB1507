@@ -83,9 +83,6 @@ chemin = fullfile(directoryname,ext);
 list = dir(chemin);
 iter = str2double(get(Saisie1,'String'));
 for n = 1:numel(list)
-%      img = rgb2gray(imread(fullfile(directoryname, list(n).name)));
-%      Out = UpdateBackground(Out, img);
-     
      if get(GorRGB,'value') == 1
      [ratio img] = compression(imread(fullfile(directoryname, list(n).name)),2);
      elseif get(GorRGB,'value') == 2     
@@ -97,7 +94,7 @@ for n = 1:numel(list)
      title(axe1,'Background'); 
      algo = 1;
      comp = 1;
-     DeblurCam = Out{1};%cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
+     DeblurCam = cam(double(img), Out{1}, iter, algo, comp, Out{3}(:,:,1));
      save_imageCam (DeblurCam, 'CamDeblurred', 1,directoryname, n);
      imshow(DeblurCam/255,'parent',axe3);
      title(axe3,'Deblurred image'); 
