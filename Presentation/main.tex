@@ -1,0 +1,54 @@
+\documentclass[10pt,svgnames,usenames,table]{beamer} %,handout si version papier
+\input{Other/header_presentation}
+\usepackage{empheq}
+\usepackage{amsmath}
+\graphicspath{{img/}}
+\definecolor{gris}{RGB}{228,228,228}
+\definecolor{bleu}{RGB}{34,148,255}
+\definecolor{darkgray}{rgb}{0.3,0.3,0.3}
+
+
+\institute{LFSAB1507}
+\title{\textbf{Picture deblurring}\\Project of applied mathematics }
+\author{Jonathan \textsc{Berthe} \and Arnaud \textsc{Cerckel} \and Benoît \textsc{Legat} \and Geoffroy \textsc{Vanderrreydt}}
+
+\date{\today}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\begin{document}
+
+
+\begin{frame}
+\maketitle
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[width= \textwidth]{../Images/Results/reel/foot/Original.jpg}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Results/reel/foot/L.png}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+\AtBeginSection[]
+  {
+     \begin{frame}<beamer>
+     %\frametitle{\insertsection}
+     \tableofcontents[hideothersubsections]
+     \end{frame}
+  }
+\include{Introduction/Introduction}
+\include{MathFormulation/MathFormulation}
+\include{GeneralStrategy/GeneralStrategy}
+\include{PSFestimation/PSFestimation}
+\include{Deconvolution/Deconvolution}
+\include{ComplementaryTreatment/ComplementaryTreatment}
+\include{Compression/Compression}
+\include{Potential/Potential}
+\include{Conclusion/Conclusion}
+
+\end{document}

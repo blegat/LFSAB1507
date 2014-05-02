@@ -1,0 +1,50 @@
+\documentclass{article}
+
+\input{../report/Other/header}
+
+%\includeonly{Chapters/train}
+\title{ \textbf{Errata} \\ - Project of picture deblurring - }
+\author{Jonathan \textsc{Berthe} \and Arnaud \textsc{Cerckel} \and Benoît \textsc{Legat} \and Geoffroy \textsc{Vanderrreydt}}
+%\institute{LFSAB1507}
+\begin{document}
+
+\maketitle
+
+\subsection{Complexity of our different results}
+
+
+Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 200 for Lucy and by around 100 for the two other algorithms. So the relation is almost linear between the number of pixels added and the time needed. The fact that it is not totally linear might be due to optimisations that Matlab while processing big matrix. 
+
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/ComplexityRel.png}
+\caption{The ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' is the y axis and the x axis is the ratio ``number of pixels of the picture / number of pixels of the smallest picture''.}
+\end{subfigure}~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/ComplexityAbs.png}
+\caption{Time  needed to compute the picture on the y-axis, number of pixels of the picture on the x-axis.}
+\end{subfigure}
+\caption{Complexity of our different algorithms. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}.}
+\label{fig:Complexity}
+\end{figure}
+
+
+
+Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. The result are more surprising. Indeed, until a certain number of pixels, the relation between time and number of pixels seems linear. However, at around 100 times more pixels than with the starting picture, the time required starts to decline and then levels off at around 11 seconds. Either we computed something wrong, or matlab does some things strange. In all cases, there is here possibility for investigation.
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.4]{../Images/ComplexityRadon.png}
+\caption{Complexity of our \texttt{robust\_angle\_estimator} method}
+\label{fig:ComplexityRadon}
+\end{figure}
+
+
+
+
+
+
+\end{document}

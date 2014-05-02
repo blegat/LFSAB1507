@@ -2,7 +2,7 @@ function [ nsr ] = nsrEstimation( f , psf)
 %NOISEESTIMATION Summary of this function goes here
 %   Detailed explanation goes here
 if true
-    d = size(f)
+    d = size(f);
     FchangedCenter = f(d(1)/2-round(d(1)/20):d(1)/2+round(d(1)/20),...
         d(2)/2-round(d(2)/20):d(2)/2+round(d(2)/20));
     FchangedCorner1 = f(1:2*round(d(1)/20)+1,...
@@ -36,8 +36,8 @@ else
     Fchanged = double(BW);
     %noise = var(dbw(:))
 end
-noise = var(Fchanged(:))
-signal = var(f(:))
-nsr = noise/signal
+noise = var(Fchanged(:));
+signal = var(f(:));
+nsr = noise/signal;
 end
 

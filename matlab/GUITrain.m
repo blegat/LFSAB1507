@@ -201,15 +201,15 @@ iter = str2double(get(IterL1,'String'));
 tic
 if get(choix1,'Value') == 1 
     if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
-       I = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
+     [time  I] = deblur(I,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
     elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
-       I = deblur(I,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
+     [time  I] = deblur(I,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
     end
 elseif get(choix1,'Value') == 2
     if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
-       I = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
+      [time I] = deblur(I,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
     elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
-       I = deblur(I,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
+       [time  I] = deblur(I,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
     end 
 end
 Temps = toc
@@ -229,15 +229,15 @@ iter = str2double(get(IterL2,'String'));
 tic
 if get(choix1,'Value') == 1 
     if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
-       L = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
+      [time L] = deblur(L,get(Method,'Value'),1,get(ParaLength,'Value'),iter);
     elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
-        L = deblur(L,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
+        [time L] = deblur(L,get(Method,'Value')+1,1,get(ParaLength,'Value'),iter);
     end
 elseif get(choix1,'Value') == 2
     if (get(Method,'Value') == 1)|| (get(Method,'Value') == 2) || (get(Method,'Value') == 3)
-       L = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
+       [time L] = deblur(L,get(Method,'Value'),0,get(ParaLength,'Value'),iter);
     elseif (get(Method,'Value') == 4)|| (get(Method,'Value') == 5)
-        L = deblur(L,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
+       [time L] = deblur(L,get(Method,'Value')+1,0,get(ParaLength,'Value'),iter);
     end 
 end
 Temps = toc

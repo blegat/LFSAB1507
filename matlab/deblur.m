@@ -1,4 +1,4 @@
-function [F] = deblur (f, algo, comp, ParaLength, iter, sizeFormat)
+function [time F] = deblur (f, algo, comp, ParaLength, iter, sizeFormat)
 % Deblur the picture given in argument by evaluation of the psf and then 
 % deconvolution using lucy, wiener or regularisation
 %
@@ -15,32 +15,33 @@ if nargin<6
     sizeFormat = 750;
 end
 % select part of the picture for qucicker psf estimation
-[ratio partfForPSF] = compression(f,comp, sizeFormat);
+%[ratio partfForPSF] = compression(f,comp, sizeFormat);
 
 %compute the estimation of the angle of PSF
-tic
-angle  = robust_angle_estimator(partfForPSF, 0);
-time = toc
+% tic
+% angle  = robust_angle_estimator(partfForPSF, 0);
+% time = toc
 %angle = angle_estimator_Gabor(f)
-
+angle = 50
 %compute the estimation of the length of PSF
 
-squared = squareborder(partfForPSF, 0);
-if ParaLength == 1
-    len = length_estimator(squared, angle, 2, 3, 0)
-elseif ParaLength == 2
-    len = length_estimator(squared, angle, 2, 5, 0)
-elseif ParaLength == 3
-    len = length_estimator(squared, angle, 2, 8, 0)
-end
+% squared = squareborder(partfForPSF, 0);
+% if ParaLength == 1
+%     len = length_estimator(squared, angle, 2, 3, 0)
+% elseif ParaLength == 2
+%     len = length_estimator(squared, angle, 2, 5, 0)
+% elseif ParaLength == 3
+%     len = length_estimator(squared, angle, 2, 8, 0)
+% end
 
+len = 80;
 % Reduce the number of pixels to a defined size if the picture
 % is too big
 
 [ratio f] = compression(f,2*comp, sizeFormat);
 
 % Adapt the number of pixels invovled after compression
-lenCompressed = ratio*len
+lenCompressed = ratio*len;
 
 %Create the psf with the arguments computed
 psf = fspecial('motion', lenCompressed, angle);
@@ -61,12 +62,14 @@ F = zeros(size(f));
 
 %Lucy Richardson
 if algo == 1
-    % tic
     for i=1:iterColorOrGray
         f(:,:,i) = edgetaper(f(:,:,i),psf);
+    end
+     tic
+    for i=1:iterColorOrGray
         F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
     end
-   % time =  toc
+    time =  toc
 end
 if algo == 2
    
@@ -81,10 +84,10 @@ if algo == 2
  f = edgetaper(f,psf);
 % save_image(f, 'sagarNoEdgeTaper', 1);
   %   figure()
- % tic
+  tic
   %     plot(fftshift(f))
    F = deconvwnr(f,psf,nsr);
-   % time =  toc
+    time =  toc
     
 %%% Plot the psf 
     %    psf_abs = abs(psf);
@@ -101,9 +104,9 @@ if algo == 2
 end
 if algo == 3
     f = edgetaper(f,psf);
-    %tic
+    tic
     [F arg] = deconvreg(f,psf,nsr);
-   % time = toc
+    time = toc
     
     %save_image(F,'deb',2);
     %F = wiener2(F, [2 2]);
