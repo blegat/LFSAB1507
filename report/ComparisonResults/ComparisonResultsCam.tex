@@ -70,7 +70,7 @@ The images of the first series figure~\ref{fig:AllBib} being tested were taken f
 
 \begin{figure}[h]
 \centering
-\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Human_walking/BGDetect/BGFinal.png}
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Human_walking/background-color/BGFinal.jpg}
 \caption{Background estimation}
 \label{fig:BibBG}
 \end{figure} 
@@ -190,7 +190,7 @@ The second series consists of images taken by a fixed camera with a terrace figu
 \subsubsection{Udpade Background}
 \label{subsec:UdpadeBg}
 
-For each new image, the foreground will be deblurred thanks to the background. It is therefore essential that it be changed dynamically when pictures are received (we assume that the pictures follow in chronological order). This requires giving some weight to the new image in the calculation of the new background. Indeed, the background should not be updated in the same way if two pictures follow of $1$ [s] or of $10$ [min], it will assign a larger weight to the new image in the second case. This weight depends on the parameter $a$ explained above (see ~\ref{sec:Bg}). Figures \ref{fig:AllAut}, \ref{fig:AutBG} and \ref{} clearly show the influence of this parameter on the different Background. A Serie of images of a motorway is used to estimate the background (figure~\ref{fig:AllAut}) and the result is shown in figure~\ref{fig:AutBG}. After, the initial serie is used to udpade the background estimation. We do it with $a=0.5$ as shown in \ref{fig:Udpade}.
+For each new image, the foreground will be deblurred thanks to the background. It is therefore essential that it be changed dynamically when pictures are received (we assume that the pictures follow in chronological order). This requires giving some weight to the new image in the calculation of the new background. Indeed, the background should not be updated in the same way if two pictures follow of $1$ [s] or of $10$ [min], it will assign a larger weight to the new image in the second case. This weight depends on the parameter $a$ explained above (see ~\ref{sec:Bg}). Figures \ref{fig:AllAut}, \ref{fig:AutBG} clearly show the influence of this parameter on the different Background. A Serie of images of a motorway is used to estimate the background (figure~\ref{fig:AllAut}) and the result is shown in figure~\ref{fig:AutBG}. After, the initial serie is used to udpade the background estimation. We do it with $a=0.5$ as shown in \ref{fig:Udpade}.
 
 \begin{figure}[h]
 \centering
