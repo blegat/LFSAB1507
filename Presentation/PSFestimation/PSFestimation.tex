@@ -75,3 +75,22 @@
 
 
 \subsection{Length estimation with modified Cepstrum}
+\begin{frame}[allowframebreaks]
+  \frametitle{Length estimation with modified Cepstrum}
+  Let $S = \log(|G|)$
+  \begin{block}{Classical Cepstrum}
+    \[ \F^{-1}(S) = 
+    \F^{-1}(\log(|H|)) + \F^{-1}(\log(|F|)) \]
+  \end{block}
+  \begin{block}{Modified Cepstrum}
+    \[ \log(\F(|S|)). \]
+  \end{block}
+  \begin{myfig}{cameraman_cepstrum}
+    {Modified Ceptstrum on the cameraman blurred with $L = 60$.}
+    \mysubfig{cameraman-plot-60_0}{Plot of the horizontal line for \ang{0}}{0.28}%
+    \mysubfig{cameraman-contourf-60_0}{Modified Cepstrum for \ang{0}}{0.28}
+    \mysubfig{cameraman-plot-60_30}{Plot of the horizontal line for \ang{30}}{0.28}%
+    \mysubfig{cameraman-contourf-60_30}{Modified Cepstrum for \ang{30}}{0.28}
+  \end{myfig}
+\end{frame}
+
