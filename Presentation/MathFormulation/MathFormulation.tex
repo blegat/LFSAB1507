@@ -1,1 +1,16 @@
 \section[Math. Formulat.]{Mathematical formulation}
+
+\begin{frame}
+	\frametitle{Mathematical Model}
+	Continuous Model
+	\begin{itemize}
+	\item What is an image? $f:\Omega \rightarrow \mathbb{R}: (x,y) \mapsto f(x,y)$
+	\item What is blurring? $g(x,y) = f(x,y) \ast h(x,y) + e(x,y)$
+	\end{itemize}
+	Discrete Model
+	\begin{itemize}
+	\item What is an image? $f(m,n)$ for $m=1...M$, $n=1...N$
+	\item What is blurring? $G = HF + E$, $G,F,E \in \mathbb{R}^{M \cross N}$, $H \in \mathbb{R}^{M \cross M}$
+	linear system: $\mathpzc{g} = \tilde{H}\mathpzc{f} + \mathpzc{e}$, where $\mathpzc{f} = vec(F)$ and $\tilde{H} = I_n \otimes H$
+	\end{itemize}
+\end{frame}

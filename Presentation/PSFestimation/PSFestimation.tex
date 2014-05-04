@@ -1,1 +1,14 @@
 \section[PSF Estimat.]{PSF Estimation}
+\begin{frame}
+	\frametitle{angle estimation with Gabor}
+	steps:
+	\begin{enumerate}
+	\item spectrum of the blurred image
+	\item logarithm of the spectrum, i.e. $I=\log(G(u,v))$, is used as input for Gabor filter
+	\item Gabor filter with different orientations ($\phi$) are convolved with $I$ to get different responses $R(\phi)$
+	\item for every $\phi$, take the $L_2$ norm
+	\item blur angle : $\alpha = arg{max_{\phi}||R(\phi)||_2}$
+	\end{enumerate}
+	
+	Problem: didn't work, not enough time to find errors
+\end{frame}

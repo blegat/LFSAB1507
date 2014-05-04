@@ -1,1 +1,20 @@
 \section[G. Strategy]{General Strategy}
+
+\begin{frame}
+	\frametitle{General Strategy}
+	\begin{enumerate}
+	\item Estimation of PSF
+		\begin{enumerate}
+		\item angle: Radon transform or Gabor filter
+		\item length: cepstrum
+		\end{enumerate}
+	\item Deconvolution with estimated PSF. 3 methods:
+		\begin{enumerate}
+		\item Richardson-Lucy
+		\item Wiener
+		\item Regularization
+		\end{enumerate}
+	\end{enumerate}
+	train case: directly applied\\
+	camera case: first detect foreground and apply only on this part of the image
+\end{frame}
