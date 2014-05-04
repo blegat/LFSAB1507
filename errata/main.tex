@@ -10,10 +10,28 @@
 
 \maketitle
 
-\subsection{Complexity of our different results}
+Our plots of the complexity presented in the report were a bit strange and it was difficult to conclude relevant informations from them. We said that we would investigate these results.  We found our mistake, a factor 2 in the call of a function. Here are our new conclusions.  
+
+\section{Complexity of our different results}
 
 
-As done in the report, let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$) with each time 16 iterations of Lucy. Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:ComplexityRelbw} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 800 for Lucy and by around 100 for the two other algorithms. So \texttt{deconvlucy} is clearly slower than the two others. 
+As done in the report, let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$ and so on until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$) with each time 16 iterations of Lucy. Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:ComplexityRelbw} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the $y$ axis and on the $x$ axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 800 for Lucy and by around 100 for the two other algorithms. So \texttt{deconvlucy} has a worse complexity than the two others. Lucy is also slower as shown in figure~\ref{fig:ComplexityAbsbw}. It takes around $33$ seconds for the last computation whereas the two others only take around $1.5$ and $5$ seconds.
+
+Now that the graphs are more relevant, let's try to have an idea of the algorithms complexity. We consider a square matrix with size $n \times n$. Let's start with Lucy. We know that if we increase the number of pixels by $400$, we increase the time by $800$. We have 
+
+\begin{align*}
+20^a &= 800\\
+a &= \frac{\log(800)}{\log(20)}\\
+a &= 2.23.
+\end{align*} 
+So we can reasonably conclude that the complexity of Lucy is in $\mathcal{O}(n^2\sqrt[4]{n})$, the magenta line at the figure~\ref{fig:ComplexityRelbw}. 
+
+If we proceed in the same way for Wiener and Regularisation, we have 
+\begin{align*}
+20^a &= 100\\
+a &= 1.54. 
+\end{align*}
+So we can reasonably conclude that the complexity of Wiener and Regularisation is in $\mathcal{O}(n\sqrt{n})$, the black line at the figure~\ref{fig:ComplexityRelbw} . 
 
 
 \begin{figure}[h!]
@@ -29,11 +47,11 @@ As done in the report, let's estimate the complexity of the deconvolution algori
 \caption{Time  needed to compute the picture on the y-axis, number of pixels of the picture on the x-axis.}
 \label{fig:ComplexityAbsbw}
 \end{subfigure}
-\caption{Complexity of our different algorithms for a black and white picture. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}.}
+\caption{Complexity of our different algorithms for a black and white picture. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}. The magenta line is for the estimated comlexity of Lucy and the black one for the estimated complexity of both \texttt{deconvwnr} and \texttt{deconvreg}.}
 \label{fig:Complexity}
 \end{figure}
 
-If we have a quick look to color image which means $125 \times 125 \times 3$ pixels, $250 \times 250 \times 3$ etc., we see that the relative time needed is almost the same which is is logical, figure~\ref{fig:ComplexityRel}. As regards the absolute time needed to compute the image, we needed for the biggest picture around $33$ seconds for Lucy, $5$ seconds for Regularisation and $1.5$ seconds for Wiener, figure~\ref{fig:ComplexityAbsbw}; we are now around $100$, $18$ and $4$ seconds, figure~\ref{fig:ComplexityAbs}. This result makes sense. Indeed, with Lucy when it's a color picture it's simply a loop for each color, so 3 times more time required. We can reasonably suppose that the two others algorithms use the same process.
+If we have a quick look to color image which means $125 \times 125 \times 3$ pixels, $250 \times 250 \times 3$ etc., we see that the relative time needed is almost the same, which is the result expected, figure~\ref{fig:ComplexityRel}. As regards the absolute time needed to compute the image, we need for the biggest picture around $33$ seconds for Lucy, $5$ seconds for Regularisation and $1.5$ seconds for Wiener, figure~\ref{fig:ComplexityAbsbw}; we are now around $100$, $18$ and $4$ seconds, figure~\ref{fig:ComplexityAbs}. This result makes sense. Indeed, with Lucy when it's a color picture it's simply a loop for each color, so 3 times more time required. We can reasonably suppose that the two others algorithms use the same process.
 
 
 \begin{figure}[h!]
@@ -55,7 +73,7 @@ If we have a quick look to color image which means $125 \times 125 \times 3$ pix
 
 
 
-Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. Now the results are far more logical than in the report. Indeed the relation between time and number of pixels is linear. If we have to deal with 400 times more pixels than at the beginning we can expect 400 times more time needed than at the beginning. 
+Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. Now the results are far more consistent than in the report. Indeed the relation between time and number of pixels is linear. If we have to deal with 400 times more pixels than at the beginning we can expect 400 times more time needed than at the beginning. 
 
 
 \begin{figure}[h!]
