@@ -1,0 +1,19 @@
+\subsection{Regularisation}
+\begin{frame}{Regularisation}
+
+We want to find 
+\begin{equation*}
+\min \sum_{k,l} \{ [G(k,l) - H(k,l)F(k,l)]^2 + \alpha [L(k,l)F(k,l)]^2\}
+\end{equation*}
+where 
+\begin{align*}
+\text{ $\alpha$ is a suitably chosen constant}, & & \text{ $L(k,l)$ is a high pass filter}
+\end{align*}
+
+So the estimated picture based on the blurred one is
+\begin{equation*}
+\hat{F}(k,l) = \frac{H(k,l)}{|H(k,l)|^2 + \alpha |L(k,l)|^2} G(k,l)
+\end{equation*}
+
+Challenge :  we have to choose both accurate $\alpha$ and $L$.
+\end{frame}
