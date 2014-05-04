@@ -17,12 +17,8 @@ if test == 1
     test_name = 'car2';
 elseif test == 2
     bg = double(imread('Back.bmp'));
-%A = double(imread('Sub.bmp'));
-%D = abs(A - bg);
     sub = double(imread('h2g2_blue.jpg'));
     test_name = 'dontpanic_blue';
-    %sub = double(imread('h2g2.jpg'));
-    %test_name = 'dontpanic';
     mix = 1;
 elseif test == 3
     bg = double(imread('Back.bmp'));
@@ -37,6 +33,11 @@ elseif test == 5
     bg = double(rgb2gray(imread('stv_bg.jpg')));
     fg = double(rgb2gray(imread('stv_blur1.jpg')));
     test_name = 'car1'
+elseif test == 6
+    bg = double(imread('Back.bmp'));
+    sub = double(imread('h2g2.jpg'));
+    test_name = 'dontpanic';
+    mix = 1;
 end
 if mix
     [N M k] = size(bg);
@@ -63,6 +64,7 @@ end
 %blurr = sprintf('%s-%d_%d', name, len, blur_angle);
 %deblu = sprintf('%s-%d_%d-%d_%d-%d', name, len, blur_angle, test, algo, iter);
 save_image(fg, 'g', 2);
+return
 F = cam(fg, bg, algo, iter, 0);
 save_image(F, sprintf('%d_%d', test, algo), 2);
 end

@@ -401,7 +401,7 @@ and \figref{dontpanic_blue-40-0_2_1-100}.
 This problem was expected since the resolution at the border
 is an approximation that is a bit wrong so it creates errors.
 
-\begin{myfig}{dontpanic}{Square image on real background blurred with $(40,\ang{0})$}
+\begin{myfig}{dontpanic}{Square image on real background blurred with $(40,\ang{0})$.}
   \begin{myfigsub}{dontpanic-40-0_2_1-20}
     {``select-lucy'' with 20 iterations}{0.49}
     \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_1-20.jpg}
@@ -419,8 +419,12 @@ is an approximation that is a bit wrong so it creates errors.
     \includegraphics[trim=15cm 7cm 15cm 7cm,clip,width=\textwidth]{dontpanic-40_0-2_2-100.jpg}
   \end{myfigsub}
   \begin{myfigsub}{dontpanic-wiener-40_0}
-    {Wiener}{0.4}
+    {Wiener}{0.49}
     \includegraphics[trim=7cm 6cm 7cm 5cm,clip,width=\textwidth]{dontpanic-wiener-40_0.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic-g-40_0}
+    {Wiener}{0.49}
+    \includegraphics[trim=7cm 6cm 7cm 5cm,clip,width=\textwidth]{dontpanic-g-40_0.png}
   \end{myfigsub}
 \end{myfig}
 
@@ -437,7 +441,7 @@ lines and increasing the numbers of iteration does
 not cause problems since there is almost no error to
 spread.
 
-\begin{myfig}{dontpanic_blue}{Square image on real background blurred with $(40,\ang{0})$}
+\begin{myfig}{dontpanic_blue}{Square image on real background blurred with $(40,\ang{0})$.}
   \begin{myfigsub}{dontpanic_blue-40-0_2_1-20}
     {``select-lucy'' with 20 iterations}{0.49}
     \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-40_0-2_1-20.png}
@@ -455,8 +459,12 @@ spread.
     \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-40_0-2_2-100.png}
   \end{myfigsub}
   \begin{myfigsub}{dontpanic_blue-wiener-40_0}
-    {Wiener}{0.4}
+    {Wiener}{0.49}
     \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-wiener-40_0.png}
+  \end{myfigsub}
+  \begin{myfigsub}{dontpanic_blue-g-40_0}
+    {Wiener}{0.49}
+    \includegraphics[trim=6cm 5cm 6cm 5cm,clip,width=\textwidth]{dontpanic_blue-g-40_0.png}
   \end{myfigsub}
 \end{myfig}
 
@@ -508,6 +516,10 @@ the original.
     {Wiener}{0.49}
     \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car1-5_3.png}
   \end{myfigsub}
+  \begin{myfigsub}{car1}
+    {Initial blurred image}{0.49}
+    \includegraphics[trim=18cm 4.5cm 7cm 15cm,clip,width=\textwidth]{car1.jpg}
+  \end{myfigsub}
 \end{myfig}
 
 \begin{myfig}{car2}{Car deblurred, real blur}
@@ -530,5 +542,9 @@ the original.
   \begin{myfigsub}{car2-1_3}
     {Wiener}{0.49}
     \includegraphics[trim=6cm 4cm 4cm 5cm,clip,width=\textwidth]{car2-1_3.png}
+  \end{myfigsub}
+  \begin{myfigsub}{car2}
+    {Initial blurred image}{0.49}
+    \includegraphics[trim=18cm 4.5cm 7cm 15cm,clip,width=\textwidth]{car2.jpg}
   \end{myfigsub}
 \end{myfig}
