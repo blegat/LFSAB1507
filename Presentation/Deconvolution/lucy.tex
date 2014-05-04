@@ -3,7 +3,7 @@
   MLE for $G \sim \pois(h * f)$.
   Classic iteration:
   \[ f_{k+1}(x,y) = f_k(x,y)\left(\frac{g(x,y)}{(h*f_k)(x,y)} * h(-x,-y)\right). \]
-  Our modified iteration:
+  Our modified iteration not sensible to black:
   \begin{equation*}
     \label{eq:lucy_iter_modif}
     f_{k+1}(x,y) = f_k(x,y)\left(1+\left(\frac{g(x,y)}{(h*f_k)(x,y)}-1\right) * h(-x,-y)\right).
