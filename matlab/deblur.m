@@ -66,7 +66,7 @@ if algo == 1
         f(:,:,i) = edgetaper(f(:,:,i),psf);
     end
      tic
-    for i=1:iterColorOrGray
+    parfor i=1:iterColorOrGray
         F(:,:,i) = deconvlucy(f(:,:,i), psf, iter);
     end
     time =  toc

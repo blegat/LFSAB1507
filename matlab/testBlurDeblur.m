@@ -80,7 +80,7 @@ elseif test == 6
     %I = double(imread('Sea.png'));
 elseif test == 8
     % Taken by us
-    I = double(imread('IMG_3907.JPG'));
+    I = double(imread('IMG_3907bw.JPG'));
     %I = double(imread('computerGray.jpg'));
     %I = double(imread('OfficeGray1HD.jpg'));
     %I = double(imread('CarGray2HDCrop.png'));

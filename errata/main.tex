@@ -3,7 +3,7 @@
 \input{../report/Other/header}
 
 %\includeonly{Chapters/train}
-\title{ \textbf{Errata} \\ - Project of picture deblurring - }
+\title{ \textbf{Erratum Complexity} \\ - Project of picture deblurring - }
 \author{Jonathan \textsc{Berthe} \and Arnaud \textsc{Cerckel} \and Benoît \textsc{Legat} \and Geoffroy \textsc{Vanderrreydt}}
 %\institute{LFSAB1507}
 \begin{document}
@@ -13,7 +13,27 @@
 \subsection{Complexity of our different results}
 
 
-Let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$). Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:Complexity} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 200 for Lucy and by around 100 for the two other algorithms. So the relation is almost linear between the number of pixels added and the time needed. The fact that it is not totally linear might be due to optimisations that Matlab while processing big matrix. 
+As done in the report, let's estimate the complexity of the deconvolution algorithms. To do so, we use the same picture. We first deblur the picture using \texttt{deconvlucy} for a certain size($125 \times 125$ here), then for $250 \times 250$, until $2500 \times 2500$ (the original picture  size was $5184 \times 3456$) with each time 16 iterations of Lucy. Afterwards we compute  \texttt{deconvwnr} and \texttt{deconvreg} in the same way. The figure \ref{fig:ComplexityRelbw} plots the ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' on the y axis and on the x axis the ratio ``number of pixels of the picture / number of pixels of the smallest picture''. We see that as the number of pixels rises by 400, the time needed to compute rises by around 800 for Lucy and by around 100 for the two other algorithms. So \texttt{deconvlucy} is clearly slower than the two others. 
+
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/ComplexityRelbw.png}
+\caption{The ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' is the y axis and the x axis is the ratio ``number of pixels of the picture / number of pixels of the smallest picture''.}
+\label{fig:ComplexityRelbw}
+\end{subfigure}
+~
+\begin{subfigure}{0.4\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/ComplexityAbsbw.png}
+\caption{Time  needed to compute the picture on the y-axis, number of pixels of the picture on the x-axis.}
+\label{fig:ComplexityAbsbw}
+\end{subfigure}
+\caption{Complexity of our different algorithms for a black and white picture. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}.}
+\label{fig:Complexity}
+\end{figure}
+
+If we have a quick look to color image which means $125 \times 125 \times 3$ pixels, $250 \times 250 \times 3$ etc., we see that the relative time needed is almost the same which is is logical, figure~\ref{fig:ComplexityRel}. As regards the absolute time needed to compute the image, we needed for the biggest picture around $33$ seconds for Lucy, $5$ seconds for Regularisation and $1.5$ seconds for Wiener, figure~\ref{fig:ComplexityAbsbw}; we are now around $100$, $18$ and $4$ seconds, figure~\ref{fig:ComplexityAbs}. This result makes sense. Indeed, with Lucy when it's a color picture it's simply a loop for each color, so 3 times more time required. We can reasonably suppose that the two others algorithms use the same process.
 
 
 \begin{figure}[h!]
@@ -21,18 +41,21 @@ Let's estimate the complexity of the deconvolution algorithms. To do so, we use 
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/ComplexityRel.png}
 \caption{The ratio ``time needed to compute the picture/ time needed to compute the smallest picture'' is the y axis and the x axis is the ratio ``number of pixels of the picture / number of pixels of the smallest picture''.}
-\end{subfigure}~
+\label{fig:ComplexityRel}
+\end{subfigure}
+~
 \begin{subfigure}{0.4\textwidth}
 \includegraphics[{width= \textwidth}]{../Images/ComplexityAbs.png}
 \caption{Time  needed to compute the picture on the y-axis, number of pixels of the picture on the x-axis.}
+\label{fig:ComplexityAbs}
 \end{subfigure}
-\caption{Complexity of our different algorithms. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}.}
+\caption{Complexity of our different algorithms for a color picture. The blue line is for \texttt{deconvLucy}, the red one for \texttt{deconvwnr} and the green one for \texttt{deconvreg}.}
 \label{fig:Complexity}
 \end{figure}
 
 
 
-Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. The result are more surprising. Indeed, until a certain number of pixels, the relation between time and number of pixels seems linear. However, at around 100 times more pixels than with the starting picture, the time required starts to decline and then levels off at around 11 seconds. Either we computed something wrong, or matlab does some things strange. In all cases, there is here possibility for investigation.
+Let's now have a look at the complexity of our \texttt{robust\_angle\_estimator} method. Proceeding in the same way as for the deconvolution algorithms, we generate the plot shown in figure \ref{fig:ComplexityRadon}. Now the results are far more logical than in the report. Indeed the relation between time and number of pixels is linear. If we have to deal with 400 times more pixels than at the beginning we can expect 400 times more time needed than at the beginning. 
 
 
 \begin{figure}[h!]
