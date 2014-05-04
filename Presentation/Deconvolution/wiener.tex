@@ -1,0 +1,18 @@
+\subsection{Wiener deconvolution}
+\begin{frame}
+\frametitle[Wiener deconvolution]{Wiener deconvolution }
+We want to find
+\begin{align*}
+\min \mathbb{E}\{|F(k,l) - \hat{F}(k,l)|^2\}&
+&\text{ with }&
+& \hat{F}(k,l) &= L(k,l)G(k,l).
+\end{align*}
+
+So the estimated picture based on the blurred one is
+\begin{equation*}
+ \hat{F}(k,l) = \frac{H^*(k,l)}{|H(k,l)|^2 + NSR} G(k,l).
+\end{equation*}
+
+Challenge :  we have to estimate the Noise-to-Signal Ration (NSR).
+
+\end{frame}
