@@ -1,0 +1,30 @@
+\begin{frame}[allowframebreaks]
+  \frametitle{Lucy-Richardson}
+  MLE for $G \sim \pois(h * f)$.
+  Classic iteration:
+  \[ f_{k+1}(x,y) = f_k(x,y)\left(\frac{g(x,y)}{(h*f_k)(x,y)} * h(-x,-y)\right). \]
+  Our modified iteration:
+  \begin{equation*}
+    \label{eq:lucy_iter_modif}
+    f_{k+1}(x,y) = f_k(x,y)\left(1+\left(\frac{g(x,y)}{(h*f_k)(x,y)}-1\right) * h(-x,-y)\right).
+  \end{equation*}
+
+\begin{myfig}{cameraman-magic}
+  {``magic-lucy'' with 100 iterations.}
+  \mysubfig{cameraman-g-60_30-black}{Blurred with black.}{0.3}
+  \mysubfig{cameraman-fullmagic-60_30-black}{``magic-lucy''.}{0.3}
+  \mysubfig{cameraman-f-60_30-black}{cropped.}{0.3}
+  \mysubfig{cameraman-g-60_30-circ}{Circular blur.}{0.3}
+  \mysubfig{cameraman-fullmagic-60_30-circ}{``magic-lucy''.}{0.3}
+  \mysubfig{cameraman-f-60_30-circ}{cropped.}{0.3}
+\end{myfig}
+
+\begin{myfig}{cameraman-otherlucy}
+  {``lucy'' and ``crop-lucy'' with 100 iterations.}
+  \mysubfig{cameraman-lucy-60_30-black}{``lucy'' for black.}{0.3}%
+  \mysubfig{cameraman-lucy-60_30-circ}{``lucy'' for circular.}{0.3}
+  \mysubfig{cameraman-croplucy-60_30-black}{``crop-lucy'' for black.}{0.3}%
+  \mysubfig{cameraman-croplucy-60_30-circ}{``crop-lucy'' for circular.}{0.3}
+\end{myfig}
+
+\end{frame}
