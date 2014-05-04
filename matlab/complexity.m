@@ -9,11 +9,19 @@
 % end
 close all;
 load timebw.mat
-x = 1:20;
-x = x.^2;
+xi = 1:20;
+x = xi.^2;
 nbpixelsrow = 125*linspace(1,20,20);
+pl = polyfit(xi,time(1,:)/time(1,1),2)
+pw = polyfit(xi,time(2,:)/time(2,1),2)
+pr = polyfit(xi,time(3,:)/time(3,1),2)
+yl = polyval(pl, xi);
+yw = polyval(pw, xi);
+yr = polyval(pr, xi);
 figure()
-plot(x, time(1,:)/time(1,1), 'b', x, time(2,:)/time(2,1), 'r', x, time(3,:)/time(3,1), 'g', x, x.^(9/8), 'm', x, x.^(3/4), 'k')
+plot(x, time(1,:)/time(1,1), 'b', x, time(2,:)/time(2,1), 'r', x, time(3,:)/time(3,1), 'g', x, x.^(9/8), 'm', x, x.^(3/4), 'k');
+figure()
+plot(x, time(1,:)/time(1,1), 'b', x, time(2,:)/time(2,1), 'r', x, time(3,:)/time(3,1), 'g', x, yl, 'm', x, yw, 'c', x, yr, 'k');
 legend('Lucy','Wiener','Reg.');
 xlabel('number of pixels of picture/number of pixels of initial picture');
 ylabel('time needed for picture/time needed for initial picture');
