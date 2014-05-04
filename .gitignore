@@ -16,5 +16,7 @@
 *.toc
 *.out
 *.gz
+*.nav
+*.snm
 
 Thumbs.db

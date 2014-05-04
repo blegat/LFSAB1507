@@ -1,6 +1,66 @@
 \section[PSF Estimat.]{PSF Estimation}
+\subsection{Angle estimation with Radon}
+\begin{frame}[allowframebreaks]
+  \frametitle{Effect of the Blur on the Fourier transform}
+  \begin{align*}
+    g & = h * f
+    & G &= H \cdot F
+    & S & = \log(1 + |G|).
+  \end{align*}
+
+  \begin{myfig}{cameraman_F_diff}
+    {Effect of the blur on the fourier transform of the cameraman}
+    \mysubfig{cameraman_F}{$S$ with no blur.}{0.32}
+    \mysubfig{cameraman_F_replicate_40-30}{$S$ with ``replicate''.}{0.32}
+    \mysubfig{cameraman_F_circular_40-30}{$S$ with ``circular''.}{0.32}
+  \end{myfig}
+
+  \framebreak
+
+  \begin{itemize}
+    \item Square it.
+    \item Apply hann window in spatial domain.
+  \end{itemize}
+  \begin{myfig}{sagar-hann}
+    {Hann window for Sagar which has been blurred at $(25,\ang{171})$.}
+    \mysubfig{hann}{Hann window.}{0.3}
+    \mysubfig{sagar-hann}{Squared and ``hanned''.}{0.35}
+    \mysubfig{sagar-S}{$S$ with a clear $\sinc$.}{0.3}
+  \end{myfig}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle{Angle estimation with Radon}
+  \begin{block}{Radon transform (RT)}
+    \[ R_\theta(x') = \int_{y_0'(x')}^{y_1'(x')} f'(x',y') \dif y' \]
+    where frame $(x',y')$ is $(x,y)$ rotated by $\theta$ counterclockwise.
+  \end{block}
+
+  \begin{myfig}{ones}
+    {Analysis of the RT on an unit matrix (filled with ones)}
+    \mysubfig{ones-Rad}{RT of an unit matrix.}{0.35}
+    \mysubfig{ones-Var}{Variance and max for each angle of the RT.}{0.35}
+  \end{myfig}
+
+  \begin{myfig}{sagar}
+    {RT for Sagar which has been blurred at $(25,\ang{171})$.}
+    \mysubfigg{sagar-Rad}{RT of $S$.}{0.3}{trim=8cm 0cm 8cm 0cm, clip, height=4cm}
+    \mysubfigg{sagar-RadNorm}{Normalized RT of $S$.}{0.3}{trim=8cm 0cm 8cm 0cm, clip, height=4cm}
+    \mysubfigg{sagar-RadFocus}{Normalized and cropped RT of $S$.}{0.3}{trim=7cm 0cm 7cm 0cm, clip, height=4cm}
+  \end{myfig}
+
+  \begin{myfig}{sagar-plot}
+    {$\var$ and $\max$ of the RT of $S$ for Sagar}
+    \mysubfig{sagar-Var}{$\var$ of the RT.}{0.28}%
+    \mysubfig{sagar-VarN}{$\var$ of the normalized RT.}{0.28}
+    \mysubfig{sagar-max}{$\max$ of the RT.}{0.28}%
+    \mysubfig{sagar-maxN}{$\max$ of the normalized RT.}{0.28}
+  \end{myfig}
+\end{frame}
+
+\subsection{Angle estimation with Gabor}
 \begin{frame}
-	\frametitle{angle estimation with Gabor}
+	\frametitle{Angle estimation with Gabor}
 	steps:
 	\begin{enumerate}
 	\item spectrum of the blurred image
@@ -12,3 +72,6 @@
 	
 	Problem: didn't work, not enough time to find errors
 \end{frame}
+
+
+\subsection{Length estimation with modified Cepstrum}
