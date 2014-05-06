@@ -1,13 +1,9 @@
 \section[Compl. Treatment]{Complementary Treatment}
 \begin{frame}
-  \frametitle{no referential blur metric}
-  
-  advantage: absolute metric, no need of the original image\\
-  steps:
-  \begin{itemize}
-  \item vertical edges (Sobel)
-  \item analysing the image image by row. Everytime a pixel that is part of an edge is found, determining the local minimum and extremum on that row.
-  \item local blur = distance (in pixels) between the extrema
-  \item global blur = average of local blurs
-  \end{itemize}
+  \frametitle{Complementary Treatment}
+  \begin{enumerate}
+  \item absolute metric: we don't need the original image
+  \item NSR Estimation: power of noise $\approx$ variance of background region
+  \item EdgeTaper: smooth edges $\rightarrow$ reduce high frequencies in Fourier transform $\rightarrow$ reduce artifacts
+  \end{enumerate}
 \end{frame}
