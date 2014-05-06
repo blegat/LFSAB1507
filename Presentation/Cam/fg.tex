@@ -3,14 +3,12 @@
 \begin{frame}
   \frametitle{Foreground estimation}
 \begin{myfig}{car-fgdetect}
-  {Detection of the foreground for the car.
-    There is only one image for the background so the $\var$ has been set arbitrarily.
-  We can see that the var is too low since there is too many pixels in \figref{car-thresh}}
-  \mysubfig{car-diff}{Difference between the background and the foreground.}{0.32}
-  \mysubfig{car-thresh}{Pixels for which the difference divided by the square root of the var is higher than the threshold 1.}{0.32}
-  \mysubfig{car-shaped}{The foreground shaped by our method with the gaussian filter.}{0.32}
-  \mysubfig{car-biggestsquare}{The biggest squared in the shaped foreground of \figref{car-shaped}.}{0.32}
-  \mysubfig{car-connected}{The connected foreground around the biggest square. The image is cropped around it.}{0.32}
-  \mysubfig{car-focusdiffconnected}{Same than \figref{car-focusdiff} but only on the connected shape.}{0.32}
+  {Detection of the foreground for the car.}
+  \mysubfig{car-diff}{Difference between the pictures.}{0.32}
+  \mysubfig{car-thresh}{After a threshold.}{0.32}
+  \mysubfig{car-shaped}{After gaussian filters and thresholds.}{0.32}
+  \mysubfig{car-biggestsquare}{The biggest squared.}{0.32}
+  \mysubfig{car-connected}{The connected foreground.}{0.32}
+  \mysubfig{car-focusdiffconnected}{Difference restricted to the foreground.}{0.32}
 \end{myfig}
 \end{frame}
