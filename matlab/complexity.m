@@ -21,8 +21,6 @@ yr = polyval(pr, xi);
 
 figure()
 plot(x, time(1,:)/time(1,1), 'b', x, time(2,:)/time(2,1), 'r', x, time(3,:)/time(3,1), 'g', x, x.^(9/8), 'm', x, x.^(3/4), 'k', x, yl, 'y');
-figure()
-plot(x, time(1,:)/time(1,1), 'b', x, time(2,:)/time(2,1), 'r', x, time(3,:)/time(3,1), 'g', x, yl, 'm', x, yw, 'c', x, yr, 'k');
 legend('Lucy','Wiener','Reg.');
 xlabel('number of pixels of picture/number of pixels of initial picture');
 ylabel('time needed for picture/time needed for initial picture');

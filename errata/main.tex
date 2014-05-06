@@ -24,14 +24,14 @@ Now that the graphs are more relevant, let's try to have an idea of the algorith
 a &= \frac{\log(800)}{\log(20)}\\
 a &= 2.23.
 \end{align*} 
-So we can conclude that the complexity of Lucy is in $\mathcal{O}(n^2\sqrt[4]{n})$, the magenta line at the figure~\ref{fig:ComplexityRelbw}. However as the last value seems to be a peak and the curve is more above the other datas, $800$ is perhaps not representative of the general curve and complexity of the algorithm. If we use \texttt{polyfit}, we get the yellow line on graph~\ref{fig:ComplexityRelbw}. This line fit better the others data of the curb, logical by definition and is in $\mathcal{O}(n^2)$. So Lucy seems to be more about $\mathcal{O}(n^2)$ than $\mathcal{O}(n^2\sqrt[4]{n})$, which is more consistent with our implementation of the algorithm used in the different part of the report.  
+So we can conclude that the complexity of Lucy is in $\mathcal{O}(n^2\sqrt[4]{n})$, the magenta line at the figure~\ref{fig:ComplexityRelbw}. However as the last value seems to be a peak and the curve is more above the other data, $800$ is perhaps not representative of the general curve and complexity of the algorithm. If we use \texttt{polyfit}, we get the yellow line on graph~\ref{fig:ComplexityRelbw}. This line fits better the other data of the curve and is in $\mathcal{O}(n^2)$. So Lucy seems to be more about $\mathcal{O}(n^2)$ than $\mathcal{O}(n^2\sqrt[4]{n})$, which is more consistent with our implementation of the algorithm used in the different part of the report.  
 
 If we proceed in the same way for Wiener and Regularisation, we have 
 \begin{align*}
 20^a &= 100\\
 a &= 1.54. 
 \end{align*}
-So we can reasonably conclude that the complexity of Wiener and Regularisation is in $\mathcal{O}(n\sqrt{n})$, the black line at the figure~\ref{fig:ComplexityRelbw} . 
+So we can reasonably conclude that the complexity of Wiener and Regularisation is in $\mathcal{O}(n\sqrt{n})$, the black line at the figure~\ref{fig:ComplexityRelbw}.  It could also be in $\mathcal{O}(n\log{n})$ seeing that $\log_2(20) \approx \sqrt{20}$ and that $n \log(n)$ is the complexity of FFT (source : Wikipedia).
 
 
 \begin{figure}[h!]
