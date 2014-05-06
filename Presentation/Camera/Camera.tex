@@ -1,1 +1,241 @@
 \section{Adaptations for camera}
+
+\begin{frame}
+	\frametitle{: Background estimation }
+	\begin{enumerate}
+	\item Input: $k$ images (size $M$x$N$ for gray-scaled image) from fixed camera
+	\item Output: Matrix M (size $M$x$N$). In (m,n), means  of the k images only if ($i = 1,\cdots, k)$:	
+	$$I_i (m,n) \in [med(m,n) - Inter(m,n); med(m,n) + Inter(m,n)]$$
+    \item Exemples
+	\end{enumerate}
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Autoroute/fg/06.jpg}
+\caption{}
+\label{fig:Aut1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/07.jpg}
+\caption{}
+\label{fig:Aut2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/08.jpg}
+\caption{}
+\label{fig:Aut3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/09.jpg}
+\caption{}
+\label{fig:Aut4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/10.jpg}
+\caption{}
+\label{fig:Aut5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/11.jpg}
+\caption{}
+\label{fig:Aut6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/12.jpg}
+\caption{}
+\label{fig:Aut7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/13.jpg}
+\caption{}
+\label{fig:Aut8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/14.jpg}
+\caption{}
+\label{fig:Aut9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/15.jpg}
+\caption{}
+\label{Aut10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/16.jpg}
+\caption{}
+\label{fig:Aut11}
+\end{subfigure}
+\caption{Images taken by camera video}
+\label{fig:AllAut}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[{width=0.4 \textwidth}]{../Images/Camera/Autoroute/BGDetect/BGDetect.png}
+\caption{Background estimation}
+\label{fig:AutBG} 
+\end{figure} 
+
+\begin{frame}
+	\frametitle{: Udpade of the background}
+	\begin{enumerate}
+	\item Formula
+	$$I_i (m,n) \in [med(m,n) - Inter(m,n); med(m,n) + Inter(m,n)]$$
+	Typically, $a = 0.99$
+	\item Exemples with $a = 0.5$
+	
+\begin{figure}[h]
+\begin{figure}[h]
+
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-1.png}
+\caption{}
+\label{fig:UAut1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-2.png}
+\caption{}
+\label{fig:UAut2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-3.png}
+\caption{}
+\label{fig:UAut3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-4.png}
+\caption{}
+\label{fig:UAut4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-5.png}
+\caption{}
+\label{fig:UAut5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-6.png}
+\caption{}
+\label{fig:UAut6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-7.png}
+\caption{}
+\label{fig:UAut7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-8.png}
+\caption{}
+\label{fig:UAut8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-9.png}
+\caption{}
+\label{fig:UAut9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-10.png}
+\caption{}
+\label{fig:UAut10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-11.png}
+\caption{}
+\label{fig:UAut11}
+\end{subfigure}
+\caption{Udpade of the Background with $a=0.5$}
+\label{fig:Udpade}
+\end{figure}
+\centering
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[width= \textwidth]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-1.png}
+\caption{}
+\label{fig:UAut1}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-2.png}
+\caption{}
+\label{fig:UAut2}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-3.png}
+\caption{}
+\label{fig:UAut3}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-4.png}
+\caption{}
+\label{fig:UAut4}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-5.png}
+\caption{}
+\label{fig:UAut5}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-6.png}
+\caption{}
+\label{fig:UAut6}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-7.png}
+\caption{}
+\label{fig:UAut7}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-8.png}
+\caption{}
+\label{fig:UAut8}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-9.png}
+\caption{}
+\label{fig:UAut9}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-10.png}
+\caption{}
+\label{fig:UAut10}
+\end{subfigure}
+~
+\begin{subfigure}{0.20\textwidth}
+\includegraphics[{width= \textwidth}]{../Images/Camera/Autoroute/fg/a50/CamDeblurred-11.png}
+\caption{}
+\label{fig:UAut11}
+\end{subfigure}
+\caption{Udpade of the Background with $a=0.5$}
+\label{fig:Udpade}
+\end{figure}
+	\end{enumerate}
+
+\end{frame}
